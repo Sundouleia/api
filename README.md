@@ -1,2 +1,2 @@
 # api
-Mimics GSpeak's API code, with some deviations.
+GSpeakAPI -> SundouleiaAPI
