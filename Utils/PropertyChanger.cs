@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace GagspeakAPI.Util;
+namespace SundouleiaAPI.Util;
 public static class PropertyChanger
 {
     public static BindingFlags PropertyFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;

@@ -1,6 +1,6 @@
 using MessagePack;
 
-namespace GagspeakAPI.Network;
+namespace SundouleiaAPI.Network;
 
 /// <summary>
 ///     Sent to the connected client in the process of verifying their account.

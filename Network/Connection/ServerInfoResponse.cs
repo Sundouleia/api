@@ -1,6 +1,6 @@
 using MessagePack;
 
-namespace GagspeakAPI.Network;
+namespace SundouleiaAPI.Network;
 
 /// <summary>
 ///     Server Info Response that provides the total online users.

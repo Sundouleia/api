@@ -1,6 +1,6 @@
-using GagspeakAPI.Data;
+using SundouleiaAPI.Data;
 
-namespace GagspeakAPI.Data.Comparer;
+namespace SundouleiaAPI.Data.Comparer;
 
 public class UserDataComparer : IEqualityComparer<UserData>
 {

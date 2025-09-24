@@ -1,13 +1,13 @@
-namespace GagspeakAPI.Hub;
+namespace SundouleiaAPI.Hub;
 
 public static class HubResponseBuilder
 {
     // Success.
-    public static HubResponse Yippee() => new(GagSpeakApiEc.Success);
-    public static HubResponse<T> Yippee<T>(T value) => new(GagSpeakApiEc.Success) { Value = value };
+    public static HubResponse Yippee() => new(SundouleiaApiEc.Success);
+    public static HubResponse<T> Yippee<T>(T value) => new(SundouleiaApiEc.Success) { Value = value };
     
     // Fail.
-    public static HubResponse AwDangIt(GagSpeakApiEc error) => new(error);
-    public static HubResponse<T> AwDangIt<T>(GagSpeakApiEc error) => new(error) { Value = default };
-    public static HubResponse<T> AwDangIt<T>(GagSpeakApiEc error, T value) => new(error) { Value = value };
+    public static HubResponse AwDangIt(SundouleiaApiEc error) => new(error);
+    public static HubResponse<T> AwDangIt<T>(SundouleiaApiEc error) => new(error) { Value = default };
+    public static HubResponse<T> AwDangIt<T>(SundouleiaApiEc error, T value) => new(error) { Value = value };
 }
