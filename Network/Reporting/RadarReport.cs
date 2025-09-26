@@ -4,10 +4,11 @@ using MessagePack;
 namespace SundouleiaAPI.Network;
 
 /// <summary>
-///     For when we need to report another user for misconduct of profile usage.
+///     For when we need to report another user for misconduct with the radar system. <para />
+///     This variant is for potentially external actions unrelated to the area's chat.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record RadarChatReport(UserData User, ushort TerritoryId, ushort WorldId, List<string> RecentChat, string ReportReason) : UserDto(User)
+public record RadarReport(ushort TerritoryId, ushort WorldId, string ReportReason)
 {
     // These can be optionally set, if the report is made indoors.
     public bool IsIndoor { get; set; } = false;

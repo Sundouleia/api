@@ -6,6 +6,14 @@ using MessagePack;
 namespace SundouleiaAPI.Network;
 
 /// <summary>
+///     A helper record for a return function on accepting a request, 
+///     compiling the send online call and add pair call into one!
+/// </summary>
+[MessagePackObject(keyAsPropertyName: true)]
+public record AddedUserPair(UserPair Pair, OnlineUser? OnlineInfo);
+
+
+/// <summary>
 ///     Holds all essential information of permissions and information between 
 ///     2 paired users.
 /// </summary>

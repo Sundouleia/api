@@ -9,4 +9,4 @@ namespace SundouleiaAPI.Network;
 ///     allow us to use the chat, if we so desire.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record RadarZoneUpdate(ushort NewTerritoryId, string HashedCID);
+public record RadarZoneUpdate(ushort WorldId, ushort TerritoryId, bool JoinChat, string HashedCID);

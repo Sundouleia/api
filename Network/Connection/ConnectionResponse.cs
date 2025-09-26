@@ -14,7 +14,7 @@ public record ConnectionResponse(UserData User) : UserDto(User)
     public int ServerVersion { get; set; }
 
     public GlobalPerms GlobalPerms { get; init; } = new();
-    public AccountReputation Reputation { get; set; } = new();
+    public UserReputation Reputation { get; set; } = new();
 
     // All Auth Uids associated with the connected user.
     public List<string> ActiveAccountUidList { get; init; } = new();

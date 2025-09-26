@@ -20,8 +20,20 @@ public enum SundouleiaApiEc
     /// <summary> The Recipient was not who it should be. </summary>
     InvalidRecipient = 4,
 
+    /// <summary> Blocked by sender or recipient. </summary>
+    RecipientBlocked = 5,
+
     /// <summary> The Method is not yet fully implemented. </summary>
-    NotYetImplemented = 5,
+    NotYetImplemented = 6,
+
+    /// <summary> Attempted to interact with self, but the method is for interaction with others </summary>
+    CannotInteractWithSelf = 7,
+
+    /// <summary> Tried to interact with another using a method intended for self-use only. </summary>
+    CanOnlyInteractWithSelf = 8,
+
+    /// <summary> Tried to use a feature that your account reputation prevents access to. </summary>
+    RestrictedByReputation = 9,
 
     // ----- Client Vanity Specific Errors -----
 
@@ -54,4 +66,7 @@ public enum SundouleiaApiEc
 
     /// <summary> The incorrect updateKind was used for the call made. </summary>
     BadUpdateKind,
+
+    // ------ Radar Specific Errors -----
+    NotInZone,
 }

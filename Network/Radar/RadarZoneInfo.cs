@@ -8,4 +8,4 @@ namespace SundouleiaAPI.Network;
 ///     Only used in callbacks from the server.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record RadarZoneInfo(List<RadarUser> CurrentUsers);
+public record RadarZoneInfo(List<OnlineUser> CurrentUsers);

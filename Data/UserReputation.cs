@@ -1,4 +1,3 @@
-using SundouleiaAPI.Enums;
 using MessagePack;
 
 namespace SundouleiaAPI.Data;
@@ -7,7 +6,7 @@ namespace SundouleiaAPI.Data;
 ///     The primary record used to represent a Sundouleia user.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record AccountReputation
+public record UserReputation
 {
     public bool IsVerified { get; set; } = false;
     public bool IsBanned { get; set; } = false;

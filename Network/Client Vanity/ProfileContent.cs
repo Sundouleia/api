@@ -15,6 +15,7 @@ public record ProfileContent
     public PublicityScope AvatarVis      { get; set; } = PublicityScope.Private;
     public PublicityScope DescriptionVis { get; set; } = PublicityScope.Private;
     public PublicityScope DecorationVis  { get; set; } = PublicityScope.Private;
+    public string         Description    { get; set; } = string.Empty;
 
     public PlateBG      MainBG              { get; set; } = PlateBG.Default;
     public PlateBorder  MainBorder          { get; set; } = PlateBorder.Default;

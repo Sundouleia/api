@@ -5,6 +5,7 @@ namespace SundouleiaAPI.Data.Permissions;
 [MessagePackObject(keyAsPropertyName: true)]
 public record GlobalPerms
 {
-    // Placeholder Setting.
-    public bool DummySetting { get; set; } = false;
+    public bool DefaultAllowAnimations { get; set; } = false;
+    public bool DefaultAllowSounds { get; set; } = false;
+    public bool DefaultAllowVfx { get; set; } = false;
 }

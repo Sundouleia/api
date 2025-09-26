@@ -1,4 +1,5 @@
 using MessagePack;
+using SundouleiaAPI.Data;
 
 namespace SundouleiaAPI.Network;
 
@@ -6,7 +7,7 @@ namespace SundouleiaAPI.Network;
 ///     Updates one GlobalPermission value.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record SingleChangeGlobal(string PermName, object NewValue)
+public record SingleChangeGlobal(UserData User, string PermName, object NewValue) : UserDto(User)
 {
-    public override string ToString() => $"SingleChangeGlobal: Changed -> [{PermName}] to [{NewValue}]";
+    public override string ToString() => $"PairGlobalPermChanged: {{{User.AliasOrUID}}} Changed -> [{PermName}] to [{NewValue}]";
 }
