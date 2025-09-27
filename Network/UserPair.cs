@@ -18,7 +18,7 @@ public record AddedUserPair(UserPair Pair, OnlineUser? OnlineInfo);
 ///     2 paired users.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record UserPair(UserData User, PairPerms OwnPerms, GlobalPerms Globals, PairPerms Perms) : UserDto(User)
+public record UserPair(UserData User, PairPerms OwnPerms, GlobalPerms Globals, PairPerms Perms, bool IsTemp) : UserDto(User)
 {
     // Perms the Client has for this User
     public PairPerms OwnPerms { get; set; } = OwnPerms;

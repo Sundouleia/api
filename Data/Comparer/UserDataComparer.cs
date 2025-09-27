@@ -1,5 +1,3 @@
-using SundouleiaAPI.Data;
-
 namespace SundouleiaAPI.Data.Comparer;
 
 public class UserDataComparer : IEqualityComparer<UserData>

@@ -1,4 +1,3 @@
-using MessagePack;
 using SundouleiaAPI.Enums;
 
 namespace SundouleiaAPI.Data;

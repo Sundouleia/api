@@ -1,5 +1,4 @@
 using MessagePack;
-using SundouleiaAPI.Data;
 
 namespace SundouleiaAPI.Network;
 

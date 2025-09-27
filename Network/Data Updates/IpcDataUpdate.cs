@@ -1,5 +1,6 @@
 using MessagePack;
 using SundouleiaAPI.Data;
+using SundouleiaAPI.Enums;
 using SundouleiaAPI.Flags;
 
 namespace SundouleiaAPI.Network;
@@ -14,4 +15,4 @@ public record IpcUpdateMods(UserData User, CharaModData ModData) : UserDto(User)
 public record IpcUpdateOther(UserData User, CharaIpcData IpcData) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record IpcUpdateSingle(UserData User, IpcKind Type, string NewData) : UserDto(User);
+public record IpcUpdateSingle(UserData User, OwnedObject ObjType, IpcKind Type, string NewData) : UserDto(User);

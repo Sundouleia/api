@@ -8,7 +8,12 @@ namespace SundouleiaAPI.Data;
 [MessagePackObject(keyAsPropertyName: true)]
 public class CharaModData
 {
-    // TODO: Find format for this later.
+    // Something on mods to add here with the game path and file replacement path or whatever.
+
+    // Something with mods to remove and their game path and file replacement path.
+
+    // The goal here is that mod data updates do not send all mods but rather the ones to be added and removed.
+    // This helps improve performance and reduce cluster calls.
 
     // Try to avoid doing a flag [all update] process.
     // Mod Data Changes & Removals.

@@ -11,6 +11,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     // --- Server Messages ---
     void OnServerMessage(Action<MessageSeverity, string> act);
     void OnHardReconnectMessage(Action<MessageSeverity, string, ServerState> act);
+    void OnRadarUserFlagged(Action<string> act);
     void OnServerInfo(Action<ServerInfoResponse> act);
 
     // --- Pair/Request ---
@@ -34,7 +35,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnBulkChangeUnique(Action<BulkChangeUnique> act);
 
     // -- Radar --
-    void OnRadarAddUser(Action<UserDto> act);
+    void OnRadarAddUpdateUser(Action<OnlineUser> act);
     void OnRadarRemoveUser(Action<UserDto> act);
     void OnRadarChat(Action<RadarChatMessage> act);
 
@@ -42,7 +43,5 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnUserOffline(Action<UserDto> act);
     void OnUserOnline(Action<OnlineUser> act);
     void OnProfileUpdated(Action<UserDto> act);
-
-    // --- InGame Account Verification ---
     void OnShowVerification(Action<VerificationCode> act);
 }

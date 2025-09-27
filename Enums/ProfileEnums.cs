@@ -10,7 +10,7 @@ public enum PublicityScope
 public enum PlateElement
 {
     Plate,
-    ProfilePicture,
+    Avatar,
     Description,
 }
 

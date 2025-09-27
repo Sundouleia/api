@@ -53,8 +53,6 @@ public interface ISundouleiaHub
     Task Callback_UserOffline(UserDto dto);
     Task Callback_UserOnline(OnlineUser dto);
     Task Callback_ProfileUpdated(UserDto dto);
-
-    // --- InGame Account Verification ---
     Task Callback_ShowVerification(VerificationCode dto);
     #endregion Callbacks
 
