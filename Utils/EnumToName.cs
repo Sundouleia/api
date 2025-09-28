@@ -1,12 +1,12 @@
 namespace SundouleiaAPI.Enums;
 public static class EnumToName
 {
-    public static string ToName(this InteractionType interactionType)
+    public static string ToName(this DataEventType interactionType)
         => interactionType switch
         {
-            InteractionType.None => "None",
-            InteractionType.PauseStateChange => "Pause State Changed",
-            InteractionType.PermissionChange => "Permission Changed",
+            DataEventType.None => "None",
+            DataEventType.PauseStateChange => "Pause State Changed",
+            DataEventType.PermissionChange => "Permission Changed",
             _ => "UNK"
         };
 }

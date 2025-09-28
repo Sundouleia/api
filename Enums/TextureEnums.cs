@@ -38,6 +38,9 @@ public enum EmoteTexture
 /// </summary>
 public enum CoreTexture
 {
+    Achievement,
+    AchievementLineSplit,
+    Clock,
     Radar,
     Icon256,
     Icon256Bg,

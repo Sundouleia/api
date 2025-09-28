@@ -61,7 +61,7 @@ public interface ISundouleiaHub
     Task<List<OnlineUser>> UserGetOnlinePairs();
     Task<List<UserPair>> UserGetAllPairs();
     Task<List<PendingRequest>> UserGetPendingRequests();
-    Task<FullProfileData> UserGetProfileData(UserDto user);
+    Task<FullProfileData> UserGetProfileData(UserDto user, bool allowNSFW);
 
 
     // --- Data Updates ---
