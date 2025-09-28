@@ -72,7 +72,7 @@ public interface ISundouleiaHub
     Task<HubResponse> UserPushIpcOther(PushIpcOther dto); // Push only non-mod updates, for faster handling.
     Task<HubResponse> UserPushIpcSingle(PushIpcSingle dto); // Push a single change to IPC appearance (useful for things like heels ext.)
     Task<HubResponse> UserUpdateProfileContent(ProfileContent dto);
-    Task<HubResponse> UserUpdateProfilePicture(ProfileImage dto);    
+    Task<HubResponse> UserUpdateProfilePicture(ProfileImage dto);
     Task<HubResponse> UserDelete();
     #endregion Data Updates
 
@@ -102,6 +102,17 @@ public interface ISundouleiaHub
     ///     If successful, you should remove the pair from your list of pairs.
     /// </summary>
     Task<HubResponse> UserRemovePair(UserDto UserDto);
+
+    /// <summary>
+    ///     Permanently block a user.
+    /// </summary>
+    Task<HubResponse> UserBlock(UserDto user);
+
+    /// <summary>
+    ///     Unblock a blocked user.
+    /// </summary>
+    Task<HubResponse> UserUnblock(UserDto user);
+
     #endregion Pair/Request Interactions
 
     // -- Permission Changes ---

@@ -56,3 +56,11 @@ public enum DataEventType
     /// </summary>
     PermissionChange,
 }
+
+public enum InteractionFilter
+{
+    All,
+    Applier,
+    Interaction,
+    Content,
+}
