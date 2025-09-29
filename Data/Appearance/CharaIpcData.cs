@@ -16,7 +16,7 @@ public class ClientIpcData
         if (NonPlayers.Count != other.NonPlayers.Count)
             return true;
         foreach (var (key, value) in NonPlayers)
-            if (!other.NonPlayers.TryGetValue(key, out var otherValue) || value.IsDifferent(otherValue))
+            if (!other.NonPlayers[key].IsDifferent(value))
                 return true;
         return false;
     }
@@ -29,30 +29,24 @@ public class ClientIpcData
     }
 
     public string GetValue(OwnedObject obj, IpcKind type)
-    {
-        if (obj == OwnedObject.Player)
+        => obj is OwnedObject.Player
+        ? type switch
         {
-            return type switch
-            {
-                IpcKind.CPlus => Player.CPlusData,
-                IpcKind.Glamourer => Player.GlamourerState,
-                IpcKind.ModManips => Player.ModManips,
-                IpcKind.Moodles => Player.Moodles,
-                IpcKind.Heels => Player.HeelsOffset,
-                IpcKind.Honorific => Player.HonorificTitle,
-                IpcKind.PetNames => Player.PetNicknames,
-                _ => string.Empty,
-            };
+            IpcKind.CPlus => Player.CPlusData,
+            IpcKind.Glamourer => Player.GlamourerState,
+            IpcKind.ModManips => Player.ModManips,
+            IpcKind.Moodles => Player.Moodles,
+            IpcKind.Heels => Player.HeelsOffset,
+            IpcKind.Honorific => Player.HonorificTitle,
+            IpcKind.PetNames => Player.PetNicknames,
+            _ => string.Empty,
         }
-        if (!NonPlayers.TryGetValue(obj, out var npcData))
-            return string.Empty;
-        return type switch
+        : type switch
         {
-            IpcKind.CPlus => npcData.CPlusData,
-            IpcKind.Glamourer => npcData.GlamourerState,
+            IpcKind.CPlus => NonPlayers[obj].CPlusData,
+            IpcKind.Glamourer => NonPlayers[obj].GlamourerState,
             _ => string.Empty,
         };
-    }
 }
 
 public class PlayerIpcData
@@ -67,14 +61,15 @@ public class PlayerIpcData
     public string PetNicknames { get; set; } = string.Empty;
 
     // Bitwise checking for differences.
-    public bool IsDifferent(PlayerIpcData other)
-        => (other.Updates & IpcKind.CPlus) != 0 && CPlusData != other.CPlusData
-        || (other.Updates & IpcKind.Glamourer) != 0 && GlamourerState != other.GlamourerState
-        || (other.Updates & IpcKind.ModManips) != 0 && ModManips != other.ModManips
-        || (other.Updates & IpcKind.Moodles) != 0 && Moodles != other.Moodles
-        || (other.Updates & IpcKind.Heels) != 0 && HeelsOffset != other.HeelsOffset
-        || (other.Updates & IpcKind.Honorific) != 0 && HonorificTitle != other.HonorificTitle
-        || (other.Updates & IpcKind.PetNames) != 0 && PetNicknames != other.PetNicknames;
+    public bool IsDifferent(PlayerIpcData? other)
+        => other is null ? false 
+         : (other.Updates.HasAny(IpcKind.CPlus) && CPlusData != other.CPlusData)
+        || (other.Updates.HasAny(IpcKind.Glamourer) && GlamourerState != other.GlamourerState)
+        || (other.Updates.HasAny(IpcKind.ModManips) && ModManips != other.ModManips)
+        || (other.Updates.HasAny(IpcKind.Moodles) && Moodles != other.Moodles)
+        || (other.Updates.HasAny(IpcKind.Heels) && HeelsOffset != other.HeelsOffset)
+        || (other.Updates.HasAny(IpcKind.Honorific) && HonorificTitle != other.HonorificTitle)
+        || (other.Updates.HasAny(IpcKind.PetNames) && PetNicknames != other.PetNicknames);
 
     public void UpdateFrom(PlayerIpcData other)
     {
@@ -95,9 +90,10 @@ public class NonPlayerIpcData
     public string GlamourerState { get; set; } = string.Empty;
 
     // Bitwise checking for differences.
-    public bool IsDifferent(NonPlayerIpcData other)
-        => (other.Updates & IpcKind.CPlus) != 0 && CPlusData != other.CPlusData
-        || (other.Updates & IpcKind.Glamourer) != 0 && GlamourerState != other.GlamourerState;
+    public bool IsDifferent(NonPlayerIpcData? other) 
+        => other is null ? false : 
+           (other.Updates.HasAny(IpcKind.CPlus) && CPlusData != other.CPlusData)
+        || (other.Updates.HasAny(IpcKind.Glamourer) && GlamourerState != other.GlamourerState);
 
     public void UpdateFrom(NonPlayerIpcData other)
     {
