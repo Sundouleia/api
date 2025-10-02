@@ -47,6 +47,11 @@ public enum DataEventType
     SingleVisualReceive,
 
     /// <summary>
+    ///     The data you got from another sundesmo was declined for some reason.
+    /// </summary>
+    ReceivedDataDeclined,
+
+    /// <summary>
     ///     The Paused state of the sundesmo has changed. Could have been by you, or them.
     /// </summary>
     PauseStateChange,
@@ -55,6 +60,11 @@ public enum DataEventType
     ///     A PairPerm from your end or the sundesmos end has changed.
     /// </summary>
     PermissionChange,
+
+    /// <summary>
+    ///     Sundesmo was disposed of.
+    /// </summary>
+    Disposed,
 }
 
 public enum InteractionFilter

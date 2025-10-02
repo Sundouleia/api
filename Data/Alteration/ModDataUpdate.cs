@@ -6,7 +6,7 @@ namespace SundouleiaAPI.Data;
 // Could manipulate this to contain files to add and remove, or a separate
 // class for removals so we can send them instantly.
 [MessagePackObject(keyAsPropertyName: true)]
-public class CharaModData
+public class ModDataUpdate
 {
     // Something on mods to add here with the game path and file replacement path or whatever.
 
@@ -19,4 +19,6 @@ public class CharaModData
     // Mod Data Changes & Removals.
     // Ideally if we can separate this enough a file emplacement removal
     // wouldn't even need to await the file uploads since it does not upload anything.
+
+    public static readonly ModDataUpdate Empty = new();
 }

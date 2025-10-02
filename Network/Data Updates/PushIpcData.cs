@@ -5,12 +5,12 @@ using SundouleiaAPI.Enums;
 namespace SundouleiaAPI.Network;
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushIpcFull(List<UserData> Recipients, CharaModData ModData, ClientIpcData IpcData);
+public record PushIpcFull(List<UserData> Recipients, ModDataUpdate Mods, VisualDataUpdate Visuals);
 
-public record PushIpcMods(List<UserData> Recipients, CharaModData ModData);
+public record PushIpcMods(List<UserData> Recipients, ModDataUpdate Mods);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushIpcOther(List<UserData> Recipients, ClientIpcData IpcData);
+public record PushIpcOther(List<UserData> Recipients, VisualDataUpdate Visuals);
 
 // Sends a single IPC update to all pairs. This update cannot be a mod update.
 [MessagePackObject(keyAsPropertyName: true)]
