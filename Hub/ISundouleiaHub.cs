@@ -26,8 +26,8 @@ public interface ISundouleiaHub
     // --- Pair/Request Callbacks ---
     Task Callback_AddPair(UserPair dto);
     Task Callback_RemovePair(UserDto dto);
-    Task Callback_AddRequest(PendingRequest dto);
-    Task Callback_RemoveRequest(PendingRequest dto);
+    Task Callback_AddRequest(SundesmoRequest dto);
+    Task Callback_RemoveRequest(SundesmoRequest dto);
 
     // -- Moderation Utility Callbacks ---
     Task Callback_Blocked(UserDto dto);
@@ -60,7 +60,7 @@ public interface ISundouleiaHub
     // --- Data Retrievals ---
     Task<List<OnlineUser>> UserGetOnlinePairs();
     Task<List<UserPair>> UserGetAllPairs();
-    Task<List<PendingRequest>> UserGetPendingRequests();
+    Task<List<SundesmoRequest>> UserGetSundesmoRequests();
     Task<FullProfileData> UserGetProfileData(UserDto user, bool allowNSFW);
 
 
@@ -79,7 +79,7 @@ public interface ISundouleiaHub
 
     // --- Pair/Request Interactions ---
     #region Pair/Request Interactions
-    Task<HubResponse<PendingRequest>> UserSendRequest(CreateRequest dto);
+    Task<HubResponse<SundesmoRequest>> UserSendRequest(CreateRequest dto);
 
     /// <summary>
     ///     If successful, remove the request they wished to cancel.

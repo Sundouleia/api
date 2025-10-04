@@ -2,23 +2,17 @@ using MessagePack;
 
 namespace SundouleiaAPI.Data;
 
-// Data transfer that contains the links of uploaded mod file emplacements.
-// Could manipulate this to contain files to add and remove, or a separate
-// class for removals so we can send them instantly.
+// Contains data of any new mods to be added, or old ones to remove.
 [MessagePackObject(keyAsPropertyName: true)]
-public class ModDataUpdate
-{
-    // Something on mods to add here with the game path and file replacement path or whatever.
+public record RecievedModUpdate(List<ModFileData> NewModsToAdd, List<string> HashesToRemove);
 
-    // Something with mods to remove and their game path and file replacement path.
+[MessagePackObject(keyAsPropertyName: true)]
+public record SentModUpdate(List<ModFileInfo> NewModsToAdd, List<string> HashesToRemove);
 
-    // The goal here is that mod data updates do not send all mods but rather the ones to be added and removed.
-    // This helps improve performance and reduce cluster calls.
+// Used in calls, does not include download links. This is handled via the server.
+[MessagePackObject(keyAsPropertyName: true)]
+public record ModFileInfo(string Hash, string[] GamePaths, string SwappedPath);
 
-    // Try to avoid doing a flag [all update] process.
-    // Mod Data Changes & Removals.
-    // Ideally if we can separate this enough a file emplacement removal
-    // wouldn't even need to await the file uploads since it does not upload anything.
-
-    public static readonly ModDataUpdate Empty = new();
-}
+// Only used on callbacks, not on server calls. Nessisary for security.
+[MessagePackObject(keyAsPropertyName: true)]
+public record ModFileData(string Hash, string[] GamePaths, string SwappedPath, string DownloadLink);

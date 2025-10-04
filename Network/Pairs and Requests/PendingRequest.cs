@@ -8,7 +8,7 @@ namespace SundouleiaAPI.Network;
 ///     Can be canceled by either side.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record PendingRequest(UserData User, UserData Target, bool IsTemp, string Message, DateTime CreatedAt) : UserDto(User)
+public record SundesmoRequest(UserData User, UserData Target, bool IsTemp, string Message, DateTime CreatedAt) : UserDto(User)
 {
     public TimeSpan TimeLeft() => TimeSpan.FromDays(3) - (DateTime.UtcNow - CreatedAt);
     public bool IsExpired() => DateTime.UtcNow - CreatedAt > TimeSpan.FromDays(3);
