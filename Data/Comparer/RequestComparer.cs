@@ -1,6 +1,6 @@
 using SundouleiaAPI.Network;
 
-namespace SundouleiaAPI.Data;
+namespace SundouleiaAPI.Data.Comparer;
 #pragma warning disable IDE1006 // Naming Styles
 public class RequestComparer : IEqualityComparer<SundesmoRequest>
 {

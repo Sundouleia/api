@@ -1,5 +1,6 @@
 using MessagePack;
 using SundouleiaAPI.Enums;
+using System.Text;
 
 namespace SundouleiaAPI.Data;
 
@@ -7,15 +8,30 @@ namespace SundouleiaAPI.Data;
 public record VisualUpdate
 {
     public IpcDataPlayerUpdate? PlayerChanges { get; set; } = null;
-    public IpcDataUpdate?       MinionMountChanges { get; set; } = null;
-    public IpcDataUpdate?       PetChanges { get; set; } = null;
-    public IpcDataUpdate?       CompanionChanges { get; set; } = null;
+    public IpcDataUpdate? MinionMountChanges { get; set; } = null;
+    public IpcDataUpdate? PetChanges { get; set; } = null;
+    public IpcDataUpdate? CompanionChanges { get; set; } = null;
 
     public bool HasData()
-        => PlayerChanges != null 
-        || MinionMountChanges != null 
-        || PetChanges != null 
+        => PlayerChanges != null
+        || MinionMountChanges != null
+        || PetChanges != null
         || CompanionChanges != null;
+
+    // concat the keys for changes to strings for each object.
+    public string ToChangesString()
+    {
+        var sb = new StringBuilder();
+        if (PlayerChanges != null)
+            sb.Append($"[Player: {PlayerChanges.Updates}]");
+        if (MinionMountChanges != null)
+            sb.Append($"[MinionMount: {MinionMountChanges.Updates}]");
+        if (PetChanges != null)
+            sb.Append($"[Pet: {PetChanges.Updates}]");
+        if (CompanionChanges != null)
+            sb.Append($"[Companion: {CompanionChanges.Updates}]");
+        return sb.ToString();
+    }
 }
 
 
