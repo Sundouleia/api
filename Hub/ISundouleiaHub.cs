@@ -50,7 +50,7 @@ public interface ISundouleiaHub
 
 
     // --- User Status Update Callbacks ---
-    Task Callback_UserPerformingFullReload(UserDto dto);
+    Task Callback_UserIsUnloading(UserDto dto);
     Task Callback_UserOffline(UserDto dto);
     Task Callback_UserOnline(OnlineUser dto);
     Task Callback_ProfileUpdated(UserDto dto);
@@ -75,7 +75,7 @@ public interface ISundouleiaHub
     Task<HubResponse> UserUpdateProfileContent(ProfileContent dto);
     Task<HubResponse> UserUpdateProfilePicture(ProfileImage dto);
     Task<HubResponse> UserDelete();
-    Task<HubResponse> PerformingFullReload(); // Used on plugin shutdown, or any method that clears all sundesmo data.
+    Task<HubResponse> NotifyIsUnloading(); // Used on plugin shutdown, or any method that clears all sundesmo data.
     #endregion Data Updates
 
 

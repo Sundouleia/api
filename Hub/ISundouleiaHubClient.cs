@@ -40,6 +40,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnRadarChat(Action<RadarChatMessage> act);
 
     // --- User Status Update ---
+    void OnUserIsUnloading(Action<UserDto> act);
     void OnUserOffline(Action<UserDto> act);
     void OnUserOnline(Action<OnlineUser> act);
     void OnProfileUpdated(Action<UserDto> act);
