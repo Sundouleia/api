@@ -75,7 +75,7 @@ public interface ISundouleiaHub
     Task<HubResponse> UserUpdateProfileContent(ProfileContent dto);
     Task<HubResponse> UserUpdateProfilePicture(ProfileImage dto);
     Task<HubResponse> UserDelete();
-    Task<HubResponse> NotifyIsUnloading(); // Used on plugin shutdown, or any method that clears all sundesmo data.
+    Task<HubResponse> UserNotifyIsUnloading(); // Used on plugin shutdown, or any method that clears all sundesmo data.
     #endregion Data Updates
 
 
