@@ -9,5 +9,5 @@ public enum CkVanityTier
     ServerBooster = 2,
     EsteemedPatron = 3,
     DistinguishedConnoisseur = 4,
-    PluginAuthor = 5,
+    ShopKeeper = 5,
 }
