@@ -9,7 +9,10 @@ namespace SundouleiaAPI.Data;
 public record NewModUpdates(List<VerifiedModFile> FilesToAdd, List<string> HashesToRemove, bool NotAllSent);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record ModUpdates(List<ModFile> FilesToAdd, List<string> HashesToRemove);
+public record ModUpdates(List<ModFile> FilesToAdd, List<string> HashesToRemove)
+{
+    public bool HasChanges => FilesToAdd.Count > 0 || HashesToRemove.Count > 0;
+}
 
 // Used in calls, does not include download links. This is handled via the server.
 [MessagePackObject(keyAsPropertyName: true)]
