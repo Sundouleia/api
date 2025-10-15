@@ -35,7 +35,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnBulkChangeUnique(Action<BulkChangeUnique> act);
 
     // -- Radar --
-    void OnRadarAddUpdateUser(Action<OnlineUser> act);
+    void OnRadarAddUpdateUser(Action<RadarUserInfo> act);
     void OnRadarRemoveUser(Action<UserDto> act);
     void OnRadarChat(Action<RadarChatMessage> act);
 

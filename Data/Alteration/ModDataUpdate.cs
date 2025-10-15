@@ -6,7 +6,10 @@ namespace SundouleiaAPI.Data;
 // if not all sent is true, it means there will be additional files sent after, and they should be marked for uploading,
 // after the download is complete.
 [MessagePackObject(keyAsPropertyName: true)]
-public record NewModUpdates(List<VerifiedModFile> FilesToAdd, List<string> HashesToRemove, bool NotAllSent);
+public record NewModUpdates(List<VerifiedModFile> FilesToAdd, List<string> HashesToRemove, bool NotAllSent)
+{
+    public bool HasChanges => FilesToAdd.Count > 0 || HashesToRemove.Count > 0;
+}
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record ModUpdates(List<ModFile> FilesToAdd, List<string> HashesToRemove)

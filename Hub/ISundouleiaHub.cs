@@ -44,7 +44,7 @@ public interface ISundouleiaHub
     Task Callback_BulkChangeUnique(BulkChangeUnique dto);
 
     // --- Radar Callbacks ---
-    Task Callback_RadarAddUpdateUser(OnlineUser dto);
+    Task Callback_RadarAddUpdateUser(RadarUserInfo dto);
     Task Callback_RadarRemoveUser(UserDto dto);
     Task Callback_RadarChat(RadarChatMessage dto);
 
@@ -129,8 +129,8 @@ public interface ISundouleiaHub
 
     // --- Radar Exchanges ---
     #region Radar Exchanges
-    Task<HubResponse<RadarZoneInfo>> RadarZoneJoin(RadarZoneUpdate joinInfo);
-    Task<HubResponse> RadarZoneLeave();
+    Task<HubResponse<RadarZoneInfo>> RadarZoneJoin(RadarZoneUpdate joinInfo); //
+    Task<HubResponse> RadarZoneLeave(); //
     Task<HubResponse> RadarUpdateState(RadarState stateUpdate);
     Task<HubResponse> RadarChatMessage(RadarChatMessage chatDto);
     #endregion Radar Exchanges
