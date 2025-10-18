@@ -42,6 +42,8 @@ public enum CoreTexture
     AchievementLineSplit,
     Clock,
     Radar,
+    ReportBg,
+    ReportBorder,
     Icon256,
     Icon256Bg,
     Tier1Icon,
