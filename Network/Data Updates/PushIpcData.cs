@@ -8,7 +8,7 @@ namespace SundouleiaAPI.Network;
 public record PushIpcFull(List<UserData> Recipients, ModUpdates Mods, VisualUpdate Visuals);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushIpcMods(List<UserData> Recipients, ModUpdates Mods);
+public record PushIpcMods(List<UserData> Recipients, ModUpdates Mods, string ManipString);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record PushIpcOther(List<UserData> Recipients, VisualUpdate Visuals);

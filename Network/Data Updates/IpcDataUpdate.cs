@@ -8,7 +8,7 @@ namespace SundouleiaAPI.Network;
 public record IpcUpdateFull(UserData User, NewModUpdates ModData, VisualUpdate IpcData) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record IpcUpdateMods(UserData User, NewModUpdates ModData) : UserDto(User);
+public record IpcUpdateMods(UserData User, NewModUpdates ModData, string ManipString) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record IpcUpdateOther(UserData User, VisualUpdate IpcData) : UserDto(User);
