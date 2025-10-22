@@ -3,8 +3,8 @@ namespace SundouleiaAPI.Enums;
 
 public enum DisconnectIntent : sbyte
 {
-    Normal       = 0,
-    Reconnection = 1,
-    Logout       = 2,
-    Shutdown     = 3
+    Normal          = 0,
+    Unexpected      = 1,
+    Reload          = 2,
+    LogoutShutdown  = 3
 }

@@ -51,4 +51,5 @@ public enum CoreTexture
     Tier3Icon,
     Tier4Icon,
     TierBoosterIcon,
+    WelcomeOverlay,
 }
