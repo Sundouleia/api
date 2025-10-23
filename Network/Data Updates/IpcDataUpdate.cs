@@ -5,7 +5,7 @@ using SundouleiaAPI.Enums;
 namespace SundouleiaAPI.Network;
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record IpcUpdateFull(UserData User, NewModUpdates ModData, VisualUpdate IpcData) : UserDto(User);
+public record IpcUpdateFull(UserData User, NewModUpdates ModData, VisualUpdate IpcData, bool IsInitialData) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record IpcUpdateMods(UserData User, NewModUpdates ModData, string ManipString) : UserDto(User);

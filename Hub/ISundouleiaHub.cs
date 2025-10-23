@@ -67,7 +67,6 @@ public interface ISundouleiaHub
 
     // --- Data Updates ---
     #region Data Updates
-    // TODO: Add methods here for updating a users dataHash cache so we can know what to send and what not to.
     Task<HubResponse<List<VerifiedModFile>>> UserPushIpcFull(PushIpcFull dto); // Push all mod file replacement data and other visual display data.
     Task<HubResponse<List<VerifiedModFile>>> UserPushIpcMods(PushIpcMods dto); // Push only mod file updates, containing file replacement data.
     Task<HubResponse> UserPushIpcOther(PushIpcOther dto); // Push only non-mod updates, for faster handling.

@@ -5,7 +5,7 @@ using SundouleiaAPI.Enums;
 namespace SundouleiaAPI.Network;
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushIpcFull(List<UserData> Recipients, ModUpdates Mods, VisualUpdate Visuals);
+public record PushIpcFull(List<UserData> Recipients, ModUpdates Mods, VisualUpdate Visuals, bool IsInitialData);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record PushIpcMods(List<UserData> Recipients, ModUpdates Mods, string ManipString);
