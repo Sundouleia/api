@@ -7,6 +7,8 @@ namespace SundouleiaAPI.Data;
 [MessagePackObject(keyAsPropertyName: true)]
 public record VisualUpdate
 {
+    public static readonly VisualUpdate Empty = new();
+
     public IpcDataPlayerUpdate? PlayerChanges { get; set; } = null;
     public IpcDataUpdate? MinionMountChanges { get; set; } = null;
     public IpcDataUpdate? PetChanges { get; set; } = null;

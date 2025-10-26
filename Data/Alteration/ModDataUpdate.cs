@@ -14,6 +14,7 @@ public record NewModUpdates(List<VerifiedModFile> FilesToAdd, List<string> Hashe
 [MessagePackObject(keyAsPropertyName: true)]
 public record ModUpdates(List<ModFile> FilesToAdd, List<string> HashesToRemove)
 {
+    public static readonly ModUpdates Empty = new([], []);
     public bool HasChanges => FilesToAdd.Count > 0 || HashesToRemove.Count > 0;
 }
 
