@@ -17,6 +17,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     // --- Pair/Request ---
     void OnAddPair(Action<UserPair> act);
     void OnRemovePair(Action<UserDto> act);
+    void OnPersistPair(Action<UserDto> act);
     void OnAddRequest(Action<SundesmoRequest> act);
     void OnRemoveRequest(Action<SundesmoRequest> act);
 

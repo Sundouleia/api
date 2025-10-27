@@ -26,7 +26,7 @@ public interface ISundouleiaHub
     // --- Pair/Request Callbacks ---
     Task Callback_AddPair(UserPair dto);
     Task Callback_RemovePair(UserDto dto);
-    Task Callback_UpdatePairToPermanent(UserDto dto);
+    Task Callback_PersistPair(UserDto dto);
     Task Callback_AddRequest(SundesmoRequest dto);
     Task Callback_RemoveRequest(SundesmoRequest dto);
 
@@ -78,7 +78,6 @@ public interface ISundouleiaHub
     Task<HubResponse> UserNotifyIsUnloading(); // Used on plugin shutdown, or any method that clears all sundesmo data.
     #endregion Data Updates
 
-
     // --- Pair/Request Interactions ---
     #region Pair/Request Interactions
     Task<HubResponse<SundesmoRequest>> UserSendRequest(CreateRequest dto);
@@ -108,7 +107,7 @@ public interface ISundouleiaHub
     /// <summary>
     ///     Converts a temporary sundesmo into a permanent one. Can only be done by the accepter.
     /// </summary>
-    Task<HubResponse> UserMakePermanent(UserDto user);
+    Task<HubResponse> UserPersistPair(UserDto user);
 
     /// <summary>
     ///     Permanently block a user.
