@@ -18,7 +18,7 @@ public record AddedUserPair(UserPair Pair, OnlineUser? OnlineInfo);
 ///     2 paired users.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record UserPair(UserData User, PairPerms OwnPerms, GlobalPerms Globals, PairPerms Perms, bool IsTemp) : UserDto(User)
+public record UserPair(UserData User, PairPerms OwnPerms, GlobalPerms Globals, PairPerms Perms, DateTime CreatedAt, string TempAccepterUID) : UserDto(User)
 {
     // Perms the Client has for this User
     public PairPerms OwnPerms { get; set; } = OwnPerms;
@@ -26,4 +26,6 @@ public record UserPair(UserData User, PairPerms OwnPerms, GlobalPerms Globals, P
     // Permissions this User has for the Client
     public GlobalPerms Globals { get; set; } = Globals;
     public PairPerms Perms { get; set; } = Perms;
+
+    public bool IsTemporary => !string.IsNullOrEmpty(TempAccepterUID);
 }

@@ -26,6 +26,7 @@ public interface ISundouleiaHub
     // --- Pair/Request Callbacks ---
     Task Callback_AddPair(UserPair dto);
     Task Callback_RemovePair(UserDto dto);
+    Task Callback_UpdatePairToPermanent(UserDto dto);
     Task Callback_AddRequest(SundesmoRequest dto);
     Task Callback_RemoveRequest(SundesmoRequest dto);
 
@@ -102,7 +103,12 @@ public interface ISundouleiaHub
     /// <summary>
     ///     If successful, you should remove the pair from your list of pairs.
     /// </summary>
-    Task<HubResponse> UserRemovePair(UserDto UserDto);
+    Task<HubResponse> UserRemovePair(UserDto user);
+
+    /// <summary>
+    ///     Converts a temporary sundesmo into a permanent one. Can only be done by the accepter.
+    /// </summary>
+    Task<HubResponse> UserMakePermanent(UserDto user);
 
     /// <summary>
     ///     Permanently block a user.

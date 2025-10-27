@@ -51,6 +51,8 @@ public enum SundouleiaApiEc
 
 
     // ----- Interaction Specific Errors -----
+    /// <summary> Cannot use temporary-related interaction on permanent sundesmo. </summary>
+    AlreadyPermanent,
 
     /// <summary> Cant send Request to someone already paired. </summary>
     AlreadyPaired,
