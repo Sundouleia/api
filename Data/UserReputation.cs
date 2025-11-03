@@ -23,4 +23,6 @@ public record UserReputation
 
     public bool ChatUsage { get; set; } = true;
     public int ChatStrikes { get; set; } = 0;
+
+    public int TotalStrikes() => WarningStrikes + ProfileViewStrikes + ProfileEditStrikes + RadarStrikes + ChatStrikes;
 }

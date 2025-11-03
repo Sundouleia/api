@@ -41,6 +41,7 @@ public enum CoreTexture
     Achievement,
     AchievementLineSplit,
     Clock,
+    Edit,
     Radar,
     ReportBg,
     ReportBorder,
