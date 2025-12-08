@@ -18,4 +18,4 @@ public record SundesmoRequest(UserData User, UserData Target, RequestDetails Det
 ///     Various details about a request. Useful for filtering requests and such.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record RequestDetails(bool IsTemp, string Message, ushort FromWorldId, ushort FromZoneId);
+public record RequestDetails(bool IsTemp, string PreferredNick, string Message, ushort FromWorldId, ushort FromZoneId);
