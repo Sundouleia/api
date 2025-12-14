@@ -25,6 +25,16 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnBlocked(Action<UserDto> act);
     void OnUnblocked(Action<UserDto> act);
 
+    // -- Moodles Integration --
+    void OnPairMoodleDataUpdated(Action<MoodlesDataUpdate> act);
+    void OnPairMoodleStatusesUpdate(Action<MoodlesStatusesUpdate> act);
+    void OnPairMoodlePresetsUpdate(Action<MoodlesPresetsUpdate> act);
+    void OnPairMoodleStatusModified(Action<MoodlesStatusModified> act);
+    void OnPairMoodlePresetModified(Action<MoodlesPresetModified> act);
+    void OnApplyMoodleId(Action<ApplyMoodleId> act);
+    void OnApplyMoodleStatus(Action<ApplyMoodleStatus> act);
+    void OnRemoveMoodleId(Action<RemoveMoodleId> act);
+
     // -- Data Updates --
     void OnIpcUpdateFull(Action<IpcUpdateFull> act);
     void OnIpcUpdateMods(Action<IpcUpdateMods> act);

@@ -34,6 +34,16 @@ public interface ISundouleiaHub
     Task Callback_Blocked(UserDto dto);
     Task Callback_Unblocked(UserDto dto);
 
+    // --- Moodles Integration Callbacks ---
+    Task Callback_PairMoodleDataUpdated(MoodlesDataUpdate dto);
+    Task Callback_PairMoodleStatusesUpdate(MoodlesStatusesUpdate dto);
+    Task Callback_PairMoodlePresetsUpdate(MoodlesPresetsUpdate dto);
+    Task Callback_PairMoodleStatusModified(MoodlesStatusModified dto);
+    Task Callback_PairMoodlePresetModified(MoodlesPresetModified dto);
+    Task Callback_ApplyMoodleId(ApplyMoodleId dto);
+    Task Callback_ApplyMoodleStatus(ApplyMoodleStatus dto);
+    Task Callback_RemoveMoodleId(RemoveMoodleId dto);
+
     // --- Data Update Callbacks ---
     Task Callback_IpcUpdateFull(IpcUpdateFull dto);
     Task Callback_IpcUpdateMods(IpcUpdateMods dto);
@@ -68,10 +78,18 @@ public interface ISundouleiaHub
 
     // --- Data Updates ---
     #region Data Updates
+    // IPC updates.
     Task<HubResponse<List<VerifiedModFile>>> UserPushIpcFull(PushIpcFull dto); // Push all mod file replacement data and other visual display data.
     Task<HubResponse<List<VerifiedModFile>>> UserPushIpcMods(PushIpcMods dto); // Push only mod file updates, containing file replacement data.
     Task<HubResponse> UserPushIpcOther(PushIpcOther dto); // Push only non-mod updates, for faster handling.
     Task<HubResponse> UserPushIpcSingle(PushIpcSingle dto); // Push a single change to IPC appearance (useful for things like heels ext.)
+    // Moodle updates.
+    Task<HubResponse> UserPushMoodlesData(PushMoodlesData dto);         // Share all data with allowed sundesmos.
+    Task<HubResponse> UserPushMoodlesStatuses(PushMoodlesStatuses dto); // Share all Statuses data.
+    Task<HubResponse> UserPushMoodlesPresets(PushMoodlesPresets dto);   // Share all Presets data.
+    Task<HubResponse> UserPushStatusModified(PushStatusModified dto);   // A MyStatus in Moodles was modified, created, or deleted.
+    Task<HubResponse> UserPushPresetModified(PushPresetModified dto);   // A Preset in Moodles was modified, created, or deleted.
+    // Other updates.
     Task<HubResponse> UserUpdateProfileContent(ProfileContent dto);
     Task<HubResponse> UserUpdateProfilePicture(ProfileImage dto);
     Task<HubResponse> UserDelete();
@@ -138,6 +156,24 @@ public interface ISundouleiaHub
     Task<HubResponse> RadarUpdateState(RadarState stateUpdate);
     Task<HubResponse> RadarChatMessage(RadarChatMessage chatDto);
     #endregion Radar Exchanges
+
+    // --- SMA File Sharing ---
+    #region SMA File Sharing
+    // As everything is with security, whoever you give access to this, know you give your appearance up to them.
+    // When you allow someone to open the base file, you are effectively giving away your appearance.
+    // Nothing can prevent anyone from tampering or sharing the decrypted data afterwards.
+    Task<HubResponse<SMABFileInfo>> AccessFile(SMABFileAccess dto);
+    Task<HubResponse<List<string>>> GetAllowedHashes(Guid FileId); // If we know the ID, we had access to the file.
+
+    // File Management.
+    Task<HubResponse> CreateProtectedSMAB(NewSMABFile dto); // Could further secure this by having it generate on the server end and encrypt but that would strain the server hard.
+    Task<HubResponse> UpdateFileDataHash(SMABDataUpdate dto); // Would need to return the new fileKey maybe? 
+    Task<HubResponse> UpdateFilePassword(SMABDataUpdate dto); // Empty string to remove password.
+    Task<HubResponse> UpdateAllowedHashes(SMABAccessUpdate dto);
+    Task<HubResponse> UpdateAllowedUids(SMABAccessUpdate dto);
+    Task<HubResponse> UpdateExpireTime(SMABExpireTime dto);
+    Task<HubResponse> RemoveProtectedFile(Guid FileId);
+    #endregion SMA File Sharing
 
     // --- Reporting ---
     #region Reporting

@@ -35,6 +35,9 @@ public enum SundouleiaApiEc
     /// <summary> Tried to use a feature that your account reputation prevents access to. </summary>
     RestrictedByReputation = 9,
 
+    /// <summary> A Request for the recipient was already made by the sender. </summary>
+    AlreadyExists = 10,
+
     // ----- Client Vanity Specific Errors -----
 
     /// <summary> The provided image file is not in PNG format. </summary>
@@ -57,9 +60,6 @@ public enum SundouleiaApiEc
     /// <summary> Cant send Request to someone already paired. </summary>
     AlreadyPaired,
 
-    /// <summary> A Request for the recipient was already made by the sender. </summary>
-    RequestExists,
-
     /// <summary> Cannot cancel a request that no longer exists. </summary>
     RequestNotFound,
 
@@ -71,4 +71,13 @@ public enum SundouleiaApiEc
 
     // ------ Radar Specific Errors -----
     NotInZone,
+
+    // ----- SMA File Sharing Specific Errors -----
+    NotFileOwner,
+
+    InvalidPassword,
+
+    WrongFileKey,
+
+    FileAccessExpired,
 }

@@ -1,3 +1,4 @@
+using GagspeakAPI.Data;
 using MessagePack;
 using SundouleiaAPI.Data;
 using SundouleiaAPI.Enums;
@@ -19,3 +20,20 @@ public record PushIpcSingle(List<UserData> Recipients, OwnedObject Object, IpcKi
 {
     public override string ToString() => $"To ({Recipients.Count}) recipients, Object: {Object} Type: {Kind}";
 }
+
+// Moodles related Info updates (if allowed)
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record PushMoodlesData(List<UserData> Recipients, MoodleData Data);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record PushMoodlesStatuses(List<UserData> Recipients, List<MoodlesStatusInfo> Statuses);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record PushMoodlesPresets(List<UserData> Recipients, List<MoodlePresetInfo> Presets);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record PushStatusModified(List<UserData> Recipients, MoodlesStatusInfo Status, bool Deleted);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record PushPresetModified(List<UserData> Recipients, MoodlePresetInfo Preset, bool Deleted);
