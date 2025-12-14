@@ -62,6 +62,21 @@ public enum DataEventType
     PermissionChange,
 
     /// <summary>
+    ///     One of your own moodles was applied by another sundesmo.
+    /// </summary>
+    MoodleApplied,
+
+    /// <summary>
+    ///     A Sundesmo applied one of their moodles to you.
+    /// </summary>
+    MoodleTupleApplied,
+
+    /// <summary>
+    ///     A Sundesmo removed a moodle from you.
+    /// </summary>
+    MoodleRemoved,
+
+    /// <summary>
     ///     Sundesmo was disposed of.
     /// </summary>
     Disposed,

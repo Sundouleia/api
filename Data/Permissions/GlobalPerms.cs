@@ -11,6 +11,5 @@ public record GlobalPerms
     public bool         DefaultAllowVfx         { get; set; } = false;
 
     public MoodleAccess DefaultMoodleAccess     { get; set; } = MoodleAccess.None;
-    public TimeSpan     DefaultMaxMoodleTime    { get; set; } = TimeSpan.Zero;
     public bool         DefaultShareOwnMoodles  { get; set; } = false;
 }

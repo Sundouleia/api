@@ -137,6 +137,26 @@ public interface ISundouleiaHub
     /// </summary>
     Task<HubResponse> UserUnblock(UserDto user);
 
+    /// <summary>
+    ///     Informs another sundesmo to apply their own Moodles to themselves.
+    /// </summary>
+    Task<HubResponse> UserApplyMoodles(ApplyMoodleId dto);
+
+    /// <summary>
+    ///     Informs another sundesmo to apply a list of MoodleStatusInfo tuples to themselves.
+    /// </summary>
+    Task<HubResponse> UserApplyMoodleTuples(ApplyMoodleStatus dto);
+
+    /// <summary>
+    ///     Informs another sundesmo to remove a moodle from themselves.
+    /// </summary>
+    Task<HubResponse> UserRemoveMoodles(RemoveMoodleId dto);
+
+    /// <summary>
+    ///     Informs another sundesmo to clear all moodles from themselves.
+    /// </summary>
+    Task<HubResponse> UserClearMoodles(UserDto dto);
+
     #endregion Pair/Request Interactions
 
     // -- Permission Changes ---
