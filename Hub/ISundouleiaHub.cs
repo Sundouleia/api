@@ -152,10 +152,10 @@ public interface ISundouleiaHub
     /// </summary>
     Task<HubResponse> UserRemoveMoodles(RemoveMoodleId dto);
 
-    /// <summary>
-    ///     Informs another sundesmo to clear all moodles from themselves.
-    /// </summary>
-    Task<HubResponse> UserClearMoodles(UserDto dto);
+    ///// <summary>
+    /////     Informs another sundesmo to clear all moodles from themselves.
+    ///// </summary>
+    //Task<HubResponse> UserClearMoodles(UserDto dto);
 
     #endregion Pair/Request Interactions
 
