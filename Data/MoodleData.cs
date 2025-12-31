@@ -11,10 +11,12 @@ namespace GagspeakAPI.Data;
 [MessagePackObject(keyAsPropertyName: true)]
 public class MoodleData
 {
+    public Dictionary<Guid, MoodlesStatusInfo> DataInfo { get; private set; } = new Dictionary<Guid, MoodlesStatusInfo>();
     public Dictionary<Guid, MoodlesStatusInfo> Statuses { get; private set; } = new Dictionary<Guid, MoodlesStatusInfo>();
     public Dictionary<Guid, MoodlePresetInfo> Presets { get; private set; } = new Dictionary<Guid, MoodlePresetInfo>();
 
     // Convenience access to collections.
+    [IgnoreMember] public IEnumerable<MoodlesStatusInfo> DataInfoList => DataInfo.Values;
     [IgnoreMember] public IEnumerable<MoodlesStatusInfo> StatusList => Statuses.Values;
     [IgnoreMember] public IEnumerable<MoodlePresetInfo> PresetList => Presets.Values;
 
@@ -23,9 +25,13 @@ public class MoodleData
 
     public MoodleData(MoodleData other)
     {
+        DataInfo = new Dictionary<Guid, MoodlesStatusInfo>(other.DataInfo);
         Statuses = new Dictionary<Guid, MoodlesStatusInfo>(other.Statuses);
         Presets = new Dictionary<Guid, MoodlePresetInfo>(other.Presets);
     }
+
+    public void UpdateDataInfo(IEnumerable<MoodlesStatusInfo> statuses)
+        => DataInfo = statuses.ToDictionary(x => x.GUID, x => x);
 
     public bool TryUpdateStatus(MoodlesStatusInfo status)
     {
@@ -52,18 +58,5 @@ public class MoodleData
 
     public void SetPresets(IEnumerable<MoodlePresetInfo> presets)
         => Presets = presets.ToDictionary(x => x.GUID, x => x);
-
-    // May not need this?
-    //public IEnumerable<MoodlesStatusInfo> GetStatusesForPreset(Guid presetId)
-    //{
-    //    if (!Presets.TryGetValue(presetId, out var preset))
-    //        yield break; // Return Empty if preset not found.
-
-    //    foreach (var id in preset.Statuses)
-    //    {
-    //        if (Statuses.TryGetValue(id, out var status))
-    //            yield return status;
-    //    }
-    //}
 }
 #pragma warning restore CS0659, IDE1006
