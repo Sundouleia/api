@@ -6,31 +6,50 @@ namespace SundouleiaAPI.Data;
 // if not all sent is true, it means there will be additional files sent after, and they should be marked for uploading,
 // after the download is complete.
 [MessagePackObject(keyAsPropertyName: true)]
-public record NewModUpdates(List<VerifiedModFile> FilesToAdd, List<string> HashesToRemove, int FilesUploading)
+public record NewModUpdates(List<ValidFileHash> NewReplacements, List<FileSwapData> NewSwaps, int FilesUploading)
 {
-    public bool HasChanges => FilesToAdd.Count > 0 || HashesToRemove.Count > 0;
+    public List<string> HashesToRemove  { get; init; } = [];
+    public List<string> SwapsToRemove   { get; init; } = [];
+
+    public bool HasHashChanges => NewReplacements.Count != 0 || HashesToRemove.Count != 0;
+    public bool HasSwapChanges => NewSwaps.Count != 0 || SwapsToRemove.Count != 0;
+    public bool HasAnyChanges => HasHashChanges || HasSwapChanges;
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record ModUpdates(List<ModFile> FilesToAdd, List<string> HashesToRemove)
+public record ModUpdates(List<FileHashData> NewReplacements, List<FileSwapData> NewSwaps)
 {
+    public List<string> HashesToRemove { get; init; } = [];
+    public List<string> SwapsToRemove { get; init; } = [];
+
+    public bool HasHashChanges => NewReplacements.Count != 0 || HashesToRemove.Count != 0;
+    public bool HasSwapChanges => NewSwaps.Count != 0 || SwapsToRemove.Count != 0;
+    public bool HasAnyChanges  => HasHashChanges || HasSwapChanges;
+
     public static readonly ModUpdates Empty = new([], []);
-    public bool HasChanges => FilesToAdd.Count > 0 || HashesToRemove.Count > 0;
 }
-
-// Used in calls, does not include download links. This is handled via the server.
-[MessagePackObject(keyAsPropertyName: true)]
-public record ModFile(string Hash, string[] GamePaths, string SwappedPath);
 
 /// <summary>
-///     Represents a mod file that has been verified via the Sundouleia FileHost. <para />
-///     This record is only in server callbacks and not included in any server calls.
-///     This is done intentionally to prevent malicious clients from sending download links.
+///     Represents a modded file entry used for ModUpdates.
 /// </summary>
-/// <param name="Hash"> The FileHash of the ModFile being sent. </param>
-/// <param name="Link"> The Authorized Upload/Download Link. </param>
+/// <param name="FileHash"> The hash of the modded file. </param>
 /// <param name="GamePaths"> The game paths this mod affects. </param>
-/// <param name="SwappedPath"> The new path this mod is swapped to. </param>
-/// <remarks> Callbacks hold download links, responces hold authorized upload links. </remarks>
 [MessagePackObject(keyAsPropertyName: true)]
-public record VerifiedModFile(string Hash, string Link, string[] GamePaths, string SwappedPath);
+public record FileHashData(string Hash, string[] GamePaths);
+
+/// <summary>
+///     A FileModData verified via the Sundouleia FileHost for download.
+/// </summary>
+/// <param name="Hash"> The hash of the modded file. </param>
+/// <param name="GamePaths"> The game paths this mod affects. </param>
+/// <param name="Link"> Download link provided by the file if it requires download. </param>
+[MessagePackObject(keyAsPropertyName: true)]
+public record ValidFileHash(string Hash, string[] GamePaths, string Link);
+
+/// <summary>
+///     Represents a modded file entry used for ModUpdates.
+/// </summary>
+/// <param name="FileHash"> The hash of the modded file. </param>
+/// <param name="GamePaths"> The game paths this mod affects. </param>
+[MessagePackObject(keyAsPropertyName: true)]
+public record FileSwapData(string SwappedPath, string[] GamePaths);
