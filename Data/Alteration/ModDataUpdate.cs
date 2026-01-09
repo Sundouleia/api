@@ -26,7 +26,7 @@ public record ModUpdates(List<FileHashData> NewReplacements, List<FileSwapData> 
     public bool HasSwapChanges => NewSwaps.Count != 0 || SwapsToRemove.Count != 0;
     public bool HasAnyChanges  => HasHashChanges || HasSwapChanges;
 
-    public static readonly ModUpdates Empty = new([], []);
+    public static ModUpdates Empty => new([], []);
 }
 
 /// <summary>
