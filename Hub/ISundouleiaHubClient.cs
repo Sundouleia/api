@@ -40,10 +40,11 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnIpcUpdateMods(Action<IpcUpdateMods> act);
     void OnIpcUpdateOther(Action<IpcUpdateOther> act);
     void OnIpcUpdateSingle(Action<IpcUpdateSingle> act);
-    void OnSingleChangeGlobal(Action<SingleChangeGlobal> act);
-    void OnBulkChangeGlobal(Action<BulkChangeGlobal> act);
-    void OnSingleChangeUnique(Action<SingleChangeUnique> act);
-    void OnBulkChangeUnique(Action<BulkChangeUnique> act);
+    void OnSingleChangeGlobal(Action<ChangeGlobalPerm> act);
+    void OnBulkChangeGlobal(Action<ChangeAllGlobal> act);
+    void OnChangeUniquePerm(Action<ChangeUniquePerm> act);
+    void OnChangeUniquePerms(Action<ChangeUniquePerms> act);
+    void OnChangeAllUnique(Action<ChangeAllUnique> act);
 
     // -- Radar --
     void OnRadarAddUpdateUser(Action<OnlineUser> act);

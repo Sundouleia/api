@@ -18,4 +18,8 @@ public record SundesmoRequest(UserData User, UserData Target, RequestDetails Det
 ///     Various details about a request. Useful for filtering requests and such.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record RequestDetails(bool IsTemp, string PreferredNick, string Message, ushort FromWorldId, ushort FromZoneId);
+public record RequestDetails(bool IsTemp, string PreferredNick, string Message, ushort FromWorldId, ushort FromZoneId)
+{
+    // Could include in here, the preset of pairperms to be applied, if not applying Globals.
+    // TODO OR WIP Later.
+}

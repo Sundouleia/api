@@ -49,10 +49,11 @@ public interface ISundouleiaHub
     Task Callback_IpcUpdateMods(IpcUpdateMods dto);
     Task Callback_IpcUpdateOther(IpcUpdateOther dto);
     Task Callback_IpcUpdateSingle(IpcUpdateSingle dto);
-    Task Callback_SingleChangeGlobal(SingleChangeGlobal dto);
-    Task Callback_BulkChangeGlobal(BulkChangeGlobal dto);
-    Task Callback_SingleChangeUnique(SingleChangeUnique dto);
-    Task Callback_BulkChangeUnique(BulkChangeUnique dto);
+    Task Callback_ChangeGlobalPerm(ChangeGlobalPerm dto);
+    Task Callback_ChangeAllGlobal(ChangeAllGlobal dto);
+    Task Callback_ChangeUniquePerm(ChangeUniquePerm dto);
+    Task Callback_ChangeUniquePerms(ChangeUniquePerms dto);
+    Task Callback_ChangeAllUnique(ChangeAllUnique dto);
 
     // --- Radar Callbacks ---
     Task Callback_RadarAddUpdateUser(OnlineUser dto);
@@ -106,10 +107,21 @@ public interface ISundouleiaHub
     Task<HubResponse> UserCancelRequest(UserDto user);
 
     /// <summary>
+    ///     If successful, remove all requests they wished to cancel.
+    /// </summary>
+    Task<HubResponse> UserCancelRequests(UserListDto users);
+
+    /// <summary>
     ///     If EC "AlreadyPaired" is returned, remove the request from your pending list.
     /// </summary>
     /// <returns> The new UserPair to add, if the request was properly accepted.</returns>
     Task<HubResponse<AddedUserPair>> UserAcceptRequest(UserDto user);
+
+    /// <summary>
+    ///     If successful, you are expected to remove all requests for users 
+    ///     passed in, regardless of if it had a return or not.
+    /// </summary>
+    Task<HubResponse<List<AddedUserPair>>> UserAcceptRequests(UserListDto users);
     
     /// <summary>
     ///     You are expected to remove the request from your pending list if successful.
@@ -118,9 +130,19 @@ public interface ISundouleiaHub
     Task<HubResponse> UserRejectRequest(UserDto user);
 
     /// <summary>
+    ///     You are expected to remove the requests for all users passed in if successful.
+    /// </summary>
+    Task<HubResponse> UserRejectRequests(UserListDto users);
+
+    /// <summary>
     ///     If successful, you should remove the pair from your list of pairs.
     /// </summary>
     Task<HubResponse> UserRemovePair(UserDto user);
+
+    /// <summary>
+    ///     If successful, you should remove all passed in users from your list of pairs.
+    /// </summary>
+    Task<HubResponse> UserRemovePairs(UserListDto users);
 
     /// <summary>
     ///     Converts a temporary sundesmo into a permanent one. Can only be done by the accepter.
@@ -163,10 +185,14 @@ public interface ISundouleiaHub
     #region Permission Changes
     // Keep in mind that all of the permission changes do not return the resulting permissions to you.
     // Instead, it only returns the hub response. If successful, assume the update set properly.
-    Task<HubResponse> UserChangeGlobalsSingle(SingleChangeGlobal dto);
-    Task<HubResponse> UserChangeGlobalsBulk(GlobalPerms newPerms);
-    Task<HubResponse> UserChangeUniqueSingle(SingleChangeUnique dto);
-    Task<HubResponse> UserChangeUniqueBulk(BulkChangeUnique newPerms);
+    Task<HubResponse> UserChangeGlobalsSingle(ChangeGlobalPerm dto);
+    Task<HubResponse> UserChangeAllGlobals(GlobalPerms newPerms);
+    Task<HubResponse> UserChangeUniquePerm(ChangeUniquePerm dto);
+    Task<HubResponse> UserChangeUniquePerms(ChangeUniquePerms dto);
+    Task<HubResponse> UserChangeAllUnique(ChangeAllUnique dto);
+    Task<HubResponse> UserBulkChangeUniquePerm(BulkChangeUniquePerm dto);
+    Task<HubResponse> UserBulkChangeUniquePerms(BulkChangeUniquePerms dto);
+    Task<HubResponse> UserBulkChangeAllUnique(BulkChangeAllUnique dto);
     #endregion Permission Changes
 
     // --- Radar Exchanges ---
