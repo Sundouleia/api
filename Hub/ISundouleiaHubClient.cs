@@ -40,6 +40,8 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnIpcUpdateMods(Action<IpcUpdateMods> act);
     void OnIpcUpdateOther(Action<IpcUpdateOther> act);
     void OnIpcUpdateSingle(Action<IpcUpdateSingle> act);
+
+    // Need to update GlobalPerm names to match new format and stuff.
     void OnSingleChangeGlobal(Action<ChangeGlobalPerm> act);
     void OnBulkChangeGlobal(Action<ChangeAllGlobal> act);
     void OnChangeUniquePerm(Action<ChangeUniquePerm> act);

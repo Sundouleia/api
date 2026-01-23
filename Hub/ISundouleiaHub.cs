@@ -185,7 +185,7 @@ public interface ISundouleiaHub
     #region Permission Changes
     // Keep in mind that all of the permission changes do not return the resulting permissions to you.
     // Instead, it only returns the hub response. If successful, assume the update set properly.
-    Task<HubResponse> UserChangeGlobalsSingle(ChangeGlobalPerm dto);
+    Task<HubResponse> UserChangeGlobalsSingle(ChangeGlobalPerm dto); // Rename this to match format later.
     Task<HubResponse> UserChangeAllGlobals(GlobalPerms newPerms);
     Task<HubResponse> UserChangeUniquePerm(ChangeUniquePerm dto);
     Task<HubResponse> UserChangeUniquePerms(ChangeUniquePerms dto);
