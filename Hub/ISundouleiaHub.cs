@@ -225,7 +225,7 @@ public interface ISundouleiaHub
     #region Reporting
     Task<HubResponse> UserReportProfile(ProfileReport dto); // hopefully this is never used x-x...
 
-    // will be more useful when we add metric gauges for tracking zone areas.
+    // may not need until more utility is added.
     Task<HubResponse> UserReportRadar(RadarReport dto);
     Task<HubResponse> UserReportChat(RadarChatReport dto); // hopefully this is never used x-x...
     #endregion Reporting
