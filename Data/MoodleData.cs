@@ -1,7 +1,7 @@
 using MessagePack;
 #pragma warning disable CS0659, IDE1006
 
-namespace GagspeakAPI.Data;
+namespace SundouleiaAPI.Data;
 
 /// <summary> 
 ///     Stores information about a player's Moodles data. <para />

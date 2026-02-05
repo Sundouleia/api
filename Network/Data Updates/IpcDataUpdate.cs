@@ -1,4 +1,3 @@
-using GagspeakAPI.Data;
 using MessagePack;
 using SundouleiaAPI.Data;
 using SundouleiaAPI.Enums;
