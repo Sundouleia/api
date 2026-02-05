@@ -2,9 +2,10 @@ global using System;
 global using System.Threading.Tasks;
 global using System.Collections.Generic;
 
-global using IPCMoodleAccessTuple = (// Maybe include ptr/objectIdx or not idk
-    SundouleiaAPI.Enums.MoodleAccess OtherAccess, long OtherMaxTime,
-    SundouleiaAPI.Enums.MoodleAccess CallerAccess, long CallerMaxTime
+// Defines Moodle permissions for a user, and the clients permissions for that user.
+global using IPCMoodleAccessTuple = (
+    SundouleiaAPI.Enums.MoodleAccess ClientAccessFlags, long ClientMaxTime,
+    SundouleiaAPI.Enums.MoodleAccess RecipientAccessFlags, long RecipientMaxTime
 );
 
 // Used for Tuple-Based IPC calls and associated data transfers.
