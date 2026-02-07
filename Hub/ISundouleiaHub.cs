@@ -100,6 +100,7 @@ public interface ISundouleiaHub
     // --- Pair/Request Interactions ---
     #region Pair/Request Interactions
     Task<HubResponse<SundesmoRequest>> UserSendRequest(CreateRequest dto);
+    Task<HubResponse<List<SundesmoRequest>>> UserSendRequests(CreateRequests dto);
 
     /// <summary>
     ///     If successful, remove the request they wished to cancel.
@@ -115,13 +116,13 @@ public interface ISundouleiaHub
     ///     If EC "AlreadyPaired" is returned, remove the request from your pending list.
     /// </summary>
     /// <returns> The new UserPair to add, if the request was properly accepted.</returns>
-    Task<HubResponse<AddedUserPair>> UserAcceptRequest(UserDto user);
+    Task<HubResponse<AddedUserPair>> UserAcceptRequest(RequestResponse response);
 
     /// <summary>
     ///     If successful, you are expected to remove all requests for users 
     ///     passed in, regardless of if it had a return or not.
     /// </summary>
-    Task<HubResponse<List<AddedUserPair>>> UserAcceptRequests(UserListDto users);
+    Task<HubResponse<List<AddedUserPair>>> UserAcceptRequests(RequestResponses responses);
     
     /// <summary>
     ///     You are expected to remove the request from your pending list if successful.
