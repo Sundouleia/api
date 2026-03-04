@@ -13,7 +13,7 @@ public enum IpcKind : byte
     Heels     = 1 << 2, // 750ms delay
     CPlus     = 1 << 3, // 750ms delay
     Honorific = 1 << 4, // 500ms delay
-    Moodles   = 1 << 5, // 250ms delay
+    Loci      = 1 << 5, // 250ms delay
     ModManips = 1 << 6, // 250ms delay
     PetNames  = 1 << 7, // 150ms delay
 }

@@ -20,19 +20,19 @@ public record PushIpcSingle(List<UserData> Recipients, OwnedObject Object, IpcKi
     public override string ToString() => $"To ({Recipients.Count}) recipients, Object: {Object} Type: {Kind}";
 }
 
-// Moodles related Info updates (if allowed)
+// Loci related Info updates
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushMoodlesData(List<UserData> Recipients, MoodleData Data);
+public record PushLociData(List<UserData> Recipients, LociData Data);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushMoodlesStatuses(List<UserData> Recipients, List<MoodlesStatusInfo> Statuses);
+public record PushLociStatuses(List<UserData> Recipients, List<LociStatusInfo> Statuses);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushMoodlesPresets(List<UserData> Recipients, List<MoodlePresetInfo> Presets);
+public record PushLociPresets(List<UserData> Recipients, List<LociPresetInfo> Presets);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushStatusModified(List<UserData> Recipients, MoodlesStatusInfo Status, bool Deleted);
+public record PushStatusModified(List<UserData> Recipients, LociStatusInfo Status, bool Deleted);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushPresetModified(List<UserData> Recipients, MoodlePresetInfo Preset, bool Deleted);
+public record PushPresetModified(List<UserData> Recipients, LociPresetInfo Preset, bool Deleted);

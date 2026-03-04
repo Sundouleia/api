@@ -6,7 +6,7 @@ public enum PendingUpdateSource
     Glamourer = 2,
     CPlus = 3,
     Heels = 4,
-    Moodles = 5,
+    Loci = 5,
     Honorific = 6,
     PetNames = 7,
 }

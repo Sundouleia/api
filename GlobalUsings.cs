@@ -2,54 +2,49 @@ global using System;
 global using System.Threading.Tasks;
 global using System.Collections.Generic;
 
-// Defines Moodle permissions for a user, and the clients permissions for that user.
-global using IPCMoodleAccessTuple = (
-    SundouleiaAPI.Enums.MoodleAccess ClientAccessFlags, long ClientMaxTime,
-    SundouleiaAPI.Enums.MoodleAccess RecipientAccessFlags, long RecipientMaxTime
-);
-
 // Used for Tuple-Based IPC calls and associated data transfers.
-global using MoodlesStatusInfoOLD = (
+global using LociStatusInfoOLD = (
     System.Guid GUID,
     int IconID,
     string Title,
     string Description,
-    byte Type,                      // Moodles StatusType enum, as a byte.
+    byte Type,                      // loci StatusType enum, as a byte.
     string CustomVFXPath,           // What VFX to show on application.
     int Stacks,                     // Usually 1 when no stacks are used.
-    long ExpireTicksUTC,            // Permanent if -1, referred to as 'NoExpire' in MoodleStatus
-    string Applier,                 // Who applied the moodle. (Only relevant when updating active moodles)
+    long ExpireTicksUTC,            // Permanent if -1, referred to as 'NoExpire'
+    string Applier,                 // Who applied the loci status. (Only relevant when updating active statuses)
     bool Dispelable,                // Can be dispelled by others.
-    string Dispeller,               // When set, only this person can dispel your moodle.
-    bool Permanent,                 // Referred to as 'Sticky' in the Moodles UI
-    System.Guid StatusOnDispell,    // What status is applied upon the moodle being right-clicked off.
+    string Dispeller,               // When set, only this person can dispel your status.
+    bool Permanent,                 // Referred to as 'Sticky' (Legacy)
+    System.Guid StatusOnDispell,    // What new status is applied upon the this statuses expiration.
     bool ReapplyIncStacks,          // If stacks increase on reapplication.
     int StackIncCount,              // How many stacks get added on each reapplication.
-    bool UseStacksOnDispelStatus    // If dispelling transfers stacks to the dispel-applied moodle.
+    bool UseStacksOnDispelStatus    // If dispelling transfers stacks to the dispel-applied status.
 );
 
-global using MoodlesStatusInfo = (
+global using LociStatusInfo = (
     int Version,
     System.Guid GUID,
     int IconID,
     string Title,
     string Description,
     string CustomVFXPath,       // What VFX to show on application.
-    long ExpireTicks,           // Permanent if -1, referred to as 'NoExpire' in MoodleStatus
-    byte Type,                  // Moodles StatusType enum.
+    long ExpireTicks,           // Permanent if -1, referred to as 'NoExpire'
+    SundouleiaAPI.StatusType Type, // Loci StatusType enum.
     int Stacks,                 // Usually 1 when no stacks are used.
     int StackSteps,             // How many stacks to add per reapplication.
     uint Modifiers,             // What can be customized, casted to uint from Modifiers (Dalamud IPC Rules)
     System.Guid ChainedStatus,  // What status is chained to this one.
-    byte ChainTrigger,          // What triggers the chained status.
-    string Applier,             // Who applied the moodle.
-    string Dispeller,           // When set, only this person can dispel your moodle.
-    bool Permanent              // Referred to as 'Sticky' in the Moodles UI
+    SundouleiaAPI.ChainTrigger ChainTrigger, // What triggers the chained status.
+    string Applier,             // Who applied the status.
+    string Dispeller,           // When set, only this person can dispel your loci status.
+    bool Permanent              // Referred to as 'Sticky' (Legacy)
 );
 
-global using MoodlePresetInfo = (
+global using LociPresetInfo = (
     System.Guid GUID,
     System.Collections.Generic.List<System.Guid> Statuses,
     byte ApplicationType,
-    string Title
+    string Title,
+    string Description
 );

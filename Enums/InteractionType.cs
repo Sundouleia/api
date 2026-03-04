@@ -62,19 +62,19 @@ public enum DataEventType
     PermissionChange,
 
     /// <summary>
-    ///     One of your own moodles was applied by another sundesmo.
+    ///     One of your loci statuses was applied by another sundesmo.
     /// </summary>
-    MoodleApplied,
+    LociDataApplied,
 
     /// <summary>
-    ///     A Sundesmo applied one of their moodles to you.
+    ///     A Sundesmo applied one of their loci statuses to you.
     /// </summary>
-    MoodleTupleApplied,
+    LociStatusTupleApplied,
 
     /// <summary>
-    ///     A Sundesmo removed a moodle from you.
+    ///     A Sundesmo removed a loci status from you.
     /// </summary>
-    MoodleRemoved,
+    LociDataRemoved,
 
     /// <summary>
     ///     Sundesmo was disposed of.

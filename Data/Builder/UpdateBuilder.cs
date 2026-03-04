@@ -12,7 +12,7 @@ public class IpcUpdateBuilder
     private string _modManips = string.Empty;
     private string _heelsOffset = string.Empty;
     private string _titleData = string.Empty;
-    private string _moodles = string.Empty;
+    private string _lociData = string.Empty;
     private string _petNicks = string.Empty;
 
     public IpcKind Updates => _updates;
@@ -52,10 +52,10 @@ public class IpcUpdateBuilder
         return this;
     }
 
-    public IpcUpdateBuilder WithMoodles(string moodles)
+    public IpcUpdateBuilder WithLoci(string lociData)
     {
-        _moodles = moodles;
-        _updates |= IpcKind.Moodles;
+        _lociData = lociData;
+        _updates |= IpcKind.Loci;
         return this;
     }
 
@@ -90,7 +90,7 @@ public class IpcUpdateBuilder
             ModManips = _modManips,
             HeelsOffset = _heelsOffset,
             TitleData = _titleData,
-            Moodles = _moodles,
+            LociData = _lociData,
             PetNicks = _petNicks
         };
     }

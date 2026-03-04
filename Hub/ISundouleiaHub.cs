@@ -34,15 +34,15 @@ public interface ISundouleiaHub
     Task Callback_Blocked(UserDto dto);
     Task Callback_Unblocked(UserDto dto);
 
-    // --- Moodles Integration Callbacks ---
-    Task Callback_PairMoodleDataUpdated(MoodlesDataUpdate dto);
-    Task Callback_PairMoodleStatusesUpdate(MoodlesStatusesUpdate dto);
-    Task Callback_PairMoodlePresetsUpdate(MoodlesPresetsUpdate dto);
-    Task Callback_PairMoodleStatusModified(MoodlesStatusModified dto);
-    Task Callback_PairMoodlePresetModified(MoodlesPresetModified dto);
-    Task Callback_ApplyMoodleId(ApplyMoodleId dto);
-    Task Callback_ApplyMoodleStatus(ApplyMoodleStatus dto);
-    Task Callback_RemoveMoodleId(RemoveMoodleId dto);
+    // --- Loci Integration Callbacks ---
+    Task Callback_PairLociDataUpdated(LociDataUpdate dto);
+    Task Callback_PairLociStatusesUpdate(LociStatusesUpdate dto);
+    Task Callback_PairLociPresetsUpdate(LociPresetsUpdate dto);
+    Task Callback_PairLociStatusModified(LociStatusModified dto);
+    Task Callback_PairLociPresetModified(LociPresetModified dto);
+    Task Callback_ApplyLociDataById(ApplyLociDataById dto);
+    Task Callback_ApplyLociStatus(ApplyLociStatus dto);
+    Task Callback_RemoveLociData(RemoveLociStatus dto);
 
     // --- Data Update Callbacks ---
     Task Callback_IpcUpdateFull(IpcUpdateFull dto);
@@ -84,12 +84,12 @@ public interface ISundouleiaHub
     Task<HubResponse<List<ValidFileHash>>> UserPushIpcMods(PushIpcMods dto); // Push only mod file updates, containing file replacement data.
     Task<HubResponse> UserPushIpcOther(PushIpcOther dto); // Push only non-mod updates, for faster handling.
     Task<HubResponse> UserPushIpcSingle(PushIpcSingle dto); // Push a single change to IPC appearance (useful for things like heels ext.)
-    // Moodle updates.
-    Task<HubResponse> UserPushMoodlesData(PushMoodlesData dto);         // Share all data with allowed sundesmos.
-    Task<HubResponse> UserPushMoodlesStatuses(PushMoodlesStatuses dto); // Share all Statuses data.
-    Task<HubResponse> UserPushMoodlesPresets(PushMoodlesPresets dto);   // Share all Presets data.
-    Task<HubResponse> UserPushStatusModified(PushStatusModified dto);   // A MyStatus in Moodles was modified, created, or deleted.
-    Task<HubResponse> UserPushPresetModified(PushPresetModified dto);   // A Preset in Moodles was modified, created, or deleted.
+    // Loci updates.
+    Task<HubResponse> UserPushLociData(PushLociData dto);         // Share all data with allowed sundesmos.
+    Task<HubResponse> UserPushLociStatuses(PushLociStatuses dto); // Share all Statuses data.
+    Task<HubResponse> UserPushLociPresets(PushLociPresets dto);   // Share all Presets data.
+    Task<HubResponse> UserPushStatusModified(PushStatusModified dto);   // A LociStatus was modified, created, or deleted.
+    Task<HubResponse> UserPushPresetModified(PushPresetModified dto);   // A LociPreset was modified, created, or deleted.
     // Other updates.
     Task<HubResponse> UserUpdateProfileContent(ProfileContent dto);
     Task<HubResponse> UserUpdateProfilePicture(ProfileImage dto);
@@ -161,24 +161,19 @@ public interface ISundouleiaHub
     Task<HubResponse> UserUnblock(UserDto user);
 
     /// <summary>
-    ///     Informs another sundesmo to apply their own Moodles to themselves.
+    ///     Informs another sundesmo to apply their own status(s) to themselves.
     /// </summary>
-    Task<HubResponse> UserApplyMoodles(ApplyMoodleId dto);
+    Task<HubResponse> UserApplyLociStatuses(ApplyLociDataById dto);
 
     /// <summary>
-    ///     Informs another sundesmo to apply a list of MoodleStatusInfo tuples to themselves.
+    ///     Informs another sundesmo to apply a list of StatusInfo tuples to themselves.
     /// </summary>
-    Task<HubResponse> UserApplyMoodleTuples(ApplyMoodleStatus dto);
+    Task<HubResponse> UserApplyLociStatusTuples(ApplyLociStatus dto);
 
     /// <summary>
-    ///     Informs another sundesmo to remove a moodle from themselves.
+    ///     Informs another sundesmo to remove a status from themselves.
     /// </summary>
-    Task<HubResponse> UserRemoveMoodles(RemoveMoodleId dto);
-
-    ///// <summary>
-    /////     Informs another sundesmo to clear all moodles from themselves.
-    ///// </summary>
-    //Task<HubResponse> UserClearMoodles(UserDto dto);
+    Task<HubResponse> UserRemoveLociStatuses(RemoveLociStatus dto);
 
     #endregion Pair/Request Interactions
 

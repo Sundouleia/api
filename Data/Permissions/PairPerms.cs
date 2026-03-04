@@ -12,7 +12,7 @@ public record PairPerms
     public bool         AllowSounds     { get; set; } = true;  // if modded sfx should should sync.
     public bool         AllowVfx        { get; set; } = true;  // if modded vfx should should sync.
 
-    public MoodleAccess MoodleAccess    { get; set; } = MoodleAccess.None;
-    public TimeSpan     MaxMoodleTime   { get; set; } = TimeSpan.Zero;
-    public bool         ShareOwnMoodles { get; set; } = false;
+    public LociAccess   LociAccess      { get; set; } = LociAccess.None;
+    public TimeSpan     MaxLociTime     { get; set; } = TimeSpan.Zero;
+    public bool         ShareOwnLociData{ get; set; } = false;
 }

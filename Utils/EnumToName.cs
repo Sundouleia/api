@@ -18,4 +18,22 @@ public static class EnumToName
             DownloadSpeeds.MBps => "MB/s",
             _ => "UNK"
         };
+
+    public static string ToName(this PresetApplyType type)
+        => type switch
+        {
+            PresetApplyType.ReplaceAll      => "Replace all current statuses",
+            PresetApplyType.UpdateExisting  => "Update duration of existing",
+            PresetApplyType.IgnoreExisting  => "Ignore existing",
+            _ => "UNK"
+        };
+
+    public static string ToDisplayName(this PresetApplyType type)
+        => type switch
+        {
+            PresetApplyType.ReplaceAll      => "Replace All",
+            PresetApplyType.UpdateExisting  => "Update Existing",
+            PresetApplyType.IgnoreExisting  => "Ignore Existing",
+            _ => "UNK"
+        };
 }

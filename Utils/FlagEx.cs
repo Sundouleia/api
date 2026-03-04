@@ -7,7 +7,7 @@ public static class FlagEx
 {
     public static bool HasAny(this IpcKind flags, IpcKind check) => (flags & check) != 0;
     public static bool HasAny(this SundesmoState flags, SundesmoState check) => (flags & check) != 0;
-    public static bool HasAny(this MoodleAccess flags, MoodleAccess check) => (flags & check) != 0;
+    public static bool HasAny(this LociAccess flags, LociAccess check) => (flags & check) != 0;
     /// <returns> If only one flag in a flag enum is set. </returns>
     public static bool IsSingleFlagSet(byte value)
         => value != 0 && (value & (value - 1)) == 0;

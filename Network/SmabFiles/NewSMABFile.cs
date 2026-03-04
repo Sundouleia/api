@@ -2,9 +2,6 @@ using MessagePack;
 
 namespace SundouleiaAPI.Network;
 
-/// <summary>
-///     Sends the GUID's for the Sundesmo to apply from the Sundesmo's moodle list.
-/// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record NewSMABFile(Guid FileId, string EncryptedFileHash, string FileKey)
 {

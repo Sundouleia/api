@@ -25,15 +25,15 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnBlocked(Action<UserDto> act);
     void OnUnblocked(Action<UserDto> act);
 
-    // -- Moodles Integration --
-    void OnPairMoodleDataUpdated(Action<MoodlesDataUpdate> act);
-    void OnPairMoodleStatusesUpdate(Action<MoodlesStatusesUpdate> act);
-    void OnPairMoodlePresetsUpdate(Action<MoodlesPresetsUpdate> act);
-    void OnPairMoodleStatusModified(Action<MoodlesStatusModified> act);
-    void OnPairMoodlePresetModified(Action<MoodlesPresetModified> act);
-    void OnApplyMoodleId(Action<ApplyMoodleId> act);
-    void OnApplyMoodleStatus(Action<ApplyMoodleStatus> act);
-    void OnRemoveMoodleId(Action<RemoveMoodleId> act);
+    // -- Loci Integration --
+    void OnPairLociDataUpdated(Action<LociDataUpdate> act);
+    void OnPairLociStatusesUpdate(Action<LociStatusesUpdate> act);
+    void OnPairLociPresetsUpdate(Action<LociPresetsUpdate> act);
+    void OnPairLociStatusModified(Action<LociStatusModified> act);
+    void OnPairLociPresetModified(Action<LociPresetModified> act);
+    void OnApplyLociDataById(Action<ApplyLociDataById> act);
+    void OnApplyLociStatus(Action<ApplyLociStatus> act);
+    void OnRemoveLociData(Action<RemoveLociStatus> act);
 
     // -- Data Updates --
     void OnIpcUpdateFull(Action<IpcUpdateFull> act);
