@@ -42,7 +42,7 @@ public interface ISundouleiaHub
     Task Callback_PairLociPresetModified(LociPresetModified dto);
     Task Callback_ApplyLociDataById(ApplyLociDataById dto);
     Task Callback_ApplyLociStatus(ApplyLociStatus dto);
-    Task Callback_RemoveLociData(RemoveLociStatus dto);
+    Task Callback_RemoveLociData(RemoveLociData dto);
 
     // --- Data Update Callbacks ---
     Task Callback_IpcUpdateFull(IpcUpdateFull dto);
@@ -150,20 +150,14 @@ public interface ISundouleiaHub
     /// </summary>
     Task<HubResponse> UserPersistPair(UserDto user);
 
-    /// <summary>
-    ///     Permanently block a user.
-    /// </summary>
+    // Functionality not yet implemented (and may be kept client side)
     Task<HubResponse> UserBlock(UserDto user);
-
-    /// <summary>
-    ///     Unblock a blocked user.
-    /// </summary>
     Task<HubResponse> UserUnblock(UserDto user);
 
     /// <summary>
     ///     Informs another sundesmo to apply their own status(s) to themselves.
     /// </summary>
-    Task<HubResponse> UserApplyLociStatuses(ApplyLociDataById dto);
+    Task<HubResponse> UserApplyLociData(ApplyLociDataById dto);
 
     /// <summary>
     ///     Informs another sundesmo to apply a list of StatusInfo tuples to themselves.
@@ -171,9 +165,9 @@ public interface ISundouleiaHub
     Task<HubResponse> UserApplyLociStatusTuples(ApplyLociStatus dto);
 
     /// <summary>
-    ///     Informs another sundesmo to remove a status from themselves.
+    ///     Informs another sundesmo to remove a status/preset from themselves.
     /// </summary>
-    Task<HubResponse> UserRemoveLociStatuses(RemoveLociStatus dto);
+    Task<HubResponse> UserRemoveLociData(RemoveLociData dto);
 
     #endregion Pair/Request Interactions
 

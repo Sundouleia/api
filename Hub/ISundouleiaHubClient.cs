@@ -33,7 +33,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnPairLociPresetModified(Action<LociPresetModified> act);
     void OnApplyLociDataById(Action<ApplyLociDataById> act);
     void OnApplyLociStatus(Action<ApplyLociStatus> act);
-    void OnRemoveLociData(Action<RemoveLociStatus> act);
+    void OnRemoveLociData(Action<RemoveLociData> act);
 
     // -- Data Updates --
     void OnIpcUpdateFull(Action<IpcUpdateFull> act);

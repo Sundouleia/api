@@ -19,4 +19,4 @@ public record ApplyLociStatus(UserData User, IEnumerable<LociStatusInfo> Statuse
 ///     The LociStatus GUID's that should be removed from the target Sundesmo.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record RemoveLociStatus(UserData User, IEnumerable<Guid> Ids) : UserDto(User);
+public record RemoveLociData(UserData User, IEnumerable<Guid> Ids) : UserDto(User);
