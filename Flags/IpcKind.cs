@@ -5,7 +5,7 @@ namespace SundouleiaAPI.Enums;
 ///     Arranged in the order we want to delay things by.
 /// </summary>
 [Flags]
-public enum IpcKind : byte
+public enum IpcKind : ushort
 {
     None      = 0 << 0,
     Mods      = 1 << 0, // 1000ms delay
@@ -13,7 +13,8 @@ public enum IpcKind : byte
     Heels     = 1 << 2, // 750ms delay
     CPlus     = 1 << 3, // 750ms delay
     Honorific = 1 << 4, // 500ms delay
-    Loci      = 1 << 5, // 250ms delay
-    ModManips = 1 << 6, // 250ms delay
-    PetNames  = 1 << 7, // 150ms delay
+    Moodles   = 1 << 5, // 250ms delay
+    Loci      = 1 << 6, // 250ms delay
+    ModManips = 1 << 7, // 250ms delay
+    PetNames  = 1 << 8, // 150ms delay
 }

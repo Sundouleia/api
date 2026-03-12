@@ -31,7 +31,7 @@ public class IpcDataPlayerCache
             HeelsOffset = Data[IpcKind.Heels],
             CPlusState = Data[IpcKind.CPlus],
             TitleData = Data[IpcKind.Honorific],
-            LociData = Data[IpcKind.Loci],
+            Loci = Data[IpcKind.Loci],
             PetNicks = Data[IpcKind.PetNames]
         };
     }
@@ -68,9 +68,9 @@ public class IpcDataPlayerCache
             Data[IpcKind.Honorific] = update.TitleData;
             changed |= IpcKind.Honorific;
         }
-        if (update.Updates.HasAny(IpcKind.Loci) && !string.Equals(Data[IpcKind.Loci], update.LociData, StringComparison.Ordinal))
+        if (update.Updates.HasAny(IpcKind.Loci) && !string.Equals(Data[IpcKind.Loci], update.Loci, StringComparison.Ordinal))
         {
-            Data[IpcKind.Loci] = update.LociData;
+            Data[IpcKind.Loci] = update.Loci;
             changed |= IpcKind.Loci;
         }
         if (update.Updates.HasAny(IpcKind.PetNames) && !string.Equals(Data[IpcKind.PetNames], update.PetNicks, StringComparison.Ordinal))

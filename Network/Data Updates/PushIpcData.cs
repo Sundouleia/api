@@ -23,16 +23,16 @@ public record PushIpcSingle(List<UserData> Recipients, OwnedObject Object, IpcKi
 // Loci related Info updates
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushLociData(List<UserData> Recipients, LociData Data);
+public record PushLociData(List<UserData> Recipients, LociContainer Data);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushLociStatuses(List<UserData> Recipients, List<LociStatusInfo> Statuses);
+public record PushLociStatuses(List<UserData> Recipients, List<LociStatusStruct> Statuses);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushLociPresets(List<UserData> Recipients, List<LociPresetInfo> Presets);
+public record PushLociPresets(List<UserData> Recipients, List<LociPresetStruct> Presets);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushStatusModified(List<UserData> Recipients, LociStatusInfo Status, bool Deleted);
+public record PushStatusModified(List<UserData> Recipients, LociStatusStruct Status, bool Deleted);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushPresetModified(List<UserData> Recipients, LociPresetInfo Preset, bool Deleted);
+public record PushPresetModified(List<UserData> Recipients, LociPresetStruct Preset, bool Deleted);

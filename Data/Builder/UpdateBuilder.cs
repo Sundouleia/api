@@ -90,7 +90,7 @@ public class IpcUpdateBuilder
             ModManips = _modManips,
             HeelsOffset = _heelsOffset,
             TitleData = _titleData,
-            LociData = _lociData,
+            Loci = _lociData,
             PetNicks = _petNicks
         };
     }

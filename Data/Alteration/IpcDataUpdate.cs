@@ -46,7 +46,6 @@ public record IpcDataPlayerUpdate(IpcKind Updates) : IpcDataUpdate(Updates)
     public string ModManips     { get; set; } = string.Empty;
     public string HeelsOffset   { get; set; } = string.Empty;
     public string TitleData     { get; set; } = string.Empty;
-    public string LociData      { get; set; } = string.Empty;
     public string PetNicks      { get; set; } = string.Empty;
 }
 
@@ -58,4 +57,5 @@ public record IpcDataUpdate(IpcKind Updates)
 {
     public string GlamourState  { get; set; } = string.Empty;
     public string CPlusState    { get; set; } = string.Empty;
+    public string Loci          { get; set; } = string.Empty;
 }
