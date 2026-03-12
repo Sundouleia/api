@@ -16,6 +16,7 @@ public class IpcDataPlayerCache
             [IpcKind.Heels] = string.Empty,
             [IpcKind.CPlus] = string.Empty,
             [IpcKind.Honorific] = string.Empty,
+            [IpcKind.Moodles] = string.Empty,
             [IpcKind.Loci] = string.Empty,
             [IpcKind.PetNames] = string.Empty
         };
@@ -31,6 +32,7 @@ public class IpcDataPlayerCache
             HeelsOffset = Data[IpcKind.Heels],
             CPlusState = Data[IpcKind.CPlus],
             TitleData = Data[IpcKind.Honorific],
+            Moodles = Data[IpcKind.Moodles],
             Loci = Data[IpcKind.Loci],
             PetNicks = Data[IpcKind.PetNames]
         };
@@ -72,6 +74,11 @@ public class IpcDataPlayerCache
         {
             Data[IpcKind.Loci] = update.Loci;
             changed |= IpcKind.Loci;
+        }
+        if (update.Updates.HasAny(IpcKind.Moodles) && !string.Equals(Data[IpcKind.Moodles], update.Moodles, StringComparison.Ordinal))
+        {
+            Data[IpcKind.Moodles] = update.Moodles;
+            changed |= IpcKind.Moodles;
         }
         if (update.Updates.HasAny(IpcKind.PetNames) && !string.Equals(Data[IpcKind.PetNames], update.PetNicks, StringComparison.Ordinal))
         {

@@ -13,16 +13,18 @@ public class IpcDataCache
         Data = new Dictionary<IpcKind, string>
         {
             [IpcKind.Glamourer] = string.Empty,
-            [IpcKind.CPlus] = string.Empty
+            [IpcKind.CPlus] = string.Empty,
+            [IpcKind.Loci] = string.Empty,
         };
     }
 
     public IpcDataUpdate ToUpdateApi()
     {
-        return new IpcDataUpdate(IpcKind.Glamourer | IpcKind.CPlus)
+        return new IpcDataUpdate(IpcKind.Glamourer | IpcKind.CPlus | IpcKind.Loci)
         {
             GlamourState = Data[IpcKind.Glamourer],
             CPlusState = Data[IpcKind.CPlus],
+            Loci = Data[IpcKind.Loci],
         };
     }
 
@@ -42,6 +44,11 @@ public class IpcDataCache
         {
             Data[IpcKind.CPlus] = update.CPlusState;
             changed |= IpcKind.CPlus;
+        }
+        if (update.Updates.HasAny(IpcKind.Loci) && !string.Equals(Data[IpcKind.Loci], update.Loci, StringComparison.Ordinal))
+        {
+            Data[IpcKind.Loci] = update.Loci;
+            changed |= IpcKind.Loci;
         }
         return changed;
     }
