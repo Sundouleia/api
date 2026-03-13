@@ -7,12 +7,13 @@ public class IpcUpdateBuilder
     private IpcKind _updates;
     private string _glamourState = string.Empty;
     private string _cPlusState = string.Empty;
+    private string _lociData = string.Empty;
 
     // Player-specific
     private string _modManips = string.Empty;
     private string _heelsOffset = string.Empty;
     private string _titleData = string.Empty;
-    private string _lociData = string.Empty;
+    private string _moodleData = string.Empty;
     private string _petNicks = string.Empty;
 
     public IpcKind Updates => _updates;
@@ -59,6 +60,13 @@ public class IpcUpdateBuilder
         return this;
     }
 
+    public IpcUpdateBuilder WithMoodles(string moodleData)
+    {
+        _moodleData = moodleData;
+        _updates |= IpcKind.Moodles;
+        return this;
+    }
+
     public IpcUpdateBuilder WithPetNicks(string petNicks)
     {
         _petNicks = petNicks;
@@ -71,11 +79,12 @@ public class IpcUpdateBuilder
         if (_updates == IpcKind.None)
             return null;
         // limit the updates to only allow Glamour and CPlus.
-        var updates = _updates & (IpcKind.Glamourer | IpcKind.CPlus);
+        var updates = _updates & (IpcKind.Glamourer | IpcKind.CPlus | IpcKind.Loci);
         return new IpcDataUpdate(updates)
         {
             GlamourState = _glamourState,
-            CPlusState = _cPlusState
+            CPlusState = _cPlusState,
+            Loci = _lociData
         };
     }
 
@@ -87,10 +96,12 @@ public class IpcUpdateBuilder
         {
             GlamourState = _glamourState,
             CPlusState = _cPlusState,
+            Loci = _lociData,
+
             ModManips = _modManips,
             HeelsOffset = _heelsOffset,
             TitleData = _titleData,
-            Loci = _lociData,
+            Moodles = _moodleData,
             PetNicks = _petNicks
         };
     }
