@@ -23,7 +23,7 @@ public record PushIpcSingle(List<UserData> Recipients, OwnedObject Object, IpcKi
 // Loci related Info updates
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record PushLociData(List<UserData> Recipients, LociContainer Data);
+public record PushLociData(List<UserData> Recipients, LociContainerData Data);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record PushLociStatuses(List<UserData> Recipients, List<LociStatusStruct> Statuses);

@@ -18,7 +18,7 @@ public record IpcUpdateSingle(UserData User, OwnedObject ObjType, IpcKind Type, 
 
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record LociDataUpdate(UserData User, LociContainer Data) : UserDto(User);
+public record LociDataUpdate(UserData User, LociContainerData Data) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record LociStatusesUpdate(UserData User, List<LociStatusStruct> Statuses) : UserDto(User);
