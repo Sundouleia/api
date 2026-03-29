@@ -52,6 +52,9 @@ public enum SundouleiaApiEc
     /// <summary> The reported user does not even have a profile yet. </summary>
     ProfileNotFound,
 
+    /// <summary> Attempted to use an action requiring a vanity tier the caller does not have. </summary>
+    InvalidVanityTier,
+
 
     // ----- Interaction Specific Errors -----
     /// <summary> Cannot use temporary-related interaction on permanent sundesmo. </summary>
@@ -70,7 +73,16 @@ public enum SundouleiaApiEc
     BadUpdateKind,
 
     // ------ Radar Specific Errors -----
-    NotInZone,
+    /// <summary> Made this call while there was no LocationData associated with the UserUID </summary>
+    BadLocationCache,
+
+    /// <summary> Attempted to join a radar chat in an area that restricts radar chat. </summary>
+    ChatForbidden,
+
+    /// <summary> Attempted to leave a group or place, but you never joined it. </summary>
+    AlreadyLeft,
+
+
 
     // ----- SMA File Sharing Specific Errors -----
     NotFileOwner,

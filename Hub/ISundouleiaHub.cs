@@ -30,10 +30,6 @@ public interface ISundouleiaHub
     Task Callback_AddRequest(SundesmoRequest dto);
     Task Callback_RemoveRequest(SundesmoRequest dto);
 
-    // -- Moderation Utility Callbacks ---
-    Task Callback_Blocked(UserDto dto);
-    Task Callback_Unblocked(UserDto dto);
-
     // --- Loci Integration Callbacks ---
     Task Callback_PairLociDataUpdated(LociDataUpdate dto);
     Task Callback_PairLociStatusesUpdate(LociStatusesUpdate dto);
@@ -56,15 +52,21 @@ public interface ISundouleiaHub
     Task Callback_ChangeAllUnique(ChangeAllUnique dto);
 
     // --- Radar Callbacks ---
-    Task Callback_RadarAddUpdateUser(OnlineUser dto);
+    Task Callback_RadarChatMessage(LoggedRadarChatMessage dto);
+    Task Callback_RadarChatAddUpdateUser(RadarChatMember dto); // name is placeholder
+    Task Callback_RadarAddUpdateUser(RadarMember dto);
     Task Callback_RadarRemoveUser(UserDto dto);
-    Task Callback_RadarChat(RadarChatMessage dto);
+    Task Callback_RadarGroupAddUpdateUser(RadarGroupMember dto);
+    Task Callback_RadarGroupRemoveUser(UserDto dto);
 
+    // Placeholder while we figure out the DTO for this.
+    Task Callback_ChatMessageReceived(ReceivedChatMessage dto);
 
     // --- User Status Update Callbacks ---
     Task Callback_UserIsUnloading(UserDto dto);
     Task Callback_UserOffline(UserDto dto);
     Task Callback_UserOnline(OnlineUser dto);
+    Task Callback_UserVanityUpdate(UserDto dto); // Enforce a refresh on all vanity status for the pair.
     Task Callback_ProfileUpdated(UserDto dto);
     Task Callback_ShowVerification(VerificationCode dto);
     #endregion Callbacks
@@ -90,7 +92,10 @@ public interface ISundouleiaHub
     Task<HubResponse> UserPushLociPresets(PushLociPresets dto);   // Share all Presets data.
     Task<HubResponse> UserPushStatusModified(PushStatusModified dto);   // A LociStatus was modified, created, or deleted.
     Task<HubResponse> UserPushPresetModified(PushPresetModified dto);   // A LociPreset was modified, created, or deleted.
+    
     // Other updates.
+    Task<HubResponse> UserSetAlias(AliasUpdate dto);
+    Task<HubResponse> UserSetVanity(VanityUpdate dto);
     Task<HubResponse> UserUpdateProfileContent(ProfileContent dto);
     Task<HubResponse> UserUpdateProfilePicture(ProfileImage dto);
     Task<HubResponse> UserDelete();
@@ -102,71 +107,46 @@ public interface ISundouleiaHub
     Task<HubResponse<SundesmoRequest>> UserSendRequest(CreateRequest dto);
     Task<HubResponse<List<SundesmoRequest>>> UserSendRequests(CreateRequests dto);
 
-    /// <summary>
-    ///     If successful, remove the request they wished to cancel.
-    /// </summary>
+    /// <remarks> If successful, remove the request they wished to cancel. </remarks>
     Task<HubResponse> UserCancelRequest(UserDto user);
 
-    /// <summary>
-    ///     If successful, remove all requests they wished to cancel.
-    /// </summary>
+    /// <remarks> If successful, remove all requests they wished to cancel. </remarks>
     Task<HubResponse> UserCancelRequests(UserListDto users);
 
-    /// <summary>
-    ///     If EC "AlreadyPaired" is returned, remove the request from your pending list.
-    /// </summary>
+    /// <remarks> If EC "AlreadyPaired" is returned, remove the request from your pending list. </remarks>
     /// <returns> The new UserPair to add, if the request was properly accepted.</returns>
     Task<HubResponse<AddedUserPair>> UserAcceptRequest(RequestResponse response);
 
-    /// <summary>
-    ///     If successful, you are expected to remove all requests for users 
-    ///     passed in, regardless of if it had a return or not.
-    /// </summary>
+    /// <remarks> If successful, remove all requests for users passed in, regardless of outcome. </remarks>
     Task<HubResponse<List<AddedUserPair>>> UserAcceptRequests(RequestResponses responses);
-    
-    /// <summary>
-    ///     You are expected to remove the request from your pending list if successful.
-    ///     (Helps save extra server calls)
-    /// </summary>
+
+    /// <remarks> Remove the request if successful. </remarks>
     Task<HubResponse> UserRejectRequest(UserDto user);
 
-    /// <summary>
-    ///     You are expected to remove the requests for all users passed in if successful.
-    /// </summary>
+    /// <remarks> Remove the requests for all users passed in if successful. </remarks>
     Task<HubResponse> UserRejectRequests(UserListDto users);
 
-    /// <summary>
-    ///     If successful, you should remove the pair from your list of pairs.
-    /// </summary>
+    /// <remarks> Remove pair if result is successful. </remarks>
     Task<HubResponse> UserRemovePair(UserDto user);
 
-    /// <summary>
-    ///     If successful, you should remove all passed in users from your list of pairs.
-    /// </summary>
+    /// <remarks> Remove pairs for all users passed in if result is successful. </remarks>
     Task<HubResponse> UserRemovePairs(UserListDto users);
 
-    /// <summary>
-    ///     Converts a temporary sundesmo into a permanent one. Can only be done by the accepter.
-    /// </summary>
+    /// <summary> Converts a temporary pair to a permanent one </summary>
+    /// <remarks> Can only be done by the accepter. </remarks>
     Task<HubResponse> UserPersistPair(UserDto user);
 
     // Functionality not yet implemented (and may be kept client side)
     Task<HubResponse> UserBlock(UserDto user);
     Task<HubResponse> UserUnblock(UserDto user);
 
-    /// <summary>
-    ///     Informs another sundesmo to apply their own status(s) to themselves.
-    /// </summary>
+    /// <summary> Informs another pair to apply their own status(s) to themselves. </summary>
     Task<HubResponse> UserApplyLociData(ApplyLociDataById dto);
 
-    /// <summary>
-    ///     Informs another sundesmo to apply a list of StatusInfo tuples to themselves.
-    /// </summary>
+    /// <summary> Informs another pair to apply a list of StatusInfo tuples to themselves. </summary>
     Task<HubResponse> UserApplyLociStatusTuples(ApplyLociStatus dto);
 
-    /// <summary>
-    ///     Informs another sundesmo to remove a status/preset from themselves.
-    /// </summary>
+    /// <summary> Informs another pair to remove a status/preset from themselves. </summary>
     Task<HubResponse> UserRemoveLociData(RemoveLociData dto);
 
     #endregion Pair/Request Interactions
@@ -185,13 +165,29 @@ public interface ISundouleiaHub
     Task<HubResponse> UserBulkChangeAllUnique(BulkChangeAllUnique dto);
     #endregion Permission Changes
 
-    // --- Radar Exchanges ---
-    #region Radar Exchanges
-    Task<HubResponse<RadarZoneInfo>> RadarZoneJoin(RadarZoneUpdate joinInfo); //
-    Task<HubResponse> RadarZoneLeave(); //
-    Task<HubResponse> RadarUpdateState(RadarState stateUpdate);
-    Task<HubResponse> RadarChatMessage(RadarChatMessage chatDto);
-    #endregion Radar Exchanges
+
+    // --- Radar and Chat Exchanges ---
+    #region Radar and Chat Exchanges
+
+    Task<HubResponse> UserSendChatDM(DirectChatMessage message);
+
+    Task<HubResponse<LocationUpdateResult>> UpdateLocation(LocationUpdate updateDto);
+
+    // Returns the recent messages for the area.
+    Task<HubResponse<List<LoggedRadarChatMessage>>> RadarChatJoin(RadarChatMember joinDto);
+    Task<HubResponse> RadarChatPermissionChange(RadarChatMember updateDto);
+    Task<HubResponse> RadarSendChat(SentRadarMessage messageDto);
+    Task<HubResponse> RadarChatLeave();
+    // No reason to add info about who is in the chat yet (?), but can easily add to the join later)
+
+    Task<HubResponse<List<RadarMember>>> RadarAreaJoin(RadarMember joinDto);
+    Task<HubResponse> RadarAreaPermissionChange(RadarMember updateDto);
+    Task<HubResponse> RadarAreaLeave(); // Will also leave the group as well...
+
+    Task<HubResponse<List<RadarGroupMember>>> RadarGroupJoin(RadarGroupMember joinDto);
+    Task<HubResponse> RadarGroupPermissionChange(RadarGroupMember updateDto);
+    Task<HubResponse> RadarGroupLeave();
+    #endregion Radar and Chat Exchanges
 
     // --- SMA File Sharing ---
     #region SMA File Sharing

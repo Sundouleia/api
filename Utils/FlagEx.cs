@@ -1,3 +1,4 @@
+using SundouleiaAPI.Data.Permissions;
 using SundouleiaAPI.Enums;
 
 namespace SundouleiaAPI;
@@ -6,8 +7,11 @@ namespace SundouleiaAPI;
 public static class FlagEx
 {
     public static bool HasAny(this IpcKind flags, IpcKind check) => (flags & check) != 0;
-    public static bool HasAny(this SundesmoState flags, SundesmoState check) => (flags & check) != 0;
     public static bool HasAny(this LociAccess flags, LociAccess check) => (flags & check) != 0;
+    public static bool HasAny(this RadarChatFlags flags, RadarChatFlags check) => (flags & check) != 0;
+    public static bool HasAny(this RadarFlags flags, RadarFlags check) => (flags & check) != 0;
+    public static bool HasAny(this RadarGroupFlags flags, RadarGroupFlags check) => (flags & check) != 0;
+
     /// <returns> If only one flag in a flag enum is set. </returns>
     public static bool IsSingleFlagSet(byte value)
         => value != 0 && (value & (value - 1)) == 0;

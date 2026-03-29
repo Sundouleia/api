@@ -49,9 +49,18 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnChangeAllUnique(Action<ChangeAllUnique> act);
 
     // -- Radar --
-    void OnRadarAddUpdateUser(Action<OnlineUser> act);
-    void OnRadarRemoveUser(Action<UserDto> act);
-    void OnRadarChat(Action<RadarChatMessage> act);
+    void OnUserSendDirectMessage(Action<DirectChatMessage> act);
+    void OnUpdateLocation(Action<LocationUpdate> act);
+    void OnRadarChatJoin(Action<RadarChatMember> act);
+    void OnRadarChatPermissionChanged(Action<RadarChatMember> act);
+    void OnRadarChatMessage(Action<LoggedRadarChatMessage> act);
+    void OnRadarChatLeave(Action act);
+    void OnRadarZoneJoin(Action<RadarMember> act);
+    void OnRadarZonePermissionChanged(Action<RadarMember> act);
+    void OnRadarZoneLeave(Action act);
+    void OnRadarGroupJoin(Action<RadarGroupMember> act);
+    void OnRadarGroupPermissionChanged(Action<RadarGroupMember> act);
+    void OnRadarGroupLeave(Action act);
 
     // --- User Status Update ---
     void OnUserIsUnloading(Action<UserDto> act);

@@ -1,6 +1,5 @@
 namespace SundouleiaAPI.Enums;
 
-
 public enum DisconnectIntent : sbyte
 {
     Normal      = 0,

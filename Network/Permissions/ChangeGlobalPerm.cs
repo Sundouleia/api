@@ -9,5 +9,5 @@ namespace SundouleiaAPI.Network;
 [MessagePackObject(keyAsPropertyName: true)]
 public record ChangeGlobalPerm(UserData User, string PermName, object NewValue) : UserDto(User)
 {
-    public override string ToString() => $"PairGlobalPermChanged: {{{User.AliasOrUID}}} Changed -> [{PermName}] to [{NewValue}]";
+    public override string ToString() => $"PairGlobalPermChanged: {{{User.DisplayName}}} Changed -> [{PermName}] to [{NewValue}]";
 }
