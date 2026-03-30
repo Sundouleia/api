@@ -49,23 +49,19 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnChangeAllUnique(Action<ChangeAllUnique> act);
 
     // -- Radar --
-    void OnUserSendDirectMessage(Action<DirectChatMessage> act);
-    void OnUpdateLocation(Action<LocationUpdate> act);
-    void OnRadarChatJoin(Action<RadarChatMember> act);
-    void OnRadarChatPermissionChanged(Action<RadarChatMember> act);
     void OnRadarChatMessage(Action<LoggedRadarChatMessage> act);
-    void OnRadarChatLeave(Action act);
-    void OnRadarZoneJoin(Action<RadarMember> act);
-    void OnRadarZonePermissionChanged(Action<RadarMember> act);
-    void OnRadarZoneLeave(Action act);
-    void OnRadarGroupJoin(Action<RadarGroupMember> act);
-    void OnRadarGroupPermissionChanged(Action<RadarGroupMember> act);
-    void OnRadarGroupLeave(Action act);
+    void OnRadarChatAddUpdateUser(Action<RadarChatMember> act);
+    void OnRadarAddUpdateUser(Action<RadarMember> act);
+    void OnRadarRemoveUser(Action<UserDto> act);
+    void OnRadarGroupAddUpdateUser(Action<RadarGroupMember> act);
+    void OnRadarGroupRemoveUser(Action<UserDto> act);
+    void OnChatMsgReceived(Action<ReceivedChatMessage> act);
 
     // --- User Status Update ---
     void OnUserIsUnloading(Action<UserDto> act);
     void OnUserOffline(Action<UserDto> act);
     void OnUserOnline(Action<OnlineUser> act);
+    void OnUserVanityUpdate(Action<UserDto> act);
     void OnProfileUpdated(Action<UserDto> act);
     void OnShowVerification(Action<VerificationCode> act);
 }

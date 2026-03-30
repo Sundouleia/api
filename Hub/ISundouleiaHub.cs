@@ -20,7 +20,7 @@ public interface ISundouleiaHub
     #region Callbacks
     Task Callback_ServerMessage(MessageSeverity severity, string message);
     Task Callback_HardReconnectMessage(MessageSeverity severity, string message, ServerState state);
-    Task Callback_RadarUserFlagged(string flaggedUserUid); // Ensures any inappropriate behavior is immediately censored.
+    Task Callback_RadarUserFlagged(string flaggedUserUid); // Maybe remove
     Task Callback_ServerInfo(ServerInfoResponse info);
 
     // --- Pair/Request Callbacks ---
@@ -51,6 +51,10 @@ public interface ISundouleiaHub
     Task Callback_ChangeUniquePerms(ChangeUniquePerms dto);
     Task Callback_ChangeAllUnique(ChangeAllUnique dto);
 
+    // --- SanctionedGroup Callbacks ---
+    // WIP...
+
+
     // --- Radar Callbacks ---
     Task Callback_RadarChatMessage(LoggedRadarChatMessage dto);
     Task Callback_RadarChatAddUpdateUser(RadarChatMember dto); // name is placeholder
@@ -60,7 +64,7 @@ public interface ISundouleiaHub
     Task Callback_RadarGroupRemoveUser(UserDto dto);
 
     // Placeholder while we figure out the DTO for this.
-    Task Callback_ChatMessageReceived(ReceivedChatMessage dto);
+    Task Callback_ChatMsgReceived(ReceivedChatMessage dto);
 
     // --- User Status Update Callbacks ---
     Task Callback_UserIsUnloading(UserDto dto);
@@ -77,7 +81,6 @@ public interface ISundouleiaHub
     Task<List<UserPair>> UserGetAllPairs();
     Task<List<SundesmoRequest>> UserGetSundesmoRequests();
     Task<FullProfileData> UserGetProfileData(UserDto user, bool allowNSFW);
-
 
     // --- Data Updates ---
     #region Data Updates
