@@ -17,6 +17,6 @@ public record UserData(
     DateTime?    CreatedOn  = null)
 {
     [IgnoreMember] public string DisplayName => VanityName ?? Alias ?? UID;
-    [IgnoreMember] public string AnonName => "Anon.User-" + UID[^4..];
+    [IgnoreMember] public string AnonName => VanityName ?? "Anon.User-" + UID[^4..];
     [IgnoreMember] public string AnonTag => UID[^4..];
 }

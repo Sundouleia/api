@@ -22,7 +22,7 @@ public interface ISundouleiaHub
     #region Callbacks (Server Information)
     Task Callback_ServerMessage(MessageSeverity severity, string message);
     Task Callback_HardReconnectMessage(MessageSeverity severity, string message, ServerState state);
-    Task Callback_RadarUserFlagged(string flaggedUserUid); // May remove if no purpose
+    Task Callback_RadarUserFlagged(string flaggedUserUid); // Maybe remove
     Task Callback_ServerInfo(ServerInfoResponse info);
 
     #endregion Callbacks (Server Information)
