@@ -18,7 +18,7 @@ public record CreateRequests(List<UserData> Recipients, RequestDetails Details);
 ///     Can be canceled by either side.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record SundesmoRequest(UserData User, UserData Target, RequestDetails Details, DateTime CreatedAt) : UserDto(User)
+public record PairRequest(UserData User, UserData Target, RequestDetails Details, DateTime CreatedAt) : UserDto(User)
 {
     public TimeSpan TimeLeft() => TimeSpan.FromDays(3) - (DateTime.UtcNow - CreatedAt);
     public bool IsExpired() => DateTime.UtcNow - CreatedAt > TimeSpan.FromDays(3);

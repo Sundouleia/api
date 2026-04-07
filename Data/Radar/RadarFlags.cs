@@ -27,7 +27,7 @@ public enum RadarFlags : ushort
     AllowTargeting = 1 << 2,
 
     /// <summary>
-    ///   Allows others to view your profile (matches displayed radar name in profile)
+    ///   Allows others to view your profile (matches Anon-Name)
     /// </summary>
     AllowProfileViewing = 1 << 3,
 

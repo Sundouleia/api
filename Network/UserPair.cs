@@ -1,7 +1,6 @@
 using MessagePack;
 using SundouleiaAPI.Data;
 using SundouleiaAPI.Data.Permissions;
-using SundouleiaAPI.Hub;
 
 // (( Could maybe make this into a modifiable class but idk, probably best to keep as record. ))
 namespace SundouleiaAPI.Network;

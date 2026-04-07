@@ -2,7 +2,7 @@ using SundouleiaAPI.Network;
 
 namespace SundouleiaAPI.Data.Comparer;
 #pragma warning disable IDE1006 // Naming Styles
-public class RequestComparer : IEqualityComparer<SundesmoRequest>
+public class RequestComparer : IEqualityComparer<PairRequest>
 {
     private static readonly RequestComparer _instance = new();
 
@@ -11,14 +11,14 @@ public class RequestComparer : IEqualityComparer<SundesmoRequest>
 
     public static RequestComparer Instance => _instance;
 
-    public bool Equals(SundesmoRequest? x, SundesmoRequest? y)
+    public bool Equals(PairRequest? x, PairRequest? y)
     {
         if (x is null || y is null) return false;
         return x.User.UID.Equals(y.User.UID, StringComparison.Ordinal)
             && x.Target.UID.Equals(y.Target.UID, StringComparison.Ordinal);
     }
 
-    public int GetHashCode(SundesmoRequest obj)
+    public int GetHashCode(PairRequest obj)
     {
         return HashCode.Combine(obj.User.UID, obj.Target.UID);
     }

@@ -10,27 +10,61 @@ namespace SundouleiaAPI.Hub;
 /// </summary>
 public interface ISundouleiaHub
 {
-    const int ApiVersion = 1;
+    const int ApiVersion = 2;
     const string Path = "/sundouleia";
 
-    // Keeps a clients connection alive.
     Task<bool> HealthCheck();
     Task<ConnectionResponse> GetConnectionResponse();
+    Task<HubResponse> UserNotifyIsUnloading(); // Used on plugin shutdown, or any method that clears all sundesmo data.
 
-    #region Callbacks
+    #region CALLBACKS
+
+    #region Callbacks (Server Information)
     Task Callback_ServerMessage(MessageSeverity severity, string message);
     Task Callback_HardReconnectMessage(MessageSeverity severity, string message, ServerState state);
-    Task Callback_RadarUserFlagged(string flaggedUserUid); // Ensures any inappropriate behavior is immediately censored.
+    Task Callback_RadarUserFlagged(string flaggedUserUid); // May remove if no purpose
     Task Callback_ServerInfo(ServerInfoResponse info);
 
-    // --- Pair/Request Callbacks ---
+    #endregion Callbacks (Server Information)
+
+    #region Callbacks (Pairs/Requests)
     Task Callback_AddPair(UserPair dto);
     Task Callback_RemovePair(UserDto dto);
     Task Callback_PersistPair(UserDto dto);
-    Task Callback_AddRequest(SundesmoRequest dto);
-    Task Callback_RemoveRequest(SundesmoRequest dto);
+    Task Callback_AddRequest(PairRequest dto);
+    Task Callback_RemoveRequest(PairRequest dto);
+    #endregion Callbacks (Pairs/Requests)
 
-    // --- Loci Integration Callbacks ---
+    #region Callbacks (Sanctions)
+    Task Callback_SanctionInfoUpdated(SanctionInfo dto); // Updates last validation, location, IsPublic, and chatlogId
+    Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
+    Task Callback_SanctionStyleModified(SanctionStyleDto dto);
+    Task Callback_SanctionRolesUpdated(SanctionRolesUpdate dto); // Updates to the roles, and their permissions
+    Task Callback_SanctionProfileUpdated(SanctionDto dto); // Triggers a refresh
+    // Task Callback_SanctionAlertsUpdated(); // WIP - Let Sanctions make alert notifications to subscribed members.
+    Task Callback_SanctionMemberJoined(SanctionPairFullDto dto); // When someone joins the sanction
+    Task Callback_SanctionMemberUpdated(SanctionPairFullDto dto); // Information regarding this user was updated. Maybe split into subcalls.
+    Task Callback_SanctionMemberPauseStateChanged(SanctionPairPause dto); // A sanction member paused you. (pointless since it Should be from direct pairs only?)
+    Task Callback_SanctionMemberLeft(SanctionPairDto dto); // When someone leaves the sanction
+    Task Callback_SanctionDeleted(SanctionDto dto); // On the deletion of a Sanction
+    #endregion Callbacks (Sanctions)
+
+    #region Callbacks (Data Updates)
+    Task Callback_IpcUpdateFull(IpcUpdateFull dto);
+    Task Callback_IpcUpdateMods(IpcUpdateMods dto);
+    Task Callback_IpcUpdateOther(IpcUpdateOther dto);
+    Task Callback_IpcUpdateSingle(IpcUpdateSingle dto);
+    #endregion Callbacks (Data Updates)
+
+    #region Callbacks (Permission Updates)
+    Task Callback_ChangeGlobalPerm(ChangeGlobalPerm dto);
+    Task Callback_ChangeAllGlobal(ChangeAllGlobal dto);
+    Task Callback_ChangeUniquePerm(ChangeUniquePerm dto);
+    Task Callback_ChangeUniquePerms(ChangeUniquePerms dto);
+    Task Callback_ChangeAllUnique(ChangeAllUnique dto);
+    #endregion Callbacks (Permission Updates)
+
+    #region Callbacks (Loci DataShare)
     Task Callback_PairLociDataUpdated(LociDataUpdate dto);
     Task Callback_PairLociStatusesUpdate(LociStatusesUpdate dto);
     Task Callback_PairLociPresetsUpdate(LociPresetsUpdate dto);
@@ -39,123 +73,66 @@ public interface ISundouleiaHub
     Task Callback_ApplyLociDataById(ApplyLociDataById dto);
     Task Callback_ApplyLociStatus(ApplyLociStatus dto);
     Task Callback_RemoveLociData(RemoveLociData dto);
+    #endregion Callbacks (Loci DataShare)
 
-    // --- Data Update Callbacks ---
-    Task Callback_IpcUpdateFull(IpcUpdateFull dto);
-    Task Callback_IpcUpdateMods(IpcUpdateMods dto);
-    Task Callback_IpcUpdateOther(IpcUpdateOther dto);
-    Task Callback_IpcUpdateSingle(IpcUpdateSingle dto);
-    Task Callback_ChangeGlobalPerm(ChangeGlobalPerm dto);
-    Task Callback_ChangeAllGlobal(ChangeAllGlobal dto);
-    Task Callback_ChangeUniquePerm(ChangeUniquePerm dto);
-    Task Callback_ChangeUniquePerms(ChangeUniquePerms dto);
-    Task Callback_ChangeAllUnique(ChangeAllUnique dto);
-
-    // --- Radar Callbacks ---
+    #region Callbacks (Radar)
     Task Callback_RadarChatMessage(LoggedRadarChatMessage dto);
     Task Callback_RadarChatAddUpdateUser(RadarChatMember dto); // name is placeholder
     Task Callback_RadarAddUpdateUser(RadarMember dto);
     Task Callback_RadarRemoveUser(UserDto dto);
     Task Callback_RadarGroupAddUpdateUser(RadarGroupMember dto);
     Task Callback_RadarGroupRemoveUser(UserDto dto);
+    #endregion Callbacks (Radar)
 
-    // Placeholder while we figure out the DTO for this.
+    #region Callbacks (Chat)
     Task Callback_ChatMessageReceived(ReceivedChatMessage dto);
+    #endregion Callbacks (Chat)
 
-    // --- User Status Update Callbacks ---
+    #region Callbacks (User State/Status)
+    Task Callback_UserOnline(OnlineUser dto);
     Task Callback_UserIsUnloading(UserDto dto);
     Task Callback_UserOffline(UserDto dto);
-    Task Callback_UserOnline(OnlineUser dto);
-    Task Callback_UserVanityUpdate(UserDto dto); // Enforce a refresh on all vanity status for the pair.
-    Task Callback_ProfileUpdated(UserDto dto);
+    Task Callback_UserVanityUpdated(UserDto dto); // Enforce a refresh on all vanity status for the pair.
+    Task Callback_UserProfileUpdated(UserDto dto);
     Task Callback_ShowVerification(VerificationCode dto);
-    #endregion Callbacks
+    #endregion Callbacks (User State/Status)
 
+    #endregion CALLBACKS
 
-    // --- Data Retrievals ---
-    Task<List<OnlineUser>> UserGetOnlinePairs();
-    Task<List<UserPair>> UserGetAllPairs();
-    Task<List<SundesmoRequest>> UserGetSundesmoRequests();
-    Task<FullProfileData> UserGetProfileData(UserDto user, bool allowNSFW);
+    #region SERVER_CALLS
 
+    #region Bulk Data Retrieval
+    Task<List<UserPair>> GetAllSundesmos();
+    Task<List<OnlineUser>> GetOnlineSundesmos();
+    // Maybe conjoin these into a single call to avoid thousands of users opening 5 calls on connections.
+    Task<List<PairRequest>> GetRequests();
+    Task<List<BlockedUser>> GetBlockedUsers();
+    Task<List<SanctionDataFull>> GetJoinedSanctions();
+    #endregion Bulk Data Retrieval
 
-    // --- Data Updates ---
-    #region Data Updates
-    // IPC updates.
-    Task<HubResponse<List<ValidFileHash>>> UserPushIpcFull(PushIpcFull dto); // Push all mod file replacement data and other visual display data.
-    Task<HubResponse<List<ValidFileHash>>> UserPushIpcMods(PushIpcMods dto); // Push only mod file updates, containing file replacement data.
-    Task<HubResponse> UserPushIpcOther(PushIpcOther dto); // Push only non-mod updates, for faster handling.
-    Task<HubResponse> UserPushIpcSingle(PushIpcSingle dto); // Push a single change to IPC appearance (useful for things like heels ext.)
-    // Loci updates.
-    Task<HubResponse> UserPushLociData(PushLociData dto);         // Share all data with allowed sundesmos.
-    Task<HubResponse> UserPushLociStatuses(PushLociStatuses dto); // Share all Statuses data.
-    Task<HubResponse> UserPushLociPresets(PushLociPresets dto);   // Share all Presets data.
-    Task<HubResponse> UserPushStatusModified(PushStatusModified dto);   // A LociStatus was modified, created, or deleted.
-    Task<HubResponse> UserPushPresetModified(PushPresetModified dto);   // A LociPreset was modified, created, or deleted.
-    
-    // Other updates.
+    #region Vanity & Cosmetics
+    /// <summary> Retrieve the ProfileData for a User. Can filter if NSFW is allowed </summary>
+    Task<UserProfileData> UserGetProfileData(UserDto user, bool allowNSFW);
+    /// <summary> Retrieve the ProfileData for a Sanction. Can filter if NSFW is allowed </summary>
+    Task<SanctionProfileData> UserGetSanctionProfile(string sanctionId, bool allowNSFW);
+    /// <summary> Allows anyone to freely update their UserData alias </summary>
     Task<HubResponse> UserSetAlias(AliasUpdate dto);
+    /// <summary> Updates the DisplayName and colors for a user. Supporter exclusive </summary>
     Task<HubResponse> UserSetVanity(VanityUpdate dto);
-    Task<HubResponse> UserUpdateProfileContent(ProfileContent dto);
+    // Modify as we update the profile layout...
+    /// <summary> Update the image contents of your ProfileData, check image validity server-side. </summary>
     Task<HubResponse> UserUpdateProfilePicture(ProfileImage dto);
+    /// <summary> Update the contents of your ProfileData. </summary>
+    Task<HubResponse> UserUpdateProfileContent(ProfileContent dto);
+    /// <summary> Sends a direct chat message to another user, if allowed. </summary>
+    Task<HubResponse> UserSendChatDM(DirectChatMessage message);
+    /// <summary> Explodes your logged in user from the Database, and all associated data with it. </summary>
+    /// <remarks> Removing your primary profile deletes all other profiles linked to your account. </remarks>
     Task<HubResponse> UserDelete();
-    Task<HubResponse> UserNotifyIsUnloading(); // Used on plugin shutdown, or any method that clears all sundesmo data.
-    #endregion Data Updates
+    #endregion Vanity & Cosmetics
 
-    // --- Pair/Request Interactions ---
-    #region Pair/Request Interactions
-    Task<HubResponse<SundesmoRequest>> UserSendRequest(CreateRequest dto);
-    Task<HubResponse<List<SundesmoRequest>>> UserSendRequests(CreateRequests dto);
-
-    /// <remarks> If successful, remove the request they wished to cancel. </remarks>
-    Task<HubResponse> UserCancelRequest(UserDto user);
-
-    /// <remarks> If successful, remove all requests they wished to cancel. </remarks>
-    Task<HubResponse> UserCancelRequests(UserListDto users);
-
-    /// <remarks> If EC "AlreadyPaired" is returned, remove the request from your pending list. </remarks>
-    /// <returns> The new UserPair to add, if the request was properly accepted.</returns>
-    Task<HubResponse<AddedUserPair>> UserAcceptRequest(RequestResponse response);
-
-    /// <remarks> If successful, remove all requests for users passed in, regardless of outcome. </remarks>
-    Task<HubResponse<List<AddedUserPair>>> UserAcceptRequests(RequestResponses responses);
-
-    /// <remarks> Remove the request if successful. </remarks>
-    Task<HubResponse> UserRejectRequest(UserDto user);
-
-    /// <remarks> Remove the requests for all users passed in if successful. </remarks>
-    Task<HubResponse> UserRejectRequests(UserListDto users);
-
-    /// <remarks> Remove pair if result is successful. </remarks>
-    Task<HubResponse> UserRemovePair(UserDto user);
-
-    /// <remarks> Remove pairs for all users passed in if result is successful. </remarks>
-    Task<HubResponse> UserRemovePairs(UserListDto users);
-
-    /// <summary> Converts a temporary pair to a permanent one </summary>
-    /// <remarks> Can only be done by the accepter. </remarks>
-    Task<HubResponse> UserPersistPair(UserDto user);
-
-    // Functionality not yet implemented (and may be kept client side)
-    Task<HubResponse> UserBlock(UserDto user);
-    Task<HubResponse> UserUnblock(UserDto user);
-
-    /// <summary> Informs another pair to apply their own status(s) to themselves. </summary>
-    Task<HubResponse> UserApplyLociData(ApplyLociDataById dto);
-
-    /// <summary> Informs another pair to apply a list of StatusInfo tuples to themselves. </summary>
-    Task<HubResponse> UserApplyLociStatusTuples(ApplyLociStatus dto);
-
-    /// <summary> Informs another pair to remove a status/preset from themselves. </summary>
-    Task<HubResponse> UserRemoveLociData(RemoveLociData dto);
-
-    #endregion Pair/Request Interactions
-
-    // -- Permission Changes ---
-    #region Permission Changes
-    // Keep in mind that all of the permission changes do not return the resulting permissions to you.
-    // Instead, it only returns the hub response. If successful, assume the update set properly.
-    Task<HubResponse> UserChangeGlobalsSingle(ChangeGlobalPerm dto); // Rename this to match format later.
+    #region User Permissions
+    Task<HubResponse> UserChangeGlobalPerm(ChangeGlobalPerm dto);
     Task<HubResponse> UserChangeAllGlobals(GlobalPerms newPerms);
     Task<HubResponse> UserChangeUniquePerm(ChangeUniquePerm dto);
     Task<HubResponse> UserChangeUniquePerms(ChangeUniquePerms dto);
@@ -163,33 +140,190 @@ public interface ISundouleiaHub
     Task<HubResponse> UserBulkChangeUniquePerm(BulkChangeUniquePerm dto);
     Task<HubResponse> UserBulkChangeUniquePerms(BulkChangeUniquePerms dto);
     Task<HubResponse> UserBulkChangeAllUnique(BulkChangeAllUnique dto);
-    #endregion Permission Changes
+    #endregion User Permissions
 
+    #region PlayerData Updates
+    Task<HubResponse<List<ValidFileHash>>> UserPushIpcFull(PushIpcFull dto); // Full data push.
+    Task<HubResponse<List<ValidFileHash>>> UserPushIpcMods(PushIpcMods dto); // Penumbra related update only
+    Task<HubResponse> UserPushIpcOther(PushIpcOther dto);   // Updates excluding file replacements
+    Task<HubResponse> UserPushIpcSingle(PushIpcSingle dto); // Individual IPC update for fast transit
+    #endregion PlayerData Updates
 
-    // --- Radar and Chat Exchanges ---
-    #region Radar and Chat Exchanges
+    #region Loci
+    Task<HubResponse> UserPushLociData(PushLociData dto);             // Share all data with allowed sundesmos.
+    Task<HubResponse> UserPushLociStatuses(PushLociStatuses dto);     // Share all Statuses data.
+    Task<HubResponse> UserPushLociPresets(PushLociPresets dto);       // Share all Presets data.
+    Task<HubResponse> UserPushStatusModified(PushStatusModified dto); // A LociStatus was modified, created, or deleted.
+    Task<HubResponse> UserPushPresetModified(PushPresetModified dto); // A LociPreset was modified, created, or deleted.
+    /// <summary> Informs another pair to apply their own status(s) to themselves. </summary>
+    Task<HubResponse> UserApplyLociData(ApplyLociDataById dto);
+    /// <summary> Informs another pair to apply a list of StatusInfo tuples to themselves. </summary>
+    Task<HubResponse> UserApplyLociStatusTuples(ApplyLociStatus dto);
+    /// <summary> Informs another pair to remove a status/preset from themselves. </summary>
+    Task<HubResponse> UserRemoveLociData(RemoveLociData dto);
+    #endregion Loci
 
-    Task<HubResponse> UserSendChatDM(DirectChatMessage message);
+    #region Pairs
+    Task<HubResponse<PairRequest>> UserSendRequest(CreateRequest dto);
+    Task<HubResponse<List<PairRequest>>> UserSendRequests(CreateRequests dto);
+    /// <remarks> If successful, remove the request they wished to cancel. </remarks>
+    Task<HubResponse> UserCancelRequest(UserDto user);
+    /// <remarks> If successful, remove all requests they wished to cancel. </remarks>
+    Task<HubResponse> UserCancelRequests(UserListDto users);
+    /// <remarks> If EC "AlreadyPaired" is returned, remove the request from your pending list. </remarks>
+    /// <returns> The new UserPair to add, if the request was properly accepted.</returns>
+    Task<HubResponse<AddedUserPair>> UserAcceptRequest(RequestResponse response);
+    /// <remarks> If successful, remove all requests for users passed in, regardless of outcome. </remarks>
+    Task<HubResponse<List<AddedUserPair>>> UserAcceptRequests(RequestResponses responses);
+    /// <remarks> Remove the request if successful. </remarks>
+    Task<HubResponse> UserRejectRequest(UserDto user);
+    /// <remarks> Remove the requests for all users passed in if successful. </remarks>
+    Task<HubResponse> UserRejectRequests(UserListDto users);
+    /// <summary> Converts a temporary pair to a permanent one. (Can only be done by the accepter) </summary>
+    Task<HubResponse> UserPersistPair(UserDto user);
+    /// <remarks> Remove pair if result is successful. </remarks>
+    Task<HubResponse> UserRemovePair(UserDto user);
+    /// <remarks> Remove pairs for all users passed in if result is successful. </remarks>
+    Task<HubResponse> UserRemovePairs(UserListDto users);
+    /// <summary> Blocks a users AccountUID, restricting view from them or any other profiles. </summary>
+    /// <remarks> Blocking will prevent seeing their chat messages, visibility in Radar, and data exchange. </summary>
+    Task<HubResponse> UserBlockAccount(UserDto user);
+    /// <summary> Unblocks a user, restoring functionality disabled by <see cref="UserBlockAccount(UserDto)"/> </summary>
+    Task<HubResponse> UserUnblockAccount(UserDto user);
+    #endregion Pairs
 
+    #region Sanctions
+    /// <summary> Updates the server with all current owned estates. </summary>
+    /// <returns> The owned Sanction info, even if location is no longer valid.
+    Task<HubResponse<List<SanctionInfo>>> UpdateOwnedSanctions(OwnedEstates dto);
+
+    /// <summary> Retrieves the Audit log for a Sanction. </summary>
+    Task<HubResponse<List<SanctionAuditRecord>>> GetSanctionAuditLog(SanctionAuditFetch dto);
+
+    /// <summary> Retrieves the banned users for a Sanction. </summary>
+    Task<HubResponse<List<SanctionBannedUser>>> GetSanctionBannedUsers(SanctionDto sanction);
+
+    /// <summary> Updates the Roles via addition, removal, or updating existing. </summary>
+    Task<HubResponse> SanctionRolesUpdate(SanctionRolesUpdate dto);
+
+    /// <summary> Updates a SanctionPairs roles. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.AssignRoles"/></remarks>
+    Task<HubResponse> SanctionSetUserRoles(SanctionPairRoles dto);
+
+    /// <summary> Marks a Sanction as public or private. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeVisibility"/></remarks>
+    Task<HubResponse> SanctionSetVisibility(SanctionVisibilityDto dto);
+
+    /// <summary> Sets the datasync preferences of a sanction. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangePreferences"/></remarks>
+    Task<HubResponse> SanctionSetPreferences(SanctionPreferencesDto dto);
+
+    /// <summary> Updates the sanctions profile images. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
+    Task<HubResponse> SanctionSetProfileImages(SanctionProfileImages dto);
+
+    /// <summary> Updates the sanctions profiles contents. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
+    Task<HubResponse> SanctionSetProfileContent(SanctionProfileContent dto);
+
+    /// <summary> Sets or clears the SanctionGroups password. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangePassword"/></remarks>
+    Task<HubResponse> SanctionSetPassword(SanctionPasswordDto dto);
+
+    /// <summary> Updates the SanctionName or ChatlogName. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeNames"/></remarks>
+    Task<HubResponse> SanctionSetName(SanctionNamesDto dto);
+
+    /// <summary> Updates the Icon, IconColor, LabelColor, BorderColor, GradientColor. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeStyle"/></remarks>
+    Task<HubResponse> SanctionSetStyle(SanctionStyleDto dto);
+
+    /// <summary> Changes the <see cref="SanctionAccess"/> of another SanctionPair. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeUserAccess"/></remarks>
+    Task<HubResponse> SanctionSetUserAccess(SanctionUserAccessDto dto);
+
+    /// <summary> Bans a SanctionedPair from the SanctionedGroup for a spesified or infinite time. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.BanMembers"/></remarks>
+    Task<HubResponse> SanctionBanUser(SanctionBanDto dto);
+
+    /// <summary> Unbans a SanctionedPair from the SanctionedGroup. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.BanMembers"/></remarks>
+    Task<HubResponse> SanctionUnbanUser(SanctionPairDto dto);
+
+    /// <summary> Removes the specified users from the SanctionedGroup. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.RemoveMembers"/></remarks>
+    Task<HubResponse> SanctionRemoveUsers(SanctionCleanupDto dto);
+
+    /// <summary> Join a SanctionedGroup for the given ID and optional password. </summary>
+    /// <returns> The current SanctionPairs, online, offline, and visible, and associated data. </returns>
+    Task<HubResponse<SanctionDataFull>> SanctionJoin(SanctionDto sanction, string password);
+
+    /// <summary>
+    ///   Leave a SanctionedGroup, optionally unpairing with the Groups 
+    ///   users not paired with elsewhere, if provided. Other paramaters can be included.
+    /// </summary>
+    Task<HubResponse> SanctionLeave(SanctionDto sanction);
+    #endregion Sanctions
+
+    #region Radar
+    /// <summary>
+    ///   Updates the server via Redis of the clients current location. <para/>
+    ///   In addition the client should provide which radar features 
+    ///   they opted into, so the returned result can contain the data 
+    ///   for the new location.
+    /// </summary>
+    /// <returns>
+    ///   The resulting data for the new location based on your Opt-In settings, including:
+    ///   <list type="bullet">
+    ///     <item> <b>ChatHistory</b> - The most recent chat history validated by the server. </item>
+    ///     <item> <b>RadarUsers</b> - The list of RadarMembers in the area. </item>
+    ///     <item> <b>RadarGroupUsers</b> - The list of RadarGroupMembers in the area. </item>
+    ///   </list>
+    /// </returns>
     Task<HubResponse<LocationUpdateResult>> UpdateLocation(LocationUpdate updateDto);
-
-    // Returns the recent messages for the area.
+    /// <summary> Joins the RadarChat for the location stored on the server. </summary>
+    /// <param name="joinDto"> Info for your client that will be stored via Redis for this location. </param>
+    /// <returns> Returns the recent messages for the area, if the join was valid. </returns>
     Task<HubResponse<List<LoggedRadarChatMessage>>> RadarChatJoin(RadarChatMember joinDto);
+    /// <summary> Update the stored permissions on redis, and inform others of this change. </summary>
     Task<HubResponse> RadarChatPermissionChange(RadarChatMember updateDto);
+    /// <summary> Sends a chat message to the RadarChat in the current location. </summary>
     Task<HubResponse> RadarSendChat(SentRadarMessage messageDto);
+    /// <summary> Manually leaves the RadarChat for the current area </summary>
     Task<HubResponse> RadarChatLeave();
-    // No reason to add info about who is in the chat yet (?), but can easily add to the join later)
-
+    /// <summary> Joins the PublicRadar for the current location. All locations should be valid. </summary>
+    /// <param name="joinDto"> The permissions for the PublicRadar to store on Redis. </param>
+    /// <returns> The list of RadarMembers in this area aside from yourself. </returns>
+    /// <remarks> This is not a RadarGroup, it is like an Anonymous locator. </remarks>
     Task<HubResponse<List<RadarMember>>> RadarAreaJoin(RadarMember joinDto);
+    /// <summary> Update the stored permissions on redis, and inform others of this change. </summary>
     Task<HubResponse> RadarAreaPermissionChange(RadarMember updateDto);
-    Task<HubResponse> RadarAreaLeave(); // Will also leave the group as well...
-
-    Task<HubResponse<List<RadarGroupMember>>> RadarGroupJoin(RadarGroupMember joinDto);
+    /// <summary> Leaves the current PublicRadar. (TODO: Maybe have this leave the RadarGroup as well?) </summary>
+    Task<HubResponse> RadarAreaLeave();
+    /// <summary>
+    ///   Joins the public RadarGroup. <br/>
+    ///   This automatically creates RadarPairs with the returned 
+    ///   users, excluding those blocked or paused. <para />
+    ///   You are able to pause these users with a 3 hour timeout. <br/>
+    ///   RadarGroup pauses expire after 5 hours of inactivity.
+    /// </summary>
+    /// <param name="joinDto"> The permissions for the RadarGroup to store on Redis. </param>
+    /// <returns> The other RadarGroup Members currently present, aside from yourself. </returns>
+    /// <remarks> <b>RadarGroups are not allowed in residential areas.</b></remarks>
+    Task<HubResponse<List<RadarGroupMember>>> RadarGroupJoin(RadarGroupJoin joinDto);
+    /// <summary> Update the stored permissions on redis, and inform others of this change. </summary>
     Task<HubResponse> RadarGroupPermissionChange(RadarGroupMember updateDto);
+    /// <summary> Leaves the current RadarGroup </summary>
     Task<HubResponse> RadarGroupLeave();
-    #endregion Radar and Chat Exchanges
+    #endregion Radar
 
-    // --- SMA File Sharing ---
+    #region Reporting
+    Task<HubResponse> UserReportProfile(ProfileReport dto);
+    Task<HubResponse> UserReportSanction(SanctionReport dto);
+    Task<HubResponse> UserReportRadar(RadarReport dto);
+    Task<HubResponse> UserReportChat(RadarChatReport dto);
+    #endregion Reporting
+
     #region SMA File Sharing
     // As everything is with security, whoever you give access to this, know you give your appearance up to them.
     // When you allow someone to open the base file, you are effectively giving away your appearance.
@@ -207,12 +341,6 @@ public interface ISundouleiaHub
     Task<HubResponse> RemoveProtectedFile(Guid FileId);
     #endregion SMA File Sharing
 
-    // --- Reporting ---
-    #region Reporting
-    Task<HubResponse> UserReportProfile(ProfileReport dto); // hopefully this is never used x-x...
-
-    // may not need until more utility is added.
-    Task<HubResponse> UserReportRadar(RadarReport dto);
-    Task<HubResponse> UserReportChat(RadarChatReport dto); // hopefully this is never used x-x...
-    #endregion Reporting
+    #endregion SERVER_CALLS
 }
+

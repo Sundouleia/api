@@ -1,6 +1,16 @@
 ﻿namespace SundouleiaAPI.Radar;
 
 /// <summary>
+///   The type of owned housing location
+/// </summary>
+public enum SanctionHouseType : sbyte
+{
+    Apartment = 0,
+    Personal = 1,
+    FreeCompany = 2,
+}
+
+/// <summary>
 ///   The ClientStructs TerritoryIntendedUse enum, relayed in server-side context.
 /// </summary>
 public enum IntendedUse : byte

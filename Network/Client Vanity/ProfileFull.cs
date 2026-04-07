@@ -8,4 +8,7 @@ namespace SundouleiaAPI.Network;
 ///     but also the avatar image with it.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record FullProfileData(UserData User, ProfileContent Info, string? Base64Image) : UserDto(User);
+public record UserProfileData(UserData User, ProfileContent Info, string? Base64Image) : UserDto(User);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionProfileData(SanctionData Sanction, SanctionProfileContent Content, SanctionProfileImages Images) : SanctionDto(Sanction);

@@ -1,3 +1,4 @@
+using SundouleiaAPI.Data;
 using SundouleiaAPI.Enums;
 using SundouleiaAPI.Network;
 
@@ -8,24 +9,51 @@ namespace SundouleiaAPI.Hub;
 /// </summary>
 public interface ISundouleiaHubClient : ISundouleiaHub
 {
-    // --- Server Messages ---
+    #region Server Information
     void OnServerMessage(Action<MessageSeverity, string> act);
     void OnHardReconnectMessage(Action<MessageSeverity, string, ServerState> act);
     void OnRadarUserFlagged(Action<string> act);
     void OnServerInfo(Action<ServerInfoResponse> act);
+    #endregion Server Information
 
-    // --- Pair/Request ---
+    #region Pairs / Requests
     void OnAddPair(Action<UserPair> act);
     void OnRemovePair(Action<UserDto> act);
     void OnPersistPair(Action<UserDto> act);
-    void OnAddRequest(Action<SundesmoRequest> act);
-    void OnRemoveRequest(Action<SundesmoRequest> act);
+    void OnAddRequest(Action<PairRequest> act);
+    void OnRemoveRequest(Action<PairRequest> act);
+    #endregion Pairs / Requests
 
-    // --- Moderation Utility ---
-    void OnBlocked(Action<UserDto> act);
-    void OnUnblocked(Action<UserDto> act);
+    #region Sanctions
+    void OnSanctionInfoUpdated(Action<SanctionInfo> act);
+    void OnSanctionPreferencesModified(Action<SanctionPreferencesDto> act);
+    void OnSanctionStyleModified(Action<SanctionStyleDto> act);
+    void OnSanctionRolesUpdated(Action<SanctionRolesUpdate> act);
+    void OnSanctionProfileUpdated(Action<SanctionDto> act);
+    // void OnSanctionAlertsUpdated(Action act); <-- WIP
+    void OnSanctionMemberJoined(Action<SanctionPairFullDto> act);
+    void OnSanctionMemberUpdated(Action<SanctionPairFullDto> act);
+    void OnSanctionMemberPauseStateChanged(Action<SanctionPairPause> act);
+    void OnSanctionMemberLeft(Action<SanctionPairDto> act);
+    void OnSanctionDeleted(Action<SanctionDto> act);
+    #endregion Sanctions
 
-    // -- Loci Integration --
+    #region Data Updates
+    void OnIpcUpdateFull(Action<IpcUpdateFull> act);
+    void OnIpcUpdateMods(Action<IpcUpdateMods> act);
+    void OnIpcUpdateOther(Action<IpcUpdateOther> act);
+    void OnIpcUpdateSingle(Action<IpcUpdateSingle> act);
+    #endregion Data Updates
+
+    #region Permission Updates
+    void OnChangeGlobalPerm(Action<ChangeGlobalPerm> act);
+    void OnBulkChangeGlobal(Action<ChangeAllGlobal> act);
+    void OnChangeUniquePerm(Action<ChangeUniquePerm> act);
+    void OnChangeUniquePerms(Action<ChangeUniquePerms> act);
+    void OnChangeAllUnique(Action<ChangeAllUnique> act);
+    #endregion Permission Updates
+
+    #region Loci DataShare
     void OnPairLociDataUpdated(Action<LociDataUpdate> act);
     void OnPairLociStatusesUpdate(Action<LociStatusesUpdate> act);
     void OnPairLociPresetsUpdate(Action<LociPresetsUpdate> act);
@@ -34,38 +62,27 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnApplyLociDataById(Action<ApplyLociDataById> act);
     void OnApplyLociStatus(Action<ApplyLociStatus> act);
     void OnRemoveLociData(Action<RemoveLociData> act);
+    #endregion Loci DataShare
 
-    // -- Data Updates --
-    void OnIpcUpdateFull(Action<IpcUpdateFull> act);
-    void OnIpcUpdateMods(Action<IpcUpdateMods> act);
-    void OnIpcUpdateOther(Action<IpcUpdateOther> act);
-    void OnIpcUpdateSingle(Action<IpcUpdateSingle> act);
-
-    // Need to update GlobalPerm names to match new format and stuff.
-    void OnSingleChangeGlobal(Action<ChangeGlobalPerm> act);
-    void OnBulkChangeGlobal(Action<ChangeAllGlobal> act);
-    void OnChangeUniquePerm(Action<ChangeUniquePerm> act);
-    void OnChangeUniquePerms(Action<ChangeUniquePerms> act);
-    void OnChangeAllUnique(Action<ChangeAllUnique> act);
-
-    // -- Radar --
-    void OnUserSendDirectMessage(Action<DirectChatMessage> act);
-    void OnUpdateLocation(Action<LocationUpdate> act);
-    void OnRadarChatJoin(Action<RadarChatMember> act);
-    void OnRadarChatPermissionChanged(Action<RadarChatMember> act);
+    #region Radar
     void OnRadarChatMessage(Action<LoggedRadarChatMessage> act);
-    void OnRadarChatLeave(Action act);
-    void OnRadarZoneJoin(Action<RadarMember> act);
-    void OnRadarZonePermissionChanged(Action<RadarMember> act);
-    void OnRadarZoneLeave(Action act);
-    void OnRadarGroupJoin(Action<RadarGroupMember> act);
-    void OnRadarGroupPermissionChanged(Action<RadarGroupMember> act);
-    void OnRadarGroupLeave(Action act);
+    void OnRadarChatAddUpdateUser(Action<RadarChatMember> act);
+    void OnRadarAddUpdateUser(Action<RadarMember> act);
+    void OnRadarRemoveUser(Action<UserDto> act);
+    void OnRadarGroupAddUpdateUser(Action<RadarGroupMember> act);
+    void OnRadarGroupRemoveUser(Action<UserDto> act);
+    #endregion Radar
 
-    // --- User Status Update ---
+    #region Chat
+    void OnChatMessageReceived(Action<ReceivedChatMessage> act);
+    #endregion Chat
+
+    #region User State / Status
+    void OnUserOnline(Action<OnlineUser> act);
     void OnUserIsUnloading(Action<UserDto> act);
     void OnUserOffline(Action<UserDto> act);
-    void OnUserOnline(Action<OnlineUser> act);
+    void OnUserVanityUpdate(Action<UserDto> act);
     void OnProfileUpdated(Action<UserDto> act);
     void OnShowVerification(Action<VerificationCode> act);
+    #endregion User State / Status
 }

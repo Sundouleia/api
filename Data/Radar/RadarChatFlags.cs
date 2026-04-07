@@ -7,7 +7,8 @@ namespace SundouleiaAPI.Data.Permissions;
 public enum RadarChatFlags : ushort
 {
     /// <summary>
-    ///   Assume Lurker state. Others see you as Anon-User and cannot interact with you.
+    ///   Assume Lurker state.
+    ///   Others see you as Anon-User and cannot interact with you.
     /// </summary>
     None = 0 << 0,
 
@@ -17,7 +18,8 @@ public enum RadarChatFlags : ushort
     UseDisplayName = 1 << 0,
 
     /// <summary>
-    ///   If others can view your profile from the chat. (this can be a matched name)
+    ///   If others can view your profile from the chat.
+    ///   (this can be a matched name)
     /// </summary>
     AllowProfileViewing = 1 << 1,
 
