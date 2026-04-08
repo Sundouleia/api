@@ -46,10 +46,7 @@ public record RadarGroupMember(UserData User, string HashedIdent, RadarGroupFlag
 public record RadarChatMember(UserData User, RadarChatFlags Flags) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record ReceivedChatMessage(ChatlogId Chatlog, UserData Sender, string Message) : UserDto(Sender);
+public record ReceivedChatMessage(ChatlogMessage Message);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record LoggedRadarChatMessage(string ChatId, string MsgId, DateTime TimeSentUTC, UserData Sender, string Message, RadarChatFlags Permissions);
-
-[MessagePackObject(keyAsPropertyName: true)]
-public record DirectChatMessage(UserData User, UserData Target, string Message, RadarChatFlags Permissions);

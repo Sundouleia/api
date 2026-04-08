@@ -1,4 +1,5 @@
 using MessagePack;
+using SundouleiaAPI.Radar;
 
 namespace SundouleiaAPI.Data;
 

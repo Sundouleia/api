@@ -38,8 +38,23 @@ public enum SundouleiaApiEc
     /// <summary> A Request for the recipient was already made by the sender. </summary>
     AlreadyExists = 10,
 
-    // ----- Client Vanity Specific Errors -----
+    /// <summary> Attempted to leave a group or place, but you never joined it. </summary>
+    AlreadyLeft = 11,
 
+    /// <summary> Invalid access level to perform the interaction. </summary>
+    AccessRestriction = 12,
+
+    // ---- Chat Related Errors ----
+    /// <summary> Attempted to join a radar chat in an area that restricts radar chat. </summary>
+    ChatForbidden,
+
+    /// <summary> The provided ChatlogId does not exist, or you were not in it. </summary>
+    ChatNotFound,
+
+    /// <summary> Attempted to do a chat related call for a user not part of the chat. </summary>
+    NotChatParticipant,
+
+    // ----- Client Vanity Specific Errors -----
     /// <summary> The provided image file is not in PNG format. </summary>
     InvalidImageFormat,
 
@@ -55,6 +70,10 @@ public enum SundouleiaApiEc
     /// <summary> Attempted to use an action requiring a vanity tier the caller does not have. </summary>
     InvalidVanityTier,
 
+    // ---- Sanction Specific Errors -----
+    InvalidSanction,
+
+    NotInSanction,
 
     // ----- Interaction Specific Errors -----
     /// <summary> Cannot use temporary-related interaction on permanent sundesmo. </summary>
@@ -76,16 +95,8 @@ public enum SundouleiaApiEc
     /// <summary> Made this call while there was no LocationData associated with the UserUID </summary>
     BadLocationCache,
 
-    /// <summary> Attempted to join a radar chat in an area that restricts radar chat. </summary>
-    ChatForbidden,
-
-    /// <summary> Attempted to leave a group or place, but you never joined it. </summary>
-    AlreadyLeft,
-
-
-
     // ----- SMA File Sharing Specific Errors -----
-    NotFileOwner,
+    NotOwner,
 
     InvalidPassword,
 

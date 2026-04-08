@@ -27,6 +27,12 @@ public readonly record struct ChatlogId(SundChatKind Kind, string ChatId);
 [MessagePackObject(keyAsPropertyName: true)]
 public readonly record struct SentRadarMessage(UserData Sender, string Message, RadarChatFlags Permissions);
 
+[MessagePackObject(keyAsPropertyName: true)]
+public readonly record struct SentSanctionMessage(string ChatId, UserData Sender, string Message);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public readonly record struct SentDirectMessage(UserData Sender, UserData Target, string Message);
+
 /// <summary>
 ///   The message stored in the database, holding nessisary information, regardless of type.
 /// </summary>

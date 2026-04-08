@@ -14,5 +14,5 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public bool AllowAnimationsPreferred { get; set; } = true;
     public bool AllowSoundsPreferred { get; set; } = true;
     public bool AllowVfxPreferred { get; set; } = true;
-    public List<SanctionRole> Roles { get; set; } = new();
+    public List<SanctionRoleData> Roles { get; set; } = new();
 }

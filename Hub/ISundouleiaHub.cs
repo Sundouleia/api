@@ -37,16 +37,20 @@ public interface ISundouleiaHub
 
     #region Callbacks (Sanctions)
     Task Callback_SanctionInfoUpdated(SanctionInfo dto); // Updates last validation, location, IsPublic, and chatlogId
-    Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
+    // Unsure yet when this will be called ^^^
+    Task Callback_SanctionNamesUpdated(SanctionNamesDto dto);
+    Task Callback_SanctionVisibilityUpdated(SanctionVisibilityDto dto);
     Task Callback_SanctionStyleModified(SanctionStyleDto dto);
+    Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
     Task Callback_SanctionRolesUpdated(SanctionRolesUpdate dto); // Updates to the roles, and their permissions
     Task Callback_SanctionProfileUpdated(SanctionDto dto); // Triggers a refresh
     // Task Callback_SanctionAlertsUpdated(); // WIP - Let Sanctions make alert notifications to subscribed members.
     Task Callback_SanctionMemberJoined(SanctionPairFullDto dto); // When someone joins the sanction
     Task Callback_SanctionMemberUpdated(SanctionPairFullDto dto); // Information regarding this user was updated. Maybe split into subcalls.
-    Task Callback_SanctionMemberPauseStateChanged(SanctionPairPause dto); // A sanction member paused you. (pointless since it Should be from direct pairs only?)
     Task Callback_SanctionMemberLeft(SanctionPairDto dto); // When someone leaves the sanction
+    Task Callback_SanctionMembersLeft(SanctionPairsDto dto);
     Task Callback_SanctionDeleted(SanctionDto dto); // On the deletion of a Sanction
+    // Called by the cleanup ^^^
     #endregion Callbacks (Sanctions)
 
     #region Callbacks (Data Updates)
@@ -114,21 +118,20 @@ public interface ISundouleiaHub
     /// <summary> Retrieve the ProfileData for a User. Can filter if NSFW is allowed </summary>
     Task<UserProfileData> UserGetProfileData(UserDto user, bool allowNSFW);
     /// <summary> Retrieve the ProfileData for a Sanction. Can filter if NSFW is allowed </summary>
-    Task<SanctionProfileData> UserGetSanctionProfile(string sanctionId, bool allowNSFW);
+    Task<SanctionProfileData> UserGetSanctionProfile(SanctionDto sanction, bool allowNSFW);
     /// <summary> Allows anyone to freely update their UserData alias </summary>
     Task<HubResponse> UserSetAlias(AliasUpdate dto);
     /// <summary> Updates the DisplayName and colors for a user. Supporter exclusive </summary>
     Task<HubResponse> UserSetVanity(VanityUpdate dto);
     // Modify as we update the profile layout...
     /// <summary> Update the image contents of your ProfileData, check image validity server-side. </summary>
-    Task<HubResponse> UserUpdateProfilePicture(ProfileImage dto);
+    Task<HubResponse> UserUpdateProfilePicture(ProfileImageData dto);
     /// <summary> Update the contents of your ProfileData. </summary>
-    Task<HubResponse> UserUpdateProfileContent(ProfileContent dto);
+    Task<HubResponse> UserUpdateProfileContent(ProfileContentData dto);
+    /// <summary> Sends a chat message to a SanctionedGroup. </summary>
+    Task<HubResponse> UserSendSanctionChat(SentSanctionMessage message);
     /// <summary> Sends a direct chat message to another user, if allowed. </summary>
-    Task<HubResponse> UserSendChatDM(DirectChatMessage message);
-    /// <summary> Explodes your logged in user from the Database, and all associated data with it. </summary>
-    /// <remarks> Removing your primary profile deletes all other profiles linked to your account. </remarks>
-    Task<HubResponse> UserDelete();
+    Task<HubResponse> UserSendChatDM(SentDirectMessage message);
     #endregion Vanity & Cosmetics
 
     #region User Permissions
@@ -185,6 +188,9 @@ public interface ISundouleiaHub
     Task<HubResponse> UserRemovePair(UserDto user);
     /// <remarks> Remove pairs for all users passed in if result is successful. </remarks>
     Task<HubResponse> UserRemovePairs(UserListDto users);
+    /// <summary> Explodes your logged in user from the Database, and all associated data with it. </summary>
+    /// <remarks> Removing your primary profile deletes all other profiles linked to your account. </remarks>
+    Task<HubResponse> UserDelete();
     /// <summary> Blocks a users AccountUID, restricting view from them or any other profiles. </summary>
     /// <remarks> Blocking will prevent seeing their chat messages, visibility in Radar, and data exchange. </summary>
     Task<HubResponse> UserBlockAccount(UserDto user);
@@ -208,7 +214,7 @@ public interface ISundouleiaHub
 
     /// <summary> Updates a SanctionPairs roles. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.AssignRoles"/></remarks>
-    Task<HubResponse> SanctionSetUserRoles(SanctionPairRoles dto);
+    Task<HubResponse<SanctionPairInfo>> SanctionSetUserRoles(SanctionPairRoles dto);
 
     /// <summary> Marks a Sanction as public or private. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeVisibility"/></remarks>
@@ -220,11 +226,11 @@ public interface ISundouleiaHub
 
     /// <summary> Updates the sanctions profile images. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
-    Task<HubResponse> SanctionSetProfileImages(SanctionProfileImages dto);
+    Task<HubResponse> SanctionSetProfileImages(SanctionProfileImagesDto dto);
 
     /// <summary> Updates the sanctions profiles contents. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
-    Task<HubResponse> SanctionSetProfileContent(SanctionProfileContent dto);
+    Task<HubResponse> SanctionSetProfileContent(SanctionProfileContentDto dto);
 
     /// <summary> Sets or clears the SanctionGroups password. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangePassword"/></remarks>

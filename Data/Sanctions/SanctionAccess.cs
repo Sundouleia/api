@@ -44,5 +44,11 @@ public enum SanctionAccess : ushort
     /// <summary> Can remove other SanctionedPairs from the SanctionedGroup. </summary>
     /// <remarks> Cannot remove users from a role higher than your own. </remarks>
     RemoveMembers = 1 << 10,
+
+    /// <summary> Reserved usually for the Owner. Be careful who has this. </summary>
+    Admin = 1 << 11,
+
+    All = AssignRoles | ChatModeration | ChangeVisibility | ChangePreferences | ChangeProfile 
+        | ChangePassword | ChangeNames | ChangeStyle | ChangeUserAccess | BanMembers | RemoveMembers | Admin
 }
 

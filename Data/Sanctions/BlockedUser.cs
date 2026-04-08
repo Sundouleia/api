@@ -4,5 +4,5 @@ using SundouleiaAPI.Network;
 namespace SundouleiaAPI.Data;
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record BlockedUser(UserData User, DateTime BlockedAt) : UserDto(User);
+public record BlockedUser(UserData User, DateTime BlockedAtUTC) : UserDto(User);
 
