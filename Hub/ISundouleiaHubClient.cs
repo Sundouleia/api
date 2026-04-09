@@ -1,6 +1,12 @@
+using SundouleiaAPI.Alterations;
+using SundouleiaAPI.Connection;
 using SundouleiaAPI.Data;
-using SundouleiaAPI.Enums;
-using SundouleiaAPI.Network;
+using SundouleiaAPI.Loci;
+using SundouleiaAPI.Permissions;
+using SundouleiaAPI.Radar;
+using SundouleiaAPI.Requests;
+using SundouleiaAPI.Sanctions;
+using SundouleiaAPI.User;
 
 namespace SundouleiaAPI.Hub;
 
@@ -33,7 +39,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     // void OnSanctionAlertsUpdated(Action act); <-- WIP
     void OnSanctionMemberJoined(Action<SanctionPairFullDto> act);
     void OnSanctionMemberUpdated(Action<SanctionPairFullDto> act);
-    void OnSanctionMemberPauseStateChanged(Action<SanctionPairPause> act);
+    // void OnSanctionMemberPauseStateChanged(Action<SanctionPairPause> act);
     void OnSanctionMemberLeft(Action<SanctionPairDto> act);
     void OnSanctionDeleted(Action<SanctionDto> act);
     #endregion Sanctions

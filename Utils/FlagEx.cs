@@ -1,5 +1,7 @@
-using SundouleiaAPI.Data.Permissions;
-using SundouleiaAPI.Enums;
+using SundouleiaAPI.Alterations;
+using SundouleiaAPI.Loci;
+using SundouleiaAPI.Radar;
+using SundouleiaAPI.Sanctions;
 
 namespace SundouleiaAPI;
 

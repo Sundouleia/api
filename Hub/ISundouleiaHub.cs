@@ -1,7 +1,15 @@
+using SundouleiaAPI.Alterations;
+using SundouleiaAPI.Chat;
+using SundouleiaAPI.Connection;
 using SundouleiaAPI.Data;
-using SundouleiaAPI.Data.Permissions;
-using SundouleiaAPI.Enums;
-using SundouleiaAPI.Network;
+using SundouleiaAPI.Files;
+using SundouleiaAPI.Loci;
+using SundouleiaAPI.Permissions;
+using SundouleiaAPI.Radar;
+using SundouleiaAPI.Reporting;
+using SundouleiaAPI.Requests;
+using SundouleiaAPI.Sanctions;
+using SundouleiaAPI.User;
 
 namespace SundouleiaAPI.Hub;
 
@@ -19,13 +27,13 @@ public interface ISundouleiaHub
 
     #region CALLBACKS
 
-    #region Callbacks (Server Information)
+    #region Callbacks (Connection Responses)
     Task Callback_ServerMessage(MessageSeverity severity, string message);
     Task Callback_HardReconnectMessage(MessageSeverity severity, string message, ServerState state);
     Task Callback_RadarUserFlagged(string flaggedUserUid); // Maybe remove
     Task Callback_ServerInfo(ServerInfoResponse info);
 
-    #endregion Callbacks (Server Information)
+    #endregion Callbacks (Connection Responses)
 
     #region Callbacks (Pairs/Requests)
     Task Callback_AddPair(UserPair dto);
@@ -36,7 +44,7 @@ public interface ISundouleiaHub
     #endregion Callbacks (Pairs/Requests)
 
     #region Callbacks (Sanctions)
-    Task Callback_SanctionInfoUpdated(SanctionInfo dto); // Updates last validation, location, IsPublic, and chatlogId
+    Task Callback_SanctionInfo(SanctionInfo dto); // Updates last validation, location, IsPublic, and chatlogId
     // Unsure yet when this will be called ^^^
     Task Callback_SanctionNamesUpdated(SanctionNamesDto dto);
     Task Callback_SanctionVisibilityUpdated(SanctionVisibilityDto dto);
@@ -53,22 +61,22 @@ public interface ISundouleiaHub
     // Called by the cleanup ^^^
     #endregion Callbacks (Sanctions)
 
-    #region Callbacks (Data Updates)
+    #region Callbacks (Alterations)
     Task Callback_IpcUpdateFull(IpcUpdateFull dto);
     Task Callback_IpcUpdateMods(IpcUpdateMods dto);
     Task Callback_IpcUpdateOther(IpcUpdateOther dto);
     Task Callback_IpcUpdateSingle(IpcUpdateSingle dto);
-    #endregion Callbacks (Data Updates)
+    #endregion Callbacks (Alterations)
 
-    #region Callbacks (Permission Updates)
+    #region Callbacks (Permissions)
     Task Callback_ChangeGlobalPerm(ChangeGlobalPerm dto);
     Task Callback_ChangeAllGlobal(ChangeAllGlobal dto);
     Task Callback_ChangeUniquePerm(ChangeUniquePerm dto);
     Task Callback_ChangeUniquePerms(ChangeUniquePerms dto);
     Task Callback_ChangeAllUnique(ChangeAllUnique dto);
-    #endregion Callbacks (Permission Updates)
+    #endregion Callbacks (Permissions)
 
-    #region Callbacks (Loci DataShare)
+    #region Callbacks (Locis)
     Task Callback_PairLociDataUpdated(LociDataUpdate dto);
     Task Callback_PairLociStatusesUpdate(LociStatusesUpdate dto);
     Task Callback_PairLociPresetsUpdate(LociPresetsUpdate dto);
@@ -77,7 +85,7 @@ public interface ISundouleiaHub
     Task Callback_ApplyLociDataById(ApplyLociDataById dto);
     Task Callback_ApplyLociStatus(ApplyLociStatus dto);
     Task Callback_RemoveLociData(RemoveLociData dto);
-    #endregion Callbacks (Loci DataShare)
+    #endregion Callbacks (Locis)
 
     #region Callbacks (Radar)
     Task Callback_RadarChatMessage(LoggedRadarChatMessage dto);
@@ -304,7 +312,7 @@ public interface ISundouleiaHub
     Task<HubResponse<List<RadarMember>>> RadarAreaJoin(RadarMember joinDto);
     /// <summary> Update the stored permissions on redis, and inform others of this change. </summary>
     Task<HubResponse> RadarAreaPermissionChange(RadarMember updateDto);
-    /// <summary> Leaves the current PublicRadar. (TODO: Maybe have this leave the RadarGroup as well?) </summary>
+    /// <summary> Leaves the current PublicRadar. </summary>
     Task<HubResponse> RadarAreaLeave();
     /// <summary>
     ///   Joins the public RadarGroup. <br/>

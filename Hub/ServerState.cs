@@ -1,4 +1,4 @@
-namespace SundouleiaAPI.Enums;
+namespace SundouleiaAPI.Hub;
 
 public enum ServerState
 {
