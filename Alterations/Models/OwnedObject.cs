@@ -1,4 +1,4 @@
-﻿namespace SundouleiaAPI.Alterations;
+﻿namespace SundouleiaAPI;
 
 public enum OwnedObject
 {
