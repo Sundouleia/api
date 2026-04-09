@@ -31,48 +31,86 @@ public interface ISundouleiaHub
     Task Callback_ServerMessage(MessageSeverity severity, string message);
     Task Callback_HardReconnectMessage(MessageSeverity severity, string message, ServerState state);
     Task Callback_RadarUserFlagged(string flaggedUserUid); // Maybe remove
+    /// <summary> Gets total online users. </summary>
     Task Callback_ServerInfo(ServerInfoResponse info);
-
     #endregion Callbacks (Connection Responses)
 
     #region Callbacks (Pairs/Requests)
     Task Callback_AddPair(UserPair dto);
     Task Callback_RemovePair(UserDto dto);
     Task Callback_PersistPair(UserDto dto);
+    /// <summary> Occurs upon recieving a pair request from someone else. </summary>
+    /// <remarks> This is not called in responce to your own sent requests. </remarks>
     Task Callback_AddRequest(PairRequest dto);
+    /// <summary> When a pending request was rejected, or pending request was canceled. </summary>
+    /// <remarks> This is not called in responce to your own sent requests. </remarks>
     Task Callback_RemoveRequest(PairRequest dto);
     #endregion Callbacks (Pairs/Requests)
 
     #region Callbacks (Sanctions)
-    Task Callback_SanctionInfo(SanctionInfo dto); // Updates last validation, location, IsPublic, and chatlogId
-    // Unsure yet when this will be called ^^^
+    /// <summary> Updates last validation, location, IsPublic, and chatlogId </summary>
+    Task Callback_SanctionInfo(SanctionInfo dto);
+    /// <summary> SanctionName or ChatlogId was modified </summary>
     Task Callback_SanctionNamesUpdated(SanctionNamesDto dto);
+    /// <summary> Sanction went Public to private, or private to public </summary>
     Task Callback_SanctionVisibilityUpdated(SanctionVisibilityDto dto);
+    /// <summary> The DDS Folder style for the sanction was modified </summary>
     Task Callback_SanctionStyleModified(SanctionStyleDto dto);
+    /// <summary> The default DataSync preferences for the Sanction were modified. </summary>
     Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
-    Task Callback_SanctionRolesUpdated(SanctionRolesUpdate dto); // Updates to the roles, and their permissions
-    Task Callback_SanctionProfileUpdated(SanctionDto dto); // Triggers a refresh
+    /// <summary> Updates to the roles and their permissions. </summary>
+    Task Callback_SanctionRolesUpdated(SanctionRolesUpdate dto);
+    /// <summary> Informs that the Sanction updated its profile. The client should trigger a refresh </summary>
+    Task Callback_SanctionProfileUpdated(SanctionDto dto);
     // Task Callback_SanctionAlertsUpdated(); // WIP - Let Sanctions make alert notifications to subscribed members.
-    Task Callback_SanctionMemberJoined(SanctionPairFullDto dto); // When someone joins the sanction
-    Task Callback_SanctionMemberUpdated(SanctionPairFullDto dto); // Information regarding this user was updated. Maybe split into subcalls.
-    Task Callback_SanctionMemberLeft(SanctionPairDto dto); // When someone leaves the sanction
+    /// <summary> When someone joins the sanction </summary>
+    Task Callback_SanctionMemberJoined(SanctionPairFullDto dto);
+    /// <summary> A sanction pairs roles, access or chatlog state was updated </summary>
+    Task Callback_SanctionMemberUpdated(SanctionPairFullDto dto);
+    /// <summary> An individual has left the Sanction Group </summary>
+    Task Callback_SanctionMemberLeft(SanctionPairDto dto);
+    /// <summary> Multiple individuals left a SanctionedGroup </summary>
     Task Callback_SanctionMembersLeft(SanctionPairsDto dto);
-    Task Callback_SanctionDeleted(SanctionDto dto); // On the deletion of a Sanction
+    /// <summary> Called when a sanction that you were in was deleted due to a timeout or invalidation period expiring. </summary>
+    Task Callback_SanctionDeleted(SanctionDto dto);
     // Called by the cleanup ^^^
     #endregion Callbacks (Sanctions)
 
     #region Callbacks (Alterations)
+    /// <summary>
+    ///   Updates both mods and other visual data. Should only be used on 
+    ///   initial load, or during a full update. <para />
+    ///   Mods will include what mods to add and what mods to remove from the existing collection.
+    /// </summary>
     Task Callback_IpcUpdateFull(IpcUpdateFull dto);
+    /// <summary>
+    ///   Handle mod updates only, by adding / removing the respective mods 
+    ///   from the existing collection.
+    /// </summary>
     Task Callback_IpcUpdateMods(IpcUpdateMods dto);
+    /// <summary>
+    ///   Perform an update on a single non-mod IPC change (heels, honorific ext.) <para />
+    ///   Useful when only changing one thing and want to do near instantaneous updates.
+    /// </summary>
     Task Callback_IpcUpdateOther(IpcUpdateOther dto);
+    /// <summary>
+    ///   Whenever one of our Sundesmo have updated a permission in their GlobalPerms.
+    /// </summary>
     Task Callback_IpcUpdateSingle(IpcUpdateSingle dto);
     #endregion Callbacks (Alterations)
 
     #region Callbacks (Permissions)
     Task Callback_ChangeGlobalPerm(ChangeGlobalPerm dto);
+    /// <summary> A Sundesmo updated their GlobalPerms in bulk. </summary>
     Task Callback_ChangeAllGlobal(ChangeAllGlobal dto);
+    /// <summary>
+    ///     Whenever one of our Sundesmo have updated a permission in their PairPerms. <para />
+    ///     Only ever called when a sundesmo changes their own permissions for our client. <para />
+    ///     <b> THIS IS NOT CALLED WHEN WE CHANGE A PAIRPERM FOR A SUNDESMO. </b>
+    /// </summary>
     Task Callback_ChangeUniquePerm(ChangeUniquePerm dto);
     Task Callback_ChangeUniquePerms(ChangeUniquePerms dto);
+    /// <summary> A Sundesmo updated their PairPerms in bulk. </summary>
     Task Callback_ChangeAllUnique(ChangeAllUnique dto);
     #endregion Callbacks (Permissions)
 
@@ -88,24 +126,47 @@ public interface ISundouleiaHub
     #endregion Callbacks (Locis)
 
     #region Callbacks (Radar)
+    /// <summary> Aquire a validated message processed by the server for this RadarChat instance. </summary>
     Task Callback_RadarChatMessage(LoggedRadarChatMessage dto);
-    Task Callback_RadarChatAddUpdateUser(RadarChatMember dto); // name is placeholder
+    /// <summary>
+    ///   Lets us know when a chat user updated their permissions. <para />
+    ///   Could also be used for joining the chat, but there isnt anything doing that currently (yet™).
+    /// </summary>
+    Task Callback_RadarChatAddUpdateUser(RadarChatMember dto);
+    /// <summary> When a user joins our current PublicRadar location. (Or permissions update) </summary>
+    /// <remarks> Ensure the ident of the stored actor reflects the current ident passed by this call. </remarks>
     Task Callback_RadarAddUpdateUser(RadarMember dto);
+    /// <summary> When a user leaves our current PublicRadar location </summary>
     Task Callback_RadarRemoveUser(UserDto dto);
+    /// <summary> When a user joins our current RadarGroup. (Or permissions update) </summary>
     Task Callback_RadarGroupAddUpdateUser(RadarGroupMember dto);
+    /// <summary> When a user leaves our current RadarGroup </summary>
     Task Callback_RadarGroupRemoveUser(UserDto dto);
     #endregion Callbacks (Radar)
 
     #region Callbacks (Chat)
+    /// <summary>
+    ///   Sent from another chat participant in any active Non-RadarChat you are in. <para/>
+    ///   This includes chats attached to groups you own / are a part of, or SanctionedGroup chats. 
+    /// </summary>
     Task Callback_ChatMessageReceived(ReceivedChatMessage dto);
     #endregion Callbacks (Chat)
 
     #region Callbacks (User State/Status)
+    /// <summary> Whenever one of our Sundesmo connects to Sundouleia. </summary>
     Task Callback_UserOnline(OnlineUser dto);
     Task Callback_UserIsUnloading(UserDto dto);
+    /// <summary> Whenever one of our Sundesmo disconnects from Sundouleia. </summary>
     Task Callback_UserOffline(UserDto dto);
-    Task Callback_UserVanityUpdated(UserDto dto); // Enforce a refresh on all vanity status for the pair.
+    /// <summary> Enforce a refresh on all vanity status for the pair. </summary>
+    Task Callback_UserVanityUpdated(UserDto dto);
+    /// <summary> Another user, paired or not, has a profile update. </summary>
+    /// <remarks> If we received this, reload their profile in the cache </remarks>
     Task Callback_UserProfileUpdated(UserDto dto);
+    /// <summary>
+    ///     When verifying your account via the discord bot, this will pass in
+    ///     the code that displays in-game for you to respond to the bot with.
+    /// </summary>
     Task Callback_ShowVerification(VerificationCode dto);
     #endregion Callbacks (User State/Status)
 

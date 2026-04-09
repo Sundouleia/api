@@ -31,16 +31,17 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     #endregion Pairs / Requests
 
     #region Sanctions
-    void OnSanctionInfoUpdated(Action<SanctionInfo> act);
-    void OnSanctionPreferencesModified(Action<SanctionPreferencesDto> act);
+    void OnSanctionInfo(Action<SanctionInfo> act);
+    void OnSanctionNamesUpdated(Action<SanctionNamesDto> act);
+    void OnSanctionVisibilityUpdated(Action<SanctionVisibilityDto> act);
     void OnSanctionStyleModified(Action<SanctionStyleDto> act);
+    void OnSanctionPreferencesModified(Action<SanctionPreferencesDto> act);
     void OnSanctionRolesUpdated(Action<SanctionRolesUpdate> act);
     void OnSanctionProfileUpdated(Action<SanctionDto> act);
-    // void OnSanctionAlertsUpdated(Action act); <-- WIP
     void OnSanctionMemberJoined(Action<SanctionPairFullDto> act);
     void OnSanctionMemberUpdated(Action<SanctionPairFullDto> act);
-    // void OnSanctionMemberPauseStateChanged(Action<SanctionPairPause> act);
     void OnSanctionMemberLeft(Action<SanctionPairDto> act);
+    void OnSanctionMembersLeft(Action<SanctionPairsDto> act);
     void OnSanctionDeleted(Action<SanctionDto> act);
     #endregion Sanctions
 
@@ -87,7 +88,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnUserOnline(Action<OnlineUser> act);
     void OnUserIsUnloading(Action<UserDto> act);
     void OnUserOffline(Action<UserDto> act);
-    void OnUserVanityUpdate(Action<UserDto> act);
+    void OnUserVanityUpdated(Action<UserDto> act);
     void OnProfileUpdated(Action<UserDto> act);
     void OnShowVerification(Action<VerificationCode> act);
     #endregion User State / Status
