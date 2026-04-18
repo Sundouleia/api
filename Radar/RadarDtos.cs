@@ -19,15 +19,17 @@ public record LocationUpdate(UserData User, LocationMeta Location, bool JoinChat
 }
 
 /// <summary>
-///   The compiled return result dto from a location update, returning all members of each component we are in.
+///   The compiled return result dto from a location update,
+///   returning all members of each component we are in.
 /// </summary>
+/// <remarks> If a returned element is null, it means you could not join it. </remarks>
 [MessagePackObject(keyAsPropertyName: true)]
 public record LocationUpdateResult()
 {
-    public List<LoggedRadarChatMessage> ChatHistory     { get; set; } = [];
-    public List<RadarMember>            RadarUsers      { get; set; } = [];
-    public List<RadarGroupMember>       RadarGroupUsers { get; set; } = [];
-    public List<SanctionInfo>           SanctionInfos   { get; set; } = [];
+    public List<SanctionInfo>?           SanctionInfos   { get; set; }
+    public List<LoggedRadarChatMessage>? ChatHistory     { get; set; }
+    public List<RadarMember>?            RadarUsers      { get; set; }
+    public List<RadarGroupMember>?       RadarGroupUsers { get; set; }
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -39,6 +41,7 @@ public record RadarGroupJoin(UserData User, string HashedIdent, RadarGroupFlags 
 [MessagePackObject(keyAsPropertyName: true)]
 public record RadarGroupMember(UserData User, string HashedIdent, RadarGroupFlags Flags) : UserDto(User)
 {
+    public RadarGroupFlags Flags { get; set; } = Flags;
     public bool PausedByMe { get; set; } = false;
     public bool PausedByMember { get; set; } = false;
 

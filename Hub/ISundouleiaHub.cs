@@ -279,7 +279,7 @@ public interface ISundouleiaHub
     Task<HubResponse<List<SanctionBannedUser>>> GetSanctionBannedUsers(SanctionDto sanction);
 
     /// <summary> Updates the Roles via addition, removal, or updating existing. </summary>
-    Task<HubResponse> SanctionRolesUpdate(SanctionRolesUpdate dto);
+    Task<HubResponse<SanctionRolesUpdate>> SanctionRolesUpdate(SanctionRolesDto dto);
 
     /// <summary> Updates a SanctionPairs roles. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.AssignRoles"/></remarks>

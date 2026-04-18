@@ -13,13 +13,13 @@ namespace SundouleiaAPI.Permissions;
 [MessagePackObject(keyAsPropertyName: true)]
 public record ChangeUniquePerm(UserData User, string PermName, object NewValue) : UserDto(User)
 {
-    public override string ToString() => $"ChangeUniquePerm: Target -> {User.DisplayName}, Changed [{PermName}] to [{NewValue}]";
+    public override string ToString() => $"ChangeUniquePerm: Target -> {User.AliasOrUID}, Changed [{PermName}] to [{NewValue}]";
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record ChangeUniquePerms(UserData User, Dictionary<string, object> Changes) : UserDto(User)
 {
-    public override string ToString() => $"ChangeUniquePerms: Target -> {User.DisplayName}, Changed [{string.Join(", ", Changes.Select(kv => $"{kv.Key} -> {kv.Value}"))}]";
+    public override string ToString() => $"ChangeUniquePerms: Target -> {User.AliasOrUID}, Changed [{string.Join(", ", Changes.Select(kv => $"{kv.Key} -> {kv.Value}"))}]";
 }
 
 /// <summary>
@@ -30,7 +30,7 @@ public record ChangeUniquePerms(UserData User, Dictionary<string, object> Change
 [MessagePackObject(keyAsPropertyName: true)]
 public record ChangeAllUnique(UserData User, PairPerms NewPerms) : UserDto(User)
 {
-    public override string ToString() => $"ChangeAllUnique: Target -> {User.DisplayName}, NewPerms -> {NewPerms}";
+    public override string ToString() => $"ChangeAllUnique: Target -> {User.AliasOrUID}, NewPerms -> {NewPerms}";
 }
 
 // ----------------------------------------------------------------------------

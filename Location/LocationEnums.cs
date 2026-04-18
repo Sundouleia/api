@@ -3,7 +3,7 @@
 /// <summary>
 ///   The type of owned housing location
 /// </summary>
-public enum SanctionHouseType : sbyte
+public enum SanctionHouseType : byte
 {
     Apartment = 0,
     Personal = 1,

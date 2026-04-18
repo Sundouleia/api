@@ -8,6 +8,9 @@ namespace SundouleiaAPI.Sanctions;
 public record SanctionRolesUpdate(SanctionData Sanction, List<SanctionRoleData> Roles, Dictionary<string, SanctionAccess> UpdatedAccess) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
+public record SanctionRolesDto(SanctionData Sanction, List<SanctionRoleData> Roles) : SanctionDto(Sanction);
+
+[MessagePackObject(keyAsPropertyName: true)]
 public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]

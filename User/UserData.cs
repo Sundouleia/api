@@ -15,7 +15,7 @@ public record UserData(
     CkVanityTier Tier       = CkVanityTier.NoRole,
     DateTime?    CreatedOn  = null)
 {
-    [IgnoreMember] public string DisplayName => VanityName ?? Alias ?? UID;
+    [IgnoreMember] public string AliasOrUID => string.IsNullOrEmpty(Alias) ? UID : Alias;
     [IgnoreMember] public string AnonName => VanityName ?? "Anon.User-" + UID[^4..];
     [IgnoreMember] public string AnonTag => UID[^4..];
 }
