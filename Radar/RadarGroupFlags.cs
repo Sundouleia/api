@@ -31,17 +31,17 @@ public enum RadarGroupFlags : ushort
     Targetable = 1 << 2,
 
     /// <summary>
+    ///   If your nameplate can change colors to indicate being in the radar.
+    /// </summary>
+    AllowNameplateColor = 1 << 3,
+
+    /// <summary>
     ///   Allows others to view your profile (shows Anon-Name)
     /// </summary>
-    AllowProfileViewing = 1 << 3,
+    AllowProfileViewing = 1 << 4,
 
     /// <summary>
     ///   Allows others from radar to send you a DM. (WIP)
     /// </summary>
-    AllowMessaging = 1 << 4,
-
-    /// <summary>
-    ///  Enforce ProfileViewing and DMing to RadarPairs and Sundesmos only.
-    /// </summary>
-    RestrictAllowancesToPairs = 1 << 5,
+    AllowMessaging = 1 << 5,
 }

@@ -11,12 +11,11 @@ public class UserDataComparer : IEqualityComparer<UserData>
 
     public bool Equals(UserData? x, UserData? y)
     {
-        if (x is null || y is null) return false;
+        if (x is null || y is null)
+            return false;
         return x.UID.Equals(y.UID, StringComparison.Ordinal);
     }
 
     public int GetHashCode(UserData obj)
-    {
-        return obj.UID.GetHashCode();
-    }
+        => obj.UID.GetHashCode();
 }

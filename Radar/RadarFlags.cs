@@ -27,27 +27,32 @@ public enum RadarFlags : ushort
     AllowTargeting = 1 << 2,
 
     /// <summary>
+    ///   If your nameplate can change colors to indicate being in the radar.
+    /// </summary>
+    AllowNameplateColor = 1 << 3,
+
+    /// <summary>
     ///   Allows others to view your profile (matches Anon-Name)
     /// </summary>
-    AllowProfileViewing = 1 << 3,
+    AllowProfileViewing = 1 << 4,
 
     /// <summary>
     ///   Allows others from radar to send you a direct message.
     /// </summary>
-    AllowDirectMessages = 1 << 4,
+    AllowDirectMessages = 1 << 5,
 
     /// <summary>
     ///   Allows others to send you a pair request.
     /// </summary>
-    AllowRequests = 1 << 5,
+    AllowRequests = 1 << 6,
 
     /// <summary>
     ///   Enforce requests sent to you as permanent, to become temporary instead.
     /// </summary>
-    EnforceTemporary = 1 << 6,
+    EnforceTemporary = 1 << 7,
 
     /// <summary>
     ///   Automatically accept sent radar requests.
     /// </summary>
-    AutoAcceptRequests = 1 << 7,
+    AutoAcceptRequests = 1 << 8,
 }
