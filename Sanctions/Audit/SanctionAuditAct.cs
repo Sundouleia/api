@@ -1,6 +1,6 @@
 namespace SundouleiaAPI.Sanctions;
 
-public enum SanctionAuditAct : int
+public enum SanctionAuditAct : byte
 {
     RoleData = 0,
     UserRoles = 1,
@@ -17,5 +17,5 @@ public enum SanctionAuditAct : int
     Cleanup = 12,
     AlertMade = 13,
     AlertRemoved = 14,
-    None = int.MaxValue,
+    None = byte.MaxValue,
 }

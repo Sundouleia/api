@@ -13,7 +13,8 @@ public enum SanctionHouseType : byte
 /// <summary>
 ///   The ClientStructs TerritoryIntendedUse enum, relayed in server-side context.
 /// </summary>
-public enum IntendedUse : byte
+/// <remarks> Primarily intended for chat decoding. </remarks>
+public enum XivIntendedUse : byte
 {
     Town = 0, // Forbid
     Overworld = 1,
@@ -83,12 +84,3 @@ public enum IntendedUse : byte
 
     UNK = byte.MaxValue
 }
-
-/// <summary>
-///   Stores a struct of information in relation to a TerritoryId.
-/// </summary>
-/// <param name="Id"> The Territories PlaceRegionID </param>
-/// <param name="RegionName"> The Territories PlaceRegion Name </param>
-/// <param name="TerritoryId"> The TerritoryID </param>
-/// <param name="TerritoryName"> The name of that Territory </param>
-public readonly record struct PlaceRegionData(ushort Id, string RegionName, ushort TerritoryId, string TerritoryName);

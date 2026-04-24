@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace SundouleiaAPI.Util;
+namespace SundouleiaAPI;
 public static class PropertyChanger
 {
     public static BindingFlags PropertyFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;
