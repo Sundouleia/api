@@ -95,7 +95,7 @@ public enum SundouleiaApiEc
     /// <summary> Made this call while there was no LocationData associated with the UserUID </summary>
     BadLocationCache,
 
-    RestrictedArea,
+    ForbiddenRadarArea,
 
     // ----- SMA File Sharing Specific Errors -----
     NotOwner,
