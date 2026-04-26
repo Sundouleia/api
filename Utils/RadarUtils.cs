@@ -109,6 +109,9 @@ public static class RadarUtils
         return $"{loc.WorldId}_{loc.TerritoryId}";
     }
 
+    public static bool IsValidRadarGroupArea(this LocationMeta loc)
+        => loc.RadarGroupKey() is not null;
+
     /// <summary>
     ///   Gets the ChatlogID of the current location for a RadarChat identifier
     /// </summary>
