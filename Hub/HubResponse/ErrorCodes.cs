@@ -45,9 +45,6 @@ public enum SundouleiaApiEc
     AccessRestriction = 12,
 
     // ---- Chat Related Errors ----
-    /// <summary> Attempted to join a radar chat in an area that restricts radar chat. </summary>
-    ChatForbidden,
-
     /// <summary> The provided ChatlogId does not exist, or you were not in it. </summary>
     ChatNotFound,
 
