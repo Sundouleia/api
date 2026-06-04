@@ -170,7 +170,8 @@ public interface ISundouleiaHub
 
     #region Bulk Data Retrieval
     Task<List<UserPair>> GetAllSundesmos();
-    Task<List<SanctionDataFull>> GetJoinedSanctions(); // Get this first so we can run a bulk online call after.
+    // This also gets the online status for all sanctionPairs with InSync set to true.
+    Task<List<SanctionDataFull>> GetJoinedSanctions();
     Task<List<OnlineUser>> GetOnlineSundesmos();
     // Maybe conjoin these into a single call to avoid thousands of users opening 5 calls on connections.
     Task<List<PairRequest>> GetRequests();
@@ -273,6 +274,9 @@ public interface ISundouleiaHub
     /// <summary> Updates the Roles via addition, removal, or updating existing. </summary>
     Task<HubResponse<SanctionRolesUpdate>> SanctionRolesUpdate(SanctionRolesDto dto);
 
+    /// <summary> Updates the Alerts via addition, removal, or updating existing. </summary>
+    Task<HubResponse<SanctionAlertsDto>> SanctionAlertsUpdate(SanctionAlertsDto dto);
+
     /// <summary> Updates a SanctionPairs roles. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.AssignRoles"/></remarks>
     Task<HubResponse<SanctionPairInfo>> SanctionSetUserRoles(SanctionPairRoles dto);
@@ -322,7 +326,7 @@ public interface ISundouleiaHub
     Task<HubResponse<SanctionDataFull>> SanctionJoin(SanctionJoinDto dto);
 
     /// <summary> Sets participant status for the sanctions data sync and chat elements. </summary>
-    Task<HubResponse<SanctionOptInData>> SanctionSetOptIns(SanctionOptInPrefs dto);
+    Task<HubResponse<List<ChatlogMessage>>> SanctionSetOptIns(SanctionOptInPrefs dto);
 
     /// <summary>
     ///   Leave a SanctionedGroup, optionally unpairing with the Groups 

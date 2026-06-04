@@ -1,4 +1,5 @@
 using SundouleiaAPI.Alterations;
+using SundouleiaAPI.Chat;
 using SundouleiaAPI.Connection;
 using SundouleiaAPI.Data;
 using SundouleiaAPI.Loci;
@@ -34,7 +35,6 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnSanctionInfo(Action<SanctionInfo> act);
     void OnSanctionNamesUpdated(Action<SanctionNamesDto> act);
     void OnSanctionVisibilityUpdated(Action<SanctionVisibilityDto> act);
-    void OnSanctionStyleModified(Action<SanctionStyleDto> act);
     void OnSanctionPreferencesModified(Action<SanctionPreferencesDto> act);
     void OnSanctionRolesUpdated(Action<SanctionRolesUpdate> act);
     void OnSanctionProfileUpdated(Action<SanctionDto> act);
@@ -72,17 +72,12 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     #endregion Loci DataShare
 
     #region Radar
-    void OnRadarChatMessage(Action<LoggedRadarChatMessage> act);
     void OnRadarChatAddUpdateUser(Action<RadarChatMember> act);
     void OnRadarAddUpdateUser(Action<RadarMember> act);
     void OnRadarRemoveUser(Action<UserDto> act);
     void OnRadarGroupAddUpdateUser(Action<RadarGroupMember> act);
     void OnRadarGroupRemoveUser(Action<UserDto> act);
     #endregion Radar
-
-    #region Chat
-    void OnChatMessageReceived(Action<SentChatMessage> act);
-    #endregion Chat
 
     #region User State / Status
     void OnUserOnline(Action<OnlineUser> act);
@@ -91,5 +86,6 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnUserVanityUpdated(Action<UserDto> act);
     void OnProfileUpdated(Action<UserDto> act);
     void OnShowVerification(Action<VerificationCode> act);
+    void OnChatMessageReceived(Action<ChatlogMessage> act);
     #endregion User State / Status
 }

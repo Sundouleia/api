@@ -11,8 +11,7 @@ public record SanctionPairDto(SanctionData Sanction, UserData User) : SanctionDt
 public record SanctionPairsDto(SanctionData Sanction, List<UserData> Users) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionPairFullDto(SanctionData Sanction, UserData User, bool IsSyncing, bool InChat, List<string> RoleIds, SanctionAccess Access, DateTime JoinedAt) : SanctionPairDto(Sanction, User);
-
+public record SanctionPairFullDto(SanctionData Sanction, UserData User, string HashedIdent, bool InSync, bool InChat, List<string> RoleIds, SanctionAccess Access, DateTime JoinedAt) : SanctionPairDto(Sanction, User);
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionPairRoles(SanctionData Sanction, UserData User, List<string> RoleIds) : SanctionPairDto(Sanction, User);
 
@@ -20,9 +19,9 @@ public record SanctionPairRoles(SanctionData Sanction, UserData User, List<strin
 //public record SanctionPairInfo(UserData User, bool InChat, List<string> RoleIds, SanctionAccess Access, DateTime JoinedAt) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionPairInfo(UserData User, DateTime JoinedAt) : UserDto(User)
+public record SanctionPairInfo(UserData User, string HashedIdent, DateTime JoinedAt) : UserDto(User)
 {
-    public bool IsSyncing { get; set; } = false;
+    public bool InSync { get; set; } = false;
     public bool InChat { get; set; } = false;
     public HashSet<string> RoleIds { get; set; } = [];
     public SanctionAccess Access { get; set; } = SanctionAccess.None;

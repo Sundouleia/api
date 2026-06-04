@@ -27,6 +27,3 @@ public record SanctionDataFull(SanctionData Sanction, SanctionInfo Info, List<Sa
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionProfileData(SanctionData Sanction, SanctionProfileContentData Content, SanctionProfileImageData Images) : SanctionDto(Sanction);
-
-[MessagePackObject(keyAsPropertyName: true)]
-public record SanctionOptInData(List<ChatlogMessage> ChatHistory, List<OnlineUser> OnlineUsers);
