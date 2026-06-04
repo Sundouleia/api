@@ -1,4 +1,6 @@
 using MessagePack;
+using SundouleiaAPI.Chat;
+using SundouleiaAPI.Connection;
 using SundouleiaAPI.Data;
 using SundouleiaAPI.User;
 
@@ -9,6 +11,9 @@ public record SanctionRolesUpdate(SanctionData Sanction, List<SanctionRoleData> 
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionRolesDto(SanctionData Sanction, List<SanctionRoleData> Roles) : SanctionDto(Sanction);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionAlertsDto(SanctionData Sanction, List<SanctionAlertData> Alerts) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic) : SanctionDto(Sanction);
@@ -29,10 +34,11 @@ public record SanctionPasswordDto(SanctionData Sanction, string NewPassword) : S
 public record SanctionNamesDto(SanctionData Sanction, string NewSanctionName, string NewChatlogId) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionStyleDto(SanctionData Sanction, SanctionStyle Style) : SanctionDto(Sanction);
-
-[MessagePackObject(keyAsPropertyName: true)]
 public record SanctionUserAccessDto(SanctionData Sanction, UserData User, SanctionAccess Access) : SanctionPairDto(Sanction, User);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionBanDto(SanctionData Sanction, UserData User, string BanReason) : SanctionPairDto(Sanction, User);
+
+// User edits.
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionOptInPrefs(SanctionData Sanction, bool SyncUser, bool ChatUser) : SanctionDto(Sanction);

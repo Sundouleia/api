@@ -1,4 +1,6 @@
 using MessagePack;
+using SundouleiaAPI.Chat;
+using SundouleiaAPI.Connection;
 using SundouleiaAPI.Data;
 
 namespace SundouleiaAPI.Sanctions;
@@ -18,10 +20,13 @@ public record SanctionData(string SID, string Name, DateTime ValidatedAt, DateTi
 public record SanctionDto(SanctionData Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionDataFull(SanctionData Sanction, SanctionInfo Info, List<SanctionPairInfo> Members) : SanctionDto(Sanction);
+public record SanctionDataFull(SanctionData Sanction, SanctionInfo Info, List<SanctionPairInfo> Members, List<ChatlogMessage> Chat) : SanctionDto(Sanction);
 
 /// <summary> 
 ///   A SanctionedGroups full profile data
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionProfileData(SanctionData Sanction, SanctionProfileContentData Content, SanctionProfileImageData Images) : SanctionDto(Sanction);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionOptInData(List<ChatlogMessage> ChatHistory, List<OnlineUser> OnlineUsers);

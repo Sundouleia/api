@@ -1,6 +1,66 @@
 using MessagePack;
+using System.Runtime.CompilerServices;
 
 namespace SundouleiaAPI.Location;
+
+public enum EstateHouseType
+{
+    Apartment = 0,
+    Small = 1,
+    Medium = 2,
+    Large = 3,
+}
+
+// Sanctions are only defined by their exterior location, and not their interior location.
+// As such as can assume static territory id locations.
+public static class SanctionHouseExtensions
+{
+    public static readonly IReadOnlyDictionary<ushort, HashSet<int>> MediumPlots = new Dictionary<ushort, HashSet<int>>
+    {
+        [979] = new HashSet<int> { 21, 18, 17, 8, 7, 2, 26 },
+        [641] = new HashSet<int> { 28, 24, 19, 1, 8, 13, 15 },
+        [341] = new HashSet<int> { 4, 6, 11, 12, 8, 25, 19 },
+        [339] = new HashSet<int> { 1, 4, 6, 7, 14, 29, 30 },
+        [340] = new HashSet<int> { 30, 27, 21, 5, 1, 16, 11 }
+    };
+
+    public static readonly IReadOnlyDictionary<ushort, HashSet<int>> LargePlots = new Dictionary<ushort, HashSet<int>>
+    {
+        [979] = new HashSet<int> { 22, 30, 12 },
+        [641] = new HashSet<int> { 30, 16, 7 },
+        [341] = new HashSet<int> { 5, 13, 30 },
+        [339] = new HashSet<int> { 2, 5, 15 },
+        [340] = new HashSet<int> { 28, 3, 6 }
+    };
+
+    public static EstateHouseType GetEstateType(this SanctionHouseId houseId)
+    {
+        if (houseId.IsApartment)
+            return EstateHouseType.Apartment;
+        if (MediumPlots.TryGetValue(houseId.TerritoryId, out var mp) && mp.Contains(houseId.PlotIndex))
+            return EstateHouseType.Medium;
+        if (LargePlots.TryGetValue(houseId.TerritoryId, out var lp) && lp.Contains(houseId.PlotIndex))
+            return EstateHouseType.Large;
+        return EstateHouseType.Small;
+    }
+
+    public static uint GetIconId(this SanctionHouseId houseId, bool isLocked)
+    {
+        if (houseId.IsApartment)
+            return 60789;
+        // Otherwise do a check based on lock type.
+        return (houseId.GetEstateType(), isLocked) switch
+        {
+            (EstateHouseType.Small, true) => 60751,
+            (EstateHouseType.Medium, true) => 60752,
+            (EstateHouseType.Large, true) => 60753,
+            (EstateHouseType.Small, false) => 60754,
+            (EstateHouseType.Medium, false) => 60755,
+            (EstateHouseType.Large, false) => 60756,
+            _ => 60754
+        };
+    }
+}
 
 // Helper to mimic behavior of parsed HouseId from FFXIVClientStructs, designed for SanctionedGroups.
 public struct SanctionHouseId : IEquatable<SanctionHouseId>, IComparable<SanctionHouseId>
@@ -96,6 +156,16 @@ public struct SanctionHouseId : IEquatable<SanctionHouseId>, IComparable<Sanctio
     /// <summary> Returns the correct join key for this location. </summary>
     public ulong JoinSanctionKey => IsApartment ? ApartmentJoinKey : PlotJoinKey;
     #endregion
+
+    public string TerritoryName => TerritoryId switch
+    {
+        339 => "Mist",
+        340 => "Lav. Beds",
+        341 => "Goblet",
+        641 => "Shirogane",
+        979 => "Empyreum",
+        _ => "Unknown"
+    };
 
     #region Matching logic
     public bool SharesWardWith(SanctionHouseId other)
