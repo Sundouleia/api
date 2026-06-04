@@ -81,7 +81,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     #endregion Radar
 
     #region Chat
-    void OnChatMessageReceived(Action<ReceivedChatMessage> act);
+    void OnChatMessageReceived(Action<SentChatMessage> act);
     #endregion Chat
 
     #region User State / Status

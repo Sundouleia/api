@@ -54,15 +54,14 @@ public interface ISundouleiaHub
     Task Callback_SanctionNamesUpdated(SanctionNamesDto dto);
     /// <summary> Sanction went Public to private, or private to public </summary>
     Task Callback_SanctionVisibilityUpdated(SanctionVisibilityDto dto);
-    /// <summary> The DDS Folder style for the sanction was modified </summary>
-    Task Callback_SanctionStyleModified(SanctionStyleDto dto);
     /// <summary> The default DataSync preferences for the Sanction were modified. </summary>
     Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
     /// <summary> Updates to the roles and their permissions. </summary>
     Task Callback_SanctionRolesUpdated(SanctionRolesUpdate dto);
     /// <summary> Informs that the Sanction updated its profile. The client should trigger a refresh </summary>
-    Task Callback_SanctionProfileUpdated(SanctionDto dto);
-    // Task Callback_SanctionAlertsUpdated(); // WIP - Let Sanctions make alert notifications to subscribed members.
+    Task Callback_SanctionProfileUpdated(SanctionDto dto, bool wasContentUpdate);
+    /// <summary> The Alerts for the sanction were updated. </summary>
+    Task Callback_SanctionAlertsUpdated(SanctionAlertsDto dto);
     /// <summary> When someone joins the sanction </summary>
     Task Callback_SanctionMemberJoined(SanctionPairFullDto dto);
     /// <summary> A sanction pairs roles, access or chatlog state was updated </summary>
@@ -126,8 +125,6 @@ public interface ISundouleiaHub
     #endregion Callbacks (Locis)
 
     #region Callbacks (Radar)
-    /// <summary> Aquire a validated message processed by the server for this RadarChat instance. </summary>
-    Task Callback_RadarChatMessage(LoggedRadarChatMessage dto);
     /// <summary>
     ///   Lets us know when a chat user updated their permissions. <para />
     ///   Could also be used for joining the chat, but there isnt anything doing that currently (yet™).
@@ -143,14 +140,6 @@ public interface ISundouleiaHub
     /// <summary> When a user leaves our current RadarGroup </summary>
     Task Callback_RadarGroupRemoveUser(UserDto dto);
     #endregion Callbacks (Radar)
-
-    #region Callbacks (Chat)
-    /// <summary>
-    ///   Sent from another chat participant in any active Non-RadarChat you are in. <para/>
-    ///   This includes chats attached to groups you own / are a part of, or SanctionedGroup chats. 
-    /// </summary>
-    Task Callback_ChatMessageReceived(ReceivedChatMessage dto);
-    #endregion Callbacks (Chat)
 
     #region Callbacks (User State/Status)
     /// <summary> Whenever one of our Sundesmo connects to Sundouleia. </summary>
@@ -168,6 +157,11 @@ public interface ISundouleiaHub
     ///     the code that displays in-game for you to respond to the bot with.
     /// </summary>
     Task Callback_ShowVerification(VerificationCode dto);
+    /// <summary>
+    ///   Sent from another chat participant in any active Non-RadarChat you are in. <para/>
+    ///   This includes chats attached to groups you own / are a part of, or SanctionedGroup chats. 
+    /// </summary>
+    Task Callback_ChatMessageReceived(ChatlogMessage dto);
     #endregion Callbacks (User State/Status)
 
     #endregion CALLBACKS
@@ -176,11 +170,12 @@ public interface ISundouleiaHub
 
     #region Bulk Data Retrieval
     Task<List<UserPair>> GetAllSundesmos();
+    Task<List<SanctionDataFull>> GetJoinedSanctions(); // Get this first so we can run a bulk online call after.
     Task<List<OnlineUser>> GetOnlineSundesmos();
     // Maybe conjoin these into a single call to avoid thousands of users opening 5 calls on connections.
     Task<List<PairRequest>> GetRequests();
     Task<List<BlockedUser>> GetBlockedUsers();
-    Task<List<SanctionDataFull>> GetJoinedSanctions();
+    Task<List<ChatlogMessage>> GetChatHistory(ChatHistoryRequest dto);
     #endregion Bulk Data Retrieval
 
     #region Vanity & Cosmetics
@@ -197,10 +192,7 @@ public interface ISundouleiaHub
     Task<HubResponse> UserUpdateProfilePicture(ProfileImageData dto);
     /// <summary> Update the contents of your ProfileData. </summary>
     Task<HubResponse> UserUpdateProfileContent(ProfileContentData dto);
-    /// <summary> Sends a chat message to a SanctionedGroup. </summary>
-    Task<HubResponse> UserSendSanctionChat(SentSanctionMessage message);
-    /// <summary> Sends a direct chat message to another user, if allowed. </summary>
-    Task<HubResponse> UserSendChatDM(SentDirectMessage message);
+    Task<HubResponse> UserSendChat(SentMessage message);
     #endregion Vanity & Cosmetics
 
     #region User Permissions
@@ -309,10 +301,6 @@ public interface ISundouleiaHub
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeNames"/></remarks>
     Task<HubResponse> SanctionSetName(SanctionNamesDto dto);
 
-    /// <summary> Updates the Icon, IconColor, LabelColor, BorderColor, GradientColor. </summary>
-    /// <remarks> Action requires <see cref="SanctionAccess.ChangeStyle"/></remarks>
-    Task<HubResponse> SanctionSetStyle(SanctionStyleDto dto);
-
     /// <summary> Changes the <see cref="SanctionAccess"/> of another SanctionPair. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeUserAccess"/></remarks>
     Task<HubResponse> SanctionSetUserAccess(SanctionUserAccessDto dto);
@@ -331,7 +319,10 @@ public interface ISundouleiaHub
 
     /// <summary> Join a SanctionedGroup for the given ID and optional password. </summary>
     /// <returns> The current SanctionPairs, online, offline, and visible, and associated data. </returns>
-    Task<HubResponse<SanctionDataFull>> SanctionJoin(SanctionDto sanction, string password);
+    Task<HubResponse<SanctionDataFull>> SanctionJoin(SanctionJoinDto dto);
+
+    /// <summary> Sets participant status for the sanctions data sync and chat elements. </summary>
+    Task<HubResponse<SanctionOptInData>> SanctionSetOptIns(SanctionOptInPrefs dto);
 
     /// <summary>
     ///   Leave a SanctionedGroup, optionally unpairing with the Groups 
@@ -359,11 +350,9 @@ public interface ISundouleiaHub
     /// <summary> Joins the RadarChat for the location stored on the server. </summary>
     /// <param name="joinDto"> Info for your client that will be stored via Redis for this location. </param>
     /// <returns> Returns the recent messages for the area, if the join was valid. </returns>
-    Task<HubResponse<List<LoggedRadarChatMessage>>> RadarChatJoin(RadarChatMember joinDto);
+    Task<HubResponse<List<ChatlogMessage>>> RadarChatJoin(RadarChatMember joinDto);
     /// <summary> Update the stored permissions on redis, and inform others of this change. </summary>
     Task<HubResponse> RadarChatPermissionChange(RadarChatMember updateDto);
-    /// <summary> Sends a chat message to the RadarChat in the current location. </summary>
-    Task<HubResponse> RadarSendChat(SentRadarMessage messageDto);
     /// <summary> Manually leaves the RadarChat for the current area </summary>
     Task<HubResponse> RadarChatLeave();
     /// <summary> Joins the PublicRadar for the current location. All locations should be valid. </summary>

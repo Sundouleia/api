@@ -31,7 +31,7 @@ public enum SanctionAccess : ushort
     /// <summary> Can change the sanction and chat name </summary>
     ChangeNames = 1 << 6,
 
-    /// <summary> Can change the sanctioned groups folder style </summary>
+    /// <summary> Can change the sanctions display style </summary>
     ChangeStyle = 1 << 7,
 
     /// <summary> Can change the permission access of others in the group. </summary>

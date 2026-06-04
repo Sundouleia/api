@@ -17,4 +17,4 @@ public record AliasUpdate(string NewAlias);
 ///   as they aren't linked to pairing.
 /// </remarks>
 [MessagePackObject(keyAsPropertyName: true)]
-public record VanityUpdate(string VanityName, uint NameColor, uint NameGlowColor);
+public record VanityUpdate(string VanityName, uint? NameColor, uint? NameGlowColor);

@@ -3,7 +3,7 @@ namespace SundouleiaAPI.Hub;
 /// <summary>
 ///     All Error Codes for SundouleiaAPI calls.
 /// </summary>
-public enum SundouleiaApiEc
+public enum  SundouleiaApiEc
 {
     /// <summary> Indicates a successful interaction. </summary>
     Success = 0,

@@ -26,10 +26,10 @@ public record LocationUpdate(UserData User, LocationMeta Location, bool JoinChat
 [MessagePackObject(keyAsPropertyName: true)]
 public record LocationUpdateResult()
 {
-    public List<SanctionInfo>?           SanctionInfos   { get; set; }
-    public List<LoggedRadarChatMessage>? ChatHistory     { get; set; }
-    public List<RadarMember>?            RadarUsers      { get; set; }
-    public List<RadarGroupMember>?       RadarGroupUsers { get; set; }
+    public List<SanctionInfo>?      SanctionInfos   { get; set; }
+    public List<ChatlogMessage>?    ChatHistory     { get; set; }
+    public List<RadarMember>?       RadarUsers      { get; set; }
+    public List<RadarGroupMember>?  RadarGroupUsers { get; set; }
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -41,7 +41,7 @@ public record RadarGroupJoin(UserData User, string HashedIdent, RadarGroupFlags 
 [MessagePackObject(keyAsPropertyName: true)]
 public record RadarGroupMember(UserData User, string HashedIdent, RadarGroupFlags Flags) : UserDto(User)
 {
-    public RadarGroupFlags Flags { get; set; } = Flags;
+    public RadarGroupFlags Flags { get; set; } = Flags; // Remove?
     public bool PausedByMe { get; set; } = false;
     public bool PausedByMember { get; set; } = false;
 
@@ -51,9 +51,3 @@ public record RadarGroupMember(UserData User, string HashedIdent, RadarGroupFlag
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record RadarChatMember(UserData User, RadarChatFlags Flags) : UserDto(User);
-
-[MessagePackObject(keyAsPropertyName: true)]
-public record ReceivedChatMessage(ChatlogMessage Message);
-
-[MessagePackObject(keyAsPropertyName: true)]
-public record LoggedRadarChatMessage(string ChatId, string MsgId, DateTime TimeSentUTC, UserData Sender, string Message, RadarChatFlags Permissions);
