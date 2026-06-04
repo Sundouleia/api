@@ -144,29 +144,32 @@ public static class RadarUtils
         };
     }
 
+    public static string? ToDistrictName(ushort territoryId)
+        => territoryId switch
+        {
+            339 => "Mist",
+            340 => "LavBeds",
+            341 => "Goblet",
+            641 => "Shirogane",
+            979 => "Empyreum",
+            _ => null,
+        };
+
     // Refer to FFXIVClientStructs HouseId on how to mimic parsing.
     public static string GetSanctionName(ulong houseId)
     {
-        if (houseId == 0)
-            return "Sanctioned Group";
+        var data = (SanctionHouseId)houseId;
+        if (houseId == 0 || !data.IsValid)
+            return "UNK Sanction";
 
-        // Extract Data2 (ushort at offset 2 = bits 16-31)
-        ushort data2 = (ushort)((houseId >> 16) & 0xFFFF);
-        // WardIndex = bits 0-5
-        byte wardIndex = (byte)(data2 & 0x3F); // 0b0011_1111
-        // RoomNumber = bits 6-15
-        int roomNumber = (data2 >> 6) & 0x3FF; // 10 bits
-        // Extract first byte for Unit info (offset 0)
-        byte unitByte = (byte)(houseId & 0xFF);
-        // Determine apartment vs plot
-        bool isApartment = (unitByte & 0b0000_0001) != 0;
-        // PlotIndex for homes
-        byte plotIndex = (byte)((unitByte >> 1) & 0x7F); // remaining 7 bits?
-
-        if (isApartment)
-            return $"Sanctioned Room {roomNumber}";
+        if (data.IsApartment)
+        {
+            return $"Sanctioned Apartment #{data.RoomNumber}";
+        }
         else
-            return $"Sanctioned Plot W{wardIndex + 1}P{plotIndex + 1}";
+        {
+            return $"Sanctioned Estate, W{data.WardIndex + 1}, P{data.PlotIndex + 1}";
+        }
     }
 }
 #nullable disable

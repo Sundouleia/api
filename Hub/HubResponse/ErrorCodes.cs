@@ -94,6 +94,8 @@ public enum SundouleiaApiEc
 
     ForbiddenRadarArea,
 
+    ChatNameExists,
+
     // ----- SMA File Sharing Specific Errors -----
     NotOwner,
 
