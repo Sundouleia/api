@@ -17,6 +17,8 @@ public record struct LocationMeta
     public short  RoomId           { get; set; }
     public bool   IsIndoors        { get; set; }
     public ulong  HouseId          { get; set; } // Only thing really important
+
+    public static readonly LocationMeta Empty = new();
 }
 
 /// <summary>

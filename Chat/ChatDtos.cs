@@ -7,10 +7,16 @@ namespace SundouleiaAPI.Chat;
 ///   The Chatlog Identifier, and the type of chat it's for.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public readonly record struct ChatlogId(SundChatKind Kind, string ChatId)
+public readonly record struct ChatlogId(SundChatKind Kind, string ChatId) : IEquatable<ChatlogId>
 {
     // Add support for DM's soon.
     public static readonly ChatlogId Invalid = new(SundChatKind.Direct, string.Empty);
+
+    public bool Equals(ChatlogId other)
+        => ChatId == other.ChatId;
+
+    public override int GetHashCode()
+        => ChatId?.GetHashCode() ?? 0;
 }
 
 /// <summary>

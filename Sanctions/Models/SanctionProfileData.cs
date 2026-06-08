@@ -26,6 +26,7 @@ public record SanctionProfileContentData
 
     public byte OpenDaysBitMask { get; set; } = 0;
     // Split via commas.
-    public string[] Tags { get; set; } = [];
+    public string[] Tags { get; set; } = []; 
+    // Figure out how to handle tags, since each should have a color maybe for style.
     public string VenueScopeKey { get; set; } = string.Empty;
 }

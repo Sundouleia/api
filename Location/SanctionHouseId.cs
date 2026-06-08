@@ -37,9 +37,9 @@ public static class SanctionHouseExtensions
     {
         if (houseId.IsApartment)
             return EstateHouseType.Apartment;
-        if (MediumPlots.TryGetValue(houseId.TerritoryId, out var mp) && mp.Contains(houseId.PlotIndex))
+        if (MediumPlots.TryGetValue(houseId.TerritoryId, out var mp) && mp.Contains(houseId.PlotIndex + 1))
             return EstateHouseType.Medium;
-        if (LargePlots.TryGetValue(houseId.TerritoryId, out var lp) && lp.Contains(houseId.PlotIndex))
+        if (LargePlots.TryGetValue(houseId.TerritoryId, out var lp) && lp.Contains(houseId.PlotIndex + 1))
             return EstateHouseType.Large;
         return EstateHouseType.Small;
     }
