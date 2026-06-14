@@ -9,7 +9,7 @@ namespace SundouleiaAPI.Alterations;
 public record IpcDeltas(UserData User, NewModDeltas ModDeltas, VisualDeltas VisualDeltas, bool InitData) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record IpcModDeltas(UserData User, ModDeltas ModDeltas, string ManipString) : UserDto(User);
+public record IpcModDeltas(UserData User, NewModDeltas ModDeltas, string ManipString) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record IpcVisualDeltas(UserData User, VisualDeltas Deltas) : UserDto(User);

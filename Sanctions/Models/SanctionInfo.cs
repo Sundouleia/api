@@ -15,8 +15,8 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public bool AllowAnimationsPreferred { get; set; } = true;
     public bool AllowSoundsPreferred { get; set; } = true;
     public bool AllowVfxPreferred { get; set; } = true;
-    public bool SyncMountMinionFashion { get; set; } = true;
-    public bool SyncPets { get; set; } = true;
-    public bool SyncCompanions { get; set; } = true;
+    public bool MountMinionSyncPreferred { get; set; } = true;
+    public bool PetSyncPreferred { get; set; } = true;
+    public bool CompanionSyncPreferred { get; set; } = true;
     public List<SanctionRoleData> Roles { get; set; } = new();
 }

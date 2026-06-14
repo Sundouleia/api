@@ -29,7 +29,10 @@ namespace SundouleiaAPI.Alterations;
 //    public static ModUpdates Empty => new([], []);
 //}
 
+[MessagePackObject(keyAsPropertyName: true)]
 public record NewModDeltas(List<ValidModFileDto> Added, List<ModFileDto> Removed, int UploadingCount);
+
+[MessagePackObject(keyAsPropertyName: true)]
 public record ModDeltas(List<ModFileDto> Added, List<ModFileDto> Removed);
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -71,3 +74,21 @@ public record ModFileDto(string ResolvedPath, string[] GamePaths, bool IsFileSwa
 ///// <param name="GamePaths"> The game paths this mod affects. </param>
 //[MessagePackObject(keyAsPropertyName: true)]
 //public record FileSwapData(string SwappedPath, string[] GamePaths);
+
+public static class DtoExtensions
+{
+    public static ValidModFileDto ToValid(this ModFileDto file)
+        => new(file.ResolvedPath, file.GamePaths, file.IsFileSwap)
+        {
+            Hash = file.Hash,
+            Source = file.Source,
+        };
+
+    public static ValidModFileDto ToValid(this ModFileDto file, string link)
+        => new(file.ResolvedPath, file.GamePaths, file.IsFileSwap)
+        {
+            Hash = file.Hash,
+            Source = file.Source,
+            Link = link
+        };
+}
