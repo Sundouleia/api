@@ -1,6 +1,4 @@
 using MessagePack;
-using SundouleiaAPI.Chat;
-using SundouleiaAPI.Connection;
 using SundouleiaAPI.Data;
 using SundouleiaAPI.User;
 
@@ -19,7 +17,7 @@ public record SanctionAlertsDto(SanctionData Sanction, List<SanctionAlertData> A
 public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionPreferencesDto(SanctionData Sanction, bool Animations, bool Sounds, bool Vfx) : SanctionDto(Sanction);
+public record SanctionPreferencesDto(SanctionData Sanction, bool Anims, bool Sfx, bool Vfx, bool SyncMinionMount, bool SyncPet, bool SyncBuddy) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionProfileImagesDto(SanctionData Sanction, SanctionProfileImageData Images) : SanctionDto(Sanction);

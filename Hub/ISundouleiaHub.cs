@@ -81,21 +81,21 @@ public interface ISundouleiaHub
     ///   initial load, or during a full update. <para />
     ///   Mods will include what mods to add and what mods to remove from the existing collection.
     /// </summary>
-    Task Callback_IpcUpdateFull(IpcUpdateFull dto);
+    Task Callback_IpcUpdateFull(IpcDeltas dto);
     /// <summary>
     ///   Handle mod updates only, by adding / removing the respective mods 
     ///   from the existing collection.
     /// </summary>
-    Task Callback_IpcUpdateMods(IpcUpdateMods dto);
+    Task Callback_IpcUpdateMods(IpcModDeltas dto);
     /// <summary>
     ///   Perform an update on a single non-mod IPC change (heels, honorific ext.) <para />
     ///   Useful when only changing one thing and want to do near instantaneous updates.
     /// </summary>
-    Task Callback_IpcUpdateOther(IpcUpdateOther dto);
+    Task Callback_IpcUpdateOther(IpcVisualDeltas dto);
     /// <summary>
     ///   Whenever one of our Sundesmo have updated a permission in their GlobalPerms.
     /// </summary>
-    Task Callback_IpcUpdateSingle(IpcUpdateSingle dto);
+    Task Callback_IpcUpdateSingle(IpcVisualDeltaSingle dto);
     #endregion Callbacks (Alterations)
 
     #region Callbacks (Permissions)
@@ -208,10 +208,10 @@ public interface ISundouleiaHub
     #endregion User Permissions
 
     #region PlayerData Updates
-    Task<HubResponse<List<ValidFileHash>>> UserPushIpcFull(PushIpcFull dto); // Full data push.
-    Task<HubResponse<List<ValidFileHash>>> UserPushIpcMods(PushIpcMods dto); // Penumbra related update only
-    Task<HubResponse> UserPushIpcOther(PushIpcOther dto);   // Updates excluding file replacements
-    Task<HubResponse> UserPushIpcSingle(PushIpcSingle dto); // Individual IPC update for fast transit
+    Task<HubResponse<List<ValidModFileDto>>> UserPushIpcFull(PushIpcDeltas dto); // Full data push.
+    Task<HubResponse<List<ValidModFileDto>>> UserPushIpcMods(PushModsDeltas dto); // Penumbra related update only
+    Task<HubResponse> UserPushIpcOther(PushVisualDeltas dto);   // Updates excluding file replacements
+    Task<HubResponse> UserPushIpcSingle(PushDeltaSingle dto); // Individual IPC update for fast transit
     #endregion PlayerData Updates
 
     #region Loci

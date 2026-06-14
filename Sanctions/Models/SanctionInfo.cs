@@ -12,9 +12,11 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public bool IsPublic { get; set; } = true;
     public string? Password { get; set; } = null;
     public string ChatlogId { get; set; } = string.Empty;
-    public SanctionStyle Style { get; set; } = new();
     public bool AllowAnimationsPreferred { get; set; } = true;
     public bool AllowSoundsPreferred { get; set; } = true;
     public bool AllowVfxPreferred { get; set; } = true;
+    public bool SyncMountMinionFashion { get; set; } = true;
+    public bool SyncPets { get; set; } = true;
+    public bool SyncCompanions { get; set; } = true;
     public List<SanctionRoleData> Roles { get; set; } = new();
 }

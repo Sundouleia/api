@@ -47,10 +47,10 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     #endregion Sanctions
 
     #region Data Updates
-    void OnIpcUpdateFull(Action<IpcUpdateFull> act);
-    void OnIpcUpdateMods(Action<IpcUpdateMods> act);
-    void OnIpcUpdateOther(Action<IpcUpdateOther> act);
-    void OnIpcUpdateSingle(Action<IpcUpdateSingle> act);
+    void OnIpcUpdateFull(Action<IpcDeltas> act);
+    void OnIpcUpdateMods(Action<IpcModDeltas> act);
+    void OnIpcUpdateOther(Action<IpcVisualDeltas> act);
+    void OnIpcUpdateSingle(Action<IpcVisualDeltaSingle> act);
     #endregion Data Updates
 
     #region Permission Updates

@@ -6,16 +6,16 @@ using SundouleiaAPI.User;
 namespace SundouleiaAPI.Alterations;
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record IpcUpdateFull(UserData User, NewModUpdates ModData, VisualUpdate IpcData, bool IsInitialData) : UserDto(User);
+public record IpcDeltas(UserData User, NewModDeltas ModDeltas, VisualDeltas VisualDeltas, bool InitData) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record IpcUpdateMods(UserData User, NewModUpdates ModData, string ManipString) : UserDto(User);
+public record IpcModDeltas(UserData User, ModDeltas ModDeltas, string ManipString) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record IpcUpdateOther(UserData User, VisualUpdate IpcData) : UserDto(User);
+public record IpcVisualDeltas(UserData User, VisualDeltas Deltas) : UserDto(User);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record IpcUpdateSingle(UserData User, OwnedObject ObjType, IpcKind Type, string NewData) : UserDto(User);
+public record IpcVisualDeltaSingle(UserData User, OwnedObject ObjType, IpcKind Type, string NewData) : UserDto(User);
 
 
 [MessagePackObject(keyAsPropertyName: true)]
