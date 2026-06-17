@@ -30,10 +30,16 @@ namespace SundouleiaAPI.Alterations;
 //}
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record NewModDeltas(List<ValidModFileDto> Added, List<ModFileDto> Removed, int UploadingCount);
+public record NewModDeltas(List<ValidModFileDto> Added, List<ValidModFileDto> Removed, int UploadingCount)
+{
+    public bool HasChanges => Added.Count is not 0 || Removed.Count is not 0;
+}
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record ModDeltas(List<ModFileDto> Added, List<ModFileDto> Removed);
+public record ModDeltas(List<ModFileDto> Added, List<ModFileDto> Removed)
+{
+    public bool HasChanges => Added.Count is not 0 || Removed.Count is not 0;
+}
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record ValidModFileDto(string ResolvedPath, string[] GamePaths, bool IsFileSwap)
@@ -90,5 +96,12 @@ public static class DtoExtensions
             Hash = file.Hash,
             Source = file.Source,
             Link = link
+        };
+
+    public static ModFileDto ToBase(this ValidModFileDto valid)
+        => new(valid.ResolvedPath, valid.GamePaths, valid.IsFileSwap)
+        {
+            Hash = valid.Hash,
+            Source = valid.Source,
         };
 }

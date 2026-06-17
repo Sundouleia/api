@@ -33,20 +33,33 @@ public record LocationUpdateResult()
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record RadarMember(UserData User, string HashedIdent, RadarFlags Flags) : UserDto(User);
-
-[MessagePackObject(keyAsPropertyName: true)]
 public record RadarGroupJoin(UserData User, string HashedIdent, RadarGroupFlags Flags) : UserDto(User);
 
-[MessagePackObject(keyAsPropertyName: true)]
-public record RadarGroupMember(UserData User, string HashedIdent, RadarGroupFlags Flags) : UserDto(User)
+public interface IRadarSyncMember
 {
-    public RadarGroupFlags Flags { get; set; } = Flags; // Remove?
+    public UserData User { get; }
+    public string HashedIdent { get; }
+    public string RadarName { get; } // Maybe remove, idk.
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record RadarMember(UserData User, string HashedIdent, RadarFlags Flags) : UserDto(User), IRadarSyncMember
+{
+    [IgnoreMember]
+    public string RadarName => Flags.HasAny(RadarFlags.UseDisplayName) ? User.VanityOrAnonName : User.AnonName;
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record RadarGroupMember(UserData User, string HashedIdent, RadarGroupFlags Flags) : UserDto(User), IRadarSyncMember
+{
     public bool PausedByMe { get; set; } = false;
     public bool PausedByMember { get; set; } = false;
 
     [IgnoreMember]
     public bool IsPaused => PausedByMe || PausedByMember;
+
+    [IgnoreMember]
+    public string RadarName => Flags.HasAny(RadarGroupFlags.UseDisplayName) ? User.VanityOrAnonName : User.AnonName;
 }
 
 [MessagePackObject(keyAsPropertyName: true)]

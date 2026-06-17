@@ -10,3 +10,6 @@ namespace SundouleiaAPI.Connection;
 /// <param name="Ident">The Identity of the online user, hashed for security. </param>
 [MessagePackObject(keyAsPropertyName: true)]
 public record OnlineUser(UserData User, string Ident) : UserDto(User);
+
+
+

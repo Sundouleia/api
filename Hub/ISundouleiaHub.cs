@@ -319,7 +319,7 @@ public interface ISundouleiaHub
 
     /// <summary> Removes the specified users from the SanctionedGroup. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.RemoveMembers"/></remarks>
-    Task<HubResponse> SanctionRemoveUsers(SanctionCleanupDto dto);
+    Task<HubResponse> SanctionRemoveUsers(SanctionPairsDto dto);
 
     /// <summary> Join a SanctionedGroup for the given ID and optional password. </summary>
     /// <returns> The current SanctionPairs, online, offline, and visible, and associated data. </returns>

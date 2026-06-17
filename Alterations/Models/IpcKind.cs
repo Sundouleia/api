@@ -1,8 +1,8 @@
 namespace SundouleiaAPI.Alterations;
 
 /// <summary>
-///     What kinds of caches are in queue for processing. <para />
-///     Arranged in the order we want to delay things by.
+///   What kinds of caches are in queue for processing. <para />
+///   Arranged in the order we want to delay things by.
 /// </summary>
 [Flags]
 public enum IpcKind : ushort
