@@ -1,6 +1,6 @@
 ﻿namespace SundouleiaAPI;
 
-public enum OwnedObject
+public enum OwnedObject : byte
 {
     Player = 0,
     MinionOrMount = 1,
