@@ -45,6 +45,9 @@ public interface IRadarSyncMember
 [MessagePackObject(keyAsPropertyName: true)]
 public record RadarMember(UserData User, string HashedIdent, RadarFlags Flags) : UserDto(User), IRadarSyncMember
 {
+    // Mutable for a more DDS-Friendly model (if it works out)
+    public RadarFlags Flags { get; set; } = Flags;
+
     [IgnoreMember]
     public string RadarName => Flags.HasAny(RadarFlags.UseDisplayName) ? User.VanityOrAnonName : User.AnonName;
 }
@@ -52,11 +55,8 @@ public record RadarMember(UserData User, string HashedIdent, RadarFlags Flags) :
 [MessagePackObject(keyAsPropertyName: true)]
 public record RadarGroupMember(UserData User, string HashedIdent, RadarGroupFlags Flags) : UserDto(User), IRadarSyncMember
 {
-    public bool PausedByMe { get; set; } = false;
-    public bool PausedByMember { get; set; } = false;
-
-    [IgnoreMember]
-    public bool IsPaused => PausedByMe || PausedByMember;
+    // Mutable for a more DDS-Friendly model (if it works out)
+    public RadarGroupFlags Flags { get; set; } = Flags;
 
     [IgnoreMember]
     public string RadarName => Flags.HasAny(RadarGroupFlags.UseDisplayName) ? User.VanityOrAnonName : User.AnonName;
