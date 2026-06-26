@@ -99,6 +99,11 @@ public interface ISundouleiaHub
     #endregion Callbacks (Alterations)
 
     #region Callbacks (Permissions)
+    /// <summary> Whenever another user pauses us </summary>
+    Task Callback_PausedByUser(PausedUser dto);
+    /// <summary> Whenever another user unpauses us </summary>
+    Task Callback_UnpausedByUser(UserDto dto);
+
     Task Callback_ChangeGlobalPerm(ChangeGlobalPerm dto);
     /// <summary> A Sundesmo updated their GlobalPerms in bulk. </summary>
     Task Callback_ChangeAllGlobal(ChangeAllGlobal dto);
@@ -153,8 +158,8 @@ public interface ISundouleiaHub
     /// <remarks> If we received this, reload their profile in the cache </remarks>
     Task Callback_UserProfileUpdated(UserDto dto);
     /// <summary>
-    ///     When verifying your account via the discord bot, this will pass in
-    ///     the code that displays in-game for you to respond to the bot with.
+    ///   When verifying your account via the discord bot, this will pass in
+    ///   the code that displays in-game for you to respond to the bot with.
     /// </summary>
     Task Callback_ShowVerification(VerificationCode dto);
     /// <summary>
@@ -170,14 +175,13 @@ public interface ISundouleiaHub
 
     #region Bulk Data Retrieval
     Task<List<UserPair>> GetAllSundesmos();
-    // This also gets the online status for all sanctionPairs with InSync set to true.
     Task<List<SanctionDataFull>> GetJoinedSanctions();
-    Task<List<OnlineUser>> GetOnlineSundesmos();
+    Task<OnlineData> GetOnlineData();
     // Maybe conjoin these into a single call to avoid thousands of users opening 5 calls on connections.
-    Task<List<PairRequest>> GetRequests();
+    Task<List<PairRequest>> GetRequests(); // Maybe unify with blocked users later or something. 
     Task<List<BlockedUser>> GetBlockedUsers();
     Task<List<ChatlogMessage>> GetChatHistory(ChatHistoryRequest dto);
-    #endregion Bulk Data Retrieval
+    #endregion
 
     #region Vanity & Cosmetics
     /// <summary> Retrieve the ProfileData for a User. Can filter if NSFW is allowed </summary>
@@ -197,6 +201,11 @@ public interface ISundouleiaHub
     #endregion Vanity & Cosmetics
 
     #region User Permissions
+    Task<HubResponse> UserPause(PausedUser dto);
+    Task<HubResponse> UserPauseBulk(BulkUserPause dto);
+    Task<HubResponse> UserUnpause(UserDto dto);
+    Task<HubResponse> UserUnpauseBulk(UserListDto dto);
+    // Permission Edits
     Task<HubResponse> UserChangeGlobalPerm(ChangeGlobalPerm dto);
     Task<HubResponse> UserChangeAllGlobals(GlobalPerms newPerms);
     Task<HubResponse> UserChangeUniquePerm(ChangeUniquePerm dto);
@@ -205,14 +214,14 @@ public interface ISundouleiaHub
     Task<HubResponse> UserBulkChangeUniquePerm(BulkChangeUniquePerm dto);
     Task<HubResponse> UserBulkChangeUniquePerms(BulkChangeUniquePerms dto);
     Task<HubResponse> UserBulkChangeAllUnique(BulkChangeAllUnique dto);
-    #endregion User Permissions
+    #endregion
 
     #region PlayerData Updates
     Task<HubResponse<List<ValidModFileDto>>> UserPushIpcFull(PushIpcDeltas dto); // Full data push.
     Task<HubResponse<List<ValidModFileDto>>> UserPushIpcMods(PushModsDeltas dto); // Penumbra related update only
     Task<HubResponse> UserPushIpcOther(PushVisualDeltas dto);   // Updates excluding file replacements
     Task<HubResponse> UserPushIpcSingle(PushDeltaSingle dto); // Individual IPC update for fast transit
-    #endregion PlayerData Updates
+    #endregion
 
     #region Loci
     Task<HubResponse> UserPushLociData(PushLociData dto);             // Share all data with allowed sundesmos.
