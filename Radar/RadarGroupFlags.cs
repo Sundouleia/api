@@ -31,9 +31,9 @@ public enum RadarGroupFlags : ushort
     Targetable = 1 << 2,
 
     /// <summary>
-    ///   If your nameplate can change colors to indicate being in the radar.
+    ///   If your nameplate can change colors or add symbols to indicate presence.
     /// </summary>
-    AllowNameplateColor = 1 << 3,
+    AllowNameplateEdits = 1 << 3,
 
     /// <summary>
     ///   Allows others to view your profile (shows Anon-Name)
