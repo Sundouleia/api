@@ -66,12 +66,18 @@ public static class ProfileUtils
     public const int MAX_DESCRIPTION_LEN = 500; // Maybe increase.
     public const int MAX_SHAPES = 50;
 
+    // For UI
     public const float BASE_WIDTH = 400f;
     public const float BASE_HEIGHT = 711f;
-    // Temp placeholders
     public const float SANCTION_BASE_WIDTH = 600f;
-    public const float SANCTION_BASE_HEIGHT = 250f;
+    public const float SANCTION_BASE_HEIGHT = 400f;
+    public const float SANCTION_BANNER_HEIGHT = 200f;
     public const float SANCTION_ICON_LENGTH = 256f;
+
+    // Raw ImageSize
+    public static readonly Vector2 MaxUserBackgroundSize = new Vector2(1080, 1920);
+    public static readonly Vector2 MaxSanctionBannerSize = new Vector2(900, 300);
+    public static readonly Vector2 MaxSanctionIconSize = new Vector2(256, 256);
 
     private static readonly JsonSerializerOptions Settings = new()
     {

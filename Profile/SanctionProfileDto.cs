@@ -12,10 +12,10 @@ public record SanctionProfileData(SanctionData Sanction, SanctionProfileInfo Con
 
 /// <summary> All Data associated with the contents of a SanctionProfile, excluding image data. </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionProfileInfo(bool NsfwLogo, bool NsfwBanner, bool Verified, bool Flagged, string ContentJson)
+public record SanctionProfileInfo(bool NsfwLogo, bool NsfwBanner, bool NsfwDesc, bool Verified, bool Flagged, string ContentJson)
 {
     /// <summary> A default, empty profile state. Ignored during serialization. </summary>
-    [IgnoreMember] public static SanctionProfileInfo Empty { get; } = new(false, false, false, false, string.Empty);
+    [IgnoreMember] public static SanctionProfileInfo Empty { get; } = new(false, false, false, false, false, string.Empty);
 }
 
 /// <summary> A SanctionedGroups profile image data. </summary>

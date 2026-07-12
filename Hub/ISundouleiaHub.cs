@@ -6,7 +6,6 @@ using SundouleiaAPI.Files;
 using SundouleiaAPI.Loci;
 using SundouleiaAPI.Permissions;
 using SundouleiaAPI.Profiles;
-using SundouleiaAPI.Profiles;
 using SundouleiaAPI.Radar;
 using SundouleiaAPI.Reporting;
 using SundouleiaAPI.Requests;
@@ -336,6 +335,10 @@ public interface ISundouleiaHub
     /// <summary> Join a SanctionedGroup for the given ID and optional password. </summary>
     /// <returns> The current SanctionPairs, online, offline, and visible, and associated data. </returns>
     Task<HubResponse<SanctionDataFull>> SanctionJoin(SanctionJoinDto dto);
+
+    /// <summary> Attempts to claim a role from a Sanction with a given claimCode. </summary>
+    /// <remarks> If the claim code is invalid or the role doesn't exist, this will fail. </remarks>
+    Task<HubResponse<SanctionPairInfo>> SanctionClaimRole(SanctionRoleClaimDto dto);
 
     /// <summary> Sets participant status for the sanctions data sync and chat elements. </summary>
     Task<HubResponse<List<ChatlogMessage>>> SanctionSetOptIns(SanctionOptInPrefs dto);

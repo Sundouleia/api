@@ -40,4 +40,7 @@ public record SanctionBanDto(SanctionData Sanction, UserData User, string BanRea
 
 // User edits.
 [MessagePackObject(keyAsPropertyName: true)]
+public record SanctionRoleClaimDto(SanctionData Sanction, string RoleId, string ClaimCode) : SanctionDto(Sanction);
+
+[MessagePackObject(keyAsPropertyName: true)]
 public record SanctionOptInPrefs(SanctionData Sanction, bool SyncUser, bool ChatUser) : SanctionDto(Sanction);
