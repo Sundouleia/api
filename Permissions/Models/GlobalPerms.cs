@@ -6,14 +6,14 @@ namespace SundouleiaAPI.Permissions;
 [MessagePackObject(keyAsPropertyName: true)]
 public record GlobalPerms
 {
-    public bool DefaultAllowAnims       { get; set; } = true;
-    public bool DefaultAllowSounds      { get; set; } = true;
-    public bool DefaultAllowVfx         { get; set; } = true;
-    public bool DefaultSyncMinionMounts { get; set; } = true;
-    public bool DefaultSyncPets         { get; set; } = true;
-    public bool DefaultSyncCompanions   { get; set; } = true;
+    public bool DefaultFilterAnims      { get; set; } = false;
+    public bool DefaultFilterSfx        { get; set; } = false;
+    public bool DefaultFilterVfx        { get; set; } = false;
+    public bool DefaultFilterSidekicks  { get; set; } = false;
+    public bool DefaultFilterPets       { get; set; } = false;
+    public bool DefaultFilterCompanions { get; set; } = false;
 
-    public LociAccess   DefaultLociAccess       { get; set; } = LociAccess.None;
-    public TimeSpan     DefaultMaxLociTime      { get; set; } = TimeSpan.Zero;
-    public bool         DefaultShareOwnLociData { get; set; } = false;
+    public bool         DefaultShareLoci    { get; set; } = false;
+    public LociAccess   DefaultLociAccess   { get; set; } = LociAccess.None;
+    public TimeSpan     DefaultMaxLociTime  { get; set; } = TimeSpan.Zero;
 }

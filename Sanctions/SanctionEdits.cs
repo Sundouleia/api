@@ -1,5 +1,6 @@
 using MessagePack;
 using SundouleiaAPI.Data;
+using SundouleiaAPI.Profiles;
 using SundouleiaAPI.User;
 
 namespace SundouleiaAPI.Sanctions;
@@ -20,10 +21,10 @@ public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic) : Sanc
 public record SanctionPreferencesDto(SanctionData Sanction, bool Anims, bool Sfx, bool Vfx, bool SyncMinionMount, bool SyncPet, bool SyncBuddy) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionProfileImagesDto(SanctionData Sanction, SanctionProfileImageData Images) : SanctionDto(Sanction);
+public record SanctionProfileImagesDto(SanctionData Sanction, SanctionProfileImages Images) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionProfileContentDto(SanctionData Sanction, SanctionProfileContentData Content) : SanctionDto(Sanction);
+public record SanctionProfileContentDto(SanctionData Sanction, SanctionProfileInfo Content) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionPasswordDto(SanctionData Sanction, string NewPassword) : SanctionDto(Sanction);

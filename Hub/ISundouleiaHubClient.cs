@@ -54,6 +54,8 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     #endregion Data Updates
 
     #region Permission Updates
+    void OnPausedByUser(Action<PausedUser> act);
+    void OnUnpausedByUser(Action<UserDto> act);
     void OnChangeGlobalPerm(Action<ChangeGlobalPerm> act);
     void OnBulkChangeGlobal(Action<ChangeAllGlobal> act);
     void OnChangeUniquePerm(Action<ChangeUniquePerm> act);

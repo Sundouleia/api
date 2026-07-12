@@ -21,9 +21,3 @@ public record SanctionDto(SanctionData Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionDataFull(SanctionData Sanction, SanctionInfo Info, List<SanctionPairInfo> Members, List<ChatlogMessage> Chat) : SanctionDto(Sanction);
-
-/// <summary> 
-///   A SanctionedGroups full profile data
-/// </summary>
-[MessagePackObject(keyAsPropertyName: true)]
-public record SanctionProfileData(SanctionData Sanction, SanctionProfileContentData Content, SanctionProfileImageData Images) : SanctionDto(Sanction);

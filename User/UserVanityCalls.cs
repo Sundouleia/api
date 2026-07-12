@@ -3,18 +3,9 @@ using MessagePack;
 namespace SundouleiaAPI.User;
 
 /// <summary>
-///   Allows anyone to update their alias! ^-^
+///   Updates the UserData's customizable data. <br/>
+///   Aliases can be changed by everyone, but all other
+///   fields are supporter-only.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
-public record AliasUpdate(string NewAlias);
-
-/// <summary>
-///   Updates the display name and colors for a vanity user. <para/>
-///   Changes are rejected if the sender is not a supporter.
-/// </summary>
-/// <remarks>
-///   Vanity names can show in radar in place of Anon names,
-///   as they aren't linked to pairing.
-/// </remarks>
-[MessagePackObject(keyAsPropertyName: true)]
-public record VanityUpdate(string VanityName, uint? NameColor, uint? NameGlowColor);
+public record UserDataUpdate(string? NewAlias, string? VanityName, uint? NameColor, uint? NameGlowColor);

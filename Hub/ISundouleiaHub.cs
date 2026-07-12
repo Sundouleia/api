@@ -5,6 +5,8 @@ using SundouleiaAPI.Data;
 using SundouleiaAPI.Files;
 using SundouleiaAPI.Loci;
 using SundouleiaAPI.Permissions;
+using SundouleiaAPI.Profiles;
+using SundouleiaAPI.Profiles;
 using SundouleiaAPI.Radar;
 using SundouleiaAPI.Reporting;
 using SundouleiaAPI.Requests;
@@ -188,15 +190,16 @@ public interface ISundouleiaHub
     Task<UserProfileData> UserGetProfileData(UserDto user, bool allowNSFW);
     /// <summary> Retrieve the ProfileData for a Sanction. Can filter if NSFW is allowed </summary>
     Task<SanctionProfileData> UserGetSanctionProfile(SanctionDto sanction, bool allowNSFW);
-    /// <summary> Allows anyone to freely update their UserData alias </summary>
-    Task<HubResponse> UserSetAlias(AliasUpdate dto);
-    /// <summary> Updates the DisplayName and colors for a user. Supporter exclusive </summary>
-    Task<HubResponse> UserSetVanity(VanityUpdate dto);
+    /// <summary>
+    ///   Allows anyone to freely update their UserData alias. <br/>
+    ///   All other fields aside from Alias are supporter only.
+    /// </summary>
+    Task<HubResponse> UserUpdateData(UserDataUpdate dto);
     // Modify as we update the profile layout...
     /// <summary> Update the image contents of your ProfileData, check image validity server-side. </summary>
-    Task<HubResponse> UserUpdateProfilePicture(ProfileImageData dto);
+    Task<HubResponse> UserUpdateProfilePicture(UserProfileImage dto);
     /// <summary> Update the contents of your ProfileData. </summary>
-    Task<HubResponse> UserUpdateProfileContent(ProfileContentData dto);
+    Task<HubResponse> UserUpdateProfileContent(UserProfileInfo dto);
     Task<HubResponse> UserSendChat(SentMessage message);
     #endregion Vanity & Cosmetics
 
