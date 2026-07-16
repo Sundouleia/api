@@ -205,7 +205,7 @@ public interface ISundouleiaHub
     Task<HubResponse> UserUpdateData(UserDataUpdate dto);
     // Modify as we update the profile layout...
     /// <summary> Update the image contents of your ProfileData, check image validity server-side. </summary>
-    Task<HubResponse> UserUpdateProfilePicture(ProfileImages dto);
+    Task<HubResponse> UserUpdateProfileImages(ProfileImages dto);
     /// <summary> Update the contents of your ProfileData. </summary>
     Task<HubResponse> UserUpdateProfileContent(UserProfileInfo dto);
     Task<HubResponse> UserSendChat(SentMessage message);

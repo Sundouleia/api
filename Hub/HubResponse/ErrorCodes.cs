@@ -67,6 +67,8 @@ public enum  SundouleiaApiEc
     /// <summary> Attempted to use an action requiring a vanity tier the caller does not have. </summary>
     InvalidVanityTier,
 
+    ValidationFailed,
+
     // ---- Sanction Specific Errors -----
     InvalidSanction,
 
