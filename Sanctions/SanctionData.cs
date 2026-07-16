@@ -20,4 +20,7 @@ public record SanctionData(string SID, string Name, DateTime ValidatedAt, DateTi
 public record SanctionDto(SanctionData Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
+public record SanctionListDto(List<SanctionData> Sanctions);
+
+[MessagePackObject(keyAsPropertyName: true)]
 public record SanctionDataFull(SanctionData Sanction, SanctionInfo Info, List<SanctionPairInfo> Members, List<ChatlogMessage> Chat) : SanctionDto(Sanction);

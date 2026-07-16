@@ -16,7 +16,7 @@ public enum PrimShapeType
 /// <summary>
 ///   Required variables for PrimativeShapes
 /// </summary>
-public interface IPrimativeShape
+public interface IPrimativeShape : IEquatable<IPrimativeShape>
 {
     /// <summary>
     ///   The kind of PrimativeShape being drawn
@@ -48,20 +48,39 @@ public class PrimativeCircle : IPrimativeShape
 {
     public PrimShapeType Type => PrimShapeType.Circle;
     public bool MoveWithExpand { get; set; } = false;
-    public bool FillShape { get; set; } = false;
+    public bool FillShape { get; set; } = true;
     public uint Color1 { get; set; } = 0xFF000000;
     public uint Color2 { get; set; } = 0xFF555555;
 
     public Vector2 Center { get; set; } = Vector2.Zero;
     public float Radius { get; set; } = 0f;
+    public int Edges { get; set; } = 16;
     public float Stroke { get; set; } = 0f;
+
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeCircle circle) return false;
+        return MoveWithExpand == circle.MoveWithExpand &&
+               FillShape == circle.FillShape &&
+               Color1 == circle.Color1 &&
+               Color2 == circle.Color2 &&
+               Center.Equals(circle.Center) &&
+               Radius == circle.Radius &&
+               Stroke == circle.Stroke;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Type, Center, Radius, Color1);
 }
 
 public class PrimativeRect : IPrimativeShape
 {
     public PrimShapeType Type => PrimShapeType.Rect;
     public bool MoveWithExpand { get; set; } = false;
-    public bool FillShape { get; set; } = false;
+    public bool FillShape { get; set; } = true;
     public uint Color1 { get; set; } = 0xFF000000;
     public uint Color2 { get; set; } = 0xFF555555;
 
@@ -69,7 +88,27 @@ public class PrimativeRect : IPrimativeShape
     public Vector2 Max { get; set; } = Vector2.Zero;
     public float Rounding { get; set; } = 0f;
     public float Stroke { get; set; } = 0f;
-    public CornerDrawFlags CornerFlags { get; set; } = CornerDrawFlags.RoundCornersAll;
+    public CornerDrawFlags CornerFlags { get; set; } = CornerDrawFlags.RoundAll;
+
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeRect rect) return false;
+        return MoveWithExpand == rect.MoveWithExpand &&
+               FillShape == rect.FillShape &&
+               Color1 == rect.Color1 &&
+               Color2 == rect.Color2 &&
+               Min.Equals(rect.Min) &&
+               Max.Equals(rect.Max) &&
+               Rounding == rect.Rounding &&
+               Stroke == rect.Stroke &&
+               CornerFlags == rect.CornerFlags;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Type, Min, Max, Color1);
 }
 
 /// <summary>
@@ -79,7 +118,7 @@ public class PrimativeGradient : IPrimativeShape
 {
     public PrimShapeType Type => PrimShapeType.Gradient;
     public bool MoveWithExpand { get; set; } = false;
-    public bool FillShape { get; set; } = false;
+    public bool FillShape { get; set; } = true;
     public uint Color1 { get; set; } = 0xFF000000;
     public uint Color2 { get; set; } = 0xFF444444;
     public uint Color3 { get; set; } = 0xFF888888;
@@ -87,7 +126,27 @@ public class PrimativeGradient : IPrimativeShape
 
     public Vector2 Min { get; set; } = Vector2.Zero;
     public Vector2 Max { get; set; } = Vector2.Zero;
-    public float Stroke { get; set; } = 0f;
+    public float Stroke => 0f;
+
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeGradient grad) return false;
+        return MoveWithExpand == grad.MoveWithExpand &&
+               FillShape == grad.FillShape &&
+               Color1 == grad.Color1 &&
+               Color2 == grad.Color2 &&
+               Color3 == grad.Color3 &&
+               Color4 == grad.Color4 &&
+               Min.Equals(grad.Min) &&
+               Max.Equals(grad.Max) &&
+               Stroke == grad.Stroke;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Type, Min, Max, Color1);
 }
 
 /// <summary>
@@ -97,7 +156,7 @@ public class PrimativeQuad : IPrimativeShape
 {
     public PrimShapeType Type => PrimShapeType.Quad;
     public bool MoveWithExpand { get; set; } = false;
-    public bool FillShape { get; set; } = false;
+    public bool FillShape { get; set; } = true;
 
     public uint Color1  { get; set; } = 0xFF000000;
     public uint Color2 { get; set; } = 0xFF555555;
@@ -107,6 +166,26 @@ public class PrimativeQuad : IPrimativeShape
     public Vector2 P3 { get; set; } = Vector2.Zero;
     public Vector2 P4 { get; set; } = Vector2.Zero;
     public float Stroke { get; set; } = 0f;
+
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeQuad quad) return false;
+        return MoveWithExpand == quad.MoveWithExpand &&
+               FillShape == quad.FillShape &&
+               Color1 == quad.Color1 &&
+               Color2 == quad.Color2 &&
+               P1.Equals(quad.P1) &&
+               P2.Equals(quad.P2) &&
+               P3.Equals(quad.P3) &&
+               P4.Equals(quad.P4) &&
+               Stroke == quad.Stroke;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Type, P1, P2, Color1);
 }
 
 public class PrimativeLine : IPrimativeShape
@@ -118,6 +197,21 @@ public class PrimativeLine : IPrimativeShape
     public Vector2 Start { get; set; } = Vector2.Zero;
     public Vector2 End { get; set; } = Vector2.Zero;
     public float Stroke { get; set; } = 0f;
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeLine line) return false;
+        return MoveWithExpand == line.MoveWithExpand &&
+               Color1 == line.Color1 &&
+               Start.Equals(line.Start) &&
+               End.Equals(line.End) &&
+               Stroke == line.Stroke;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Type, Start, End, Color1);
 }
 
 public enum PrimativePathType
@@ -127,22 +221,55 @@ public enum PrimativePathType
     BezierTo,
 }
 
-public class PrimativePathNode
+public class PrimativePathNode : IEquatable<PrimativePathNode>
 {
     public PrimativePathType Instruction;
     public Vector2 DestPoint;
     public Vector2 Control1; // For Bezier
     public Vector2 Control2; // For Bezier
     public float Radius;     // For ArcTo
+
+    public bool Equals(PrimativePathNode? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Instruction == other.Instruction &&
+               DestPoint.Equals(other.DestPoint) &&
+               Control1.Equals(other.Control1) &&
+               Control2.Equals(other.Control2) &&
+               Radius == other.Radius;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as PrimativePathNode);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Instruction, DestPoint, Radius);
 }
 
 public class PrimativePath : IPrimativeShape
 {
     public PrimShapeType Type => PrimShapeType.Path;
     public bool MoveWithExpand { get; set; } = false;
-    public bool FillShape => false;
+    public bool FillShape { get; set; } = false;
     public Vector2 Start { get; set; } = Vector2.Zero;
     public List<PrimativePathNode> Nodes { get; set; } = [];
     public uint Color1 { get; set; } = 0xFF000000;
     public float Stroke { get; set; } = 0f;
+
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativePath path) return false;
+        return MoveWithExpand == path.MoveWithExpand &&
+               Start.Equals(path.Start) &&
+               Color1 == path.Color1 &&
+               Stroke == path.Stroke &&
+               Nodes.SequenceEqual(path.Nodes);
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Type, Start, Color1, Nodes.Count);
 }

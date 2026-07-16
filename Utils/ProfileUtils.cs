@@ -75,11 +75,11 @@ public static class ProfileUtils
     public const float SANCTION_ICON_LENGTH = 256f;
 
     // Raw ImageSize
+    public static readonly Vector2 MaxIconSize = new Vector2(256, 256);
     public static readonly Vector2 MaxUserBackgroundSize = new Vector2(1080, 1920);
     public static readonly Vector2 MaxSanctionBannerSize = new Vector2(900, 300);
-    public static readonly Vector2 MaxSanctionIconSize = new Vector2(256, 256);
 
-    private static readonly JsonSerializerOptions Settings = new()
+    public static readonly JsonSerializerOptions Settings = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
@@ -135,7 +135,7 @@ public static class ProfileUtils
         var infoMin = frameSize;
         var infoMax = profileSize - frameSize;
 
-        if (up.CustomShapes.Count > MAX_SHAPES)
+        if (up.Theme.Shapes.Count > MAX_SHAPES)
             return ValidationError.TooManyShapes;
         if (up.DisplayName.Length > 0 && string.IsNullOrWhiteSpace(up.DisplayName))
             return ValidationError.EmptyWhitespace;
@@ -143,22 +143,23 @@ public static class ProfileUtils
             return ValidationError.EmptyWhitespace;
         if (up.Description.Length > 0 && string.IsNullOrWhiteSpace(up.Description))
             return ValidationError.EmptyWhitespace;
-        if (OutOfBounds(up.NamePos))
+        if (OutOfBounds(up.Theme.NamePos))
             return ValidationError.NamePos;
-        if (OutOfBounds(up.SubNamePos))
+        if (OutOfBounds(up.Theme.SubNamePos))
             return ValidationError.PronounsPos;
-        if (OutOfBounds(up.InterestsMin) || OutOfBounds(up.InterestsMax))
+        if (OutOfBounds(up.Theme.InterestsMin) || OutOfBounds(up.Theme.InterestsMax))
             return ValidationError.InterestsRectOutside;
-        if (OutOfBounds(up.DescriptionMin) || OutOfBounds(up.DescriptionMax))
+        if (OutOfBounds(up.Theme.BioMin) || OutOfBounds(up.Theme.BioMax))
             return ValidationError.DescriptionRectOutside;
 
         // Insure that the rect of the activities and description don't overlap.
-        if (up.InterestsMin.X < up.DescriptionMax.X && up.InterestsMax.X > up.DescriptionMin.X && up.InterestsMin.Y < up.DescriptionMax.Y && up.InterestsMax.Y > up.DescriptionMin.Y)
+        if (up.Theme.InterestsMin.X < up.Theme.BioMax.X && up.Theme.InterestsMax.X > up.Theme.BioMin.X &&
+            up.Theme.InterestsMin.Y < up.Theme.BioMax.Y && up.Theme.InterestsMax.Y > up.Theme.BioMin.Y)
             return ValidationError.RectOverlap;
 
         // Should also validate colors.
-        if (!IsOpaque(up.Colors.ButtonColor) || !IsOpaque(up.Colors.BottomColor) || !IsOpaque(up.Colors.BorderColor) ||
-            !IsOpaque(up.Colors.TextColor) || !IsOpaque(up.Colors.PillTextColor) || !IsOpaque(up.Colors.AboutMeColor))
+        if (!IsOpaque(up.Theme.StaticButtons.Color) || !IsOpaque(up.Theme.BottomColor) || !IsOpaque(up.Theme.BorderColor) ||
+            !IsOpaque(up.Theme.MainText.Color) || !IsOpaque(up.Theme.PillText.Color) || !IsOpaque(up.Theme.BioText.Color))
         {
             return ValidationError.BadColorOpacity;
         }

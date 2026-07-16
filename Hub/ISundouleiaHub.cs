@@ -174,7 +174,7 @@ public interface ISundouleiaHub
 
     #region SERVER_CALLS
 
-    #region Bulk Data Retrieval
+    #region Data Retrieval
     Task<List<UserPair>> GetAllSundesmos();
     Task<List<SanctionDataFull>> GetJoinedSanctions();
     Task<OnlineData> GetOnlineData();
@@ -182,13 +182,22 @@ public interface ISundouleiaHub
     Task<List<PairRequest>> GetRequests(); // Maybe unify with blocked users later or something. 
     Task<List<BlockedUser>> GetBlockedUsers();
     Task<List<ChatlogMessage>> GetChatHistory(ChatHistoryRequest dto);
+
+    /// <summary> Retrieve the ProfileData for a User. </summary>
+    Task<UserProfileData> GetUserProfile(UserDto user);
+
+    /// <summary> Retrieves the profileData for a list of users. </summary>
+    Task<List<UserProfileData>> GetUserProfiles(UserListDto users);
+
+    /// <summary> Retrieve the ProfileData for a Sanction. </summary>
+    Task<SanctionProfileData> GetSanctionProfile(SanctionDto sanction);
+
+    /// <summary> Retrieves the profileData for a list of sanctions. </summary>
+    Task<List<SanctionProfileData>> GetSanctionProfiles(SanctionListDto sanctions);
+
     #endregion
 
     #region Vanity & Cosmetics
-    /// <summary> Retrieve the ProfileData for a User. Can filter if NSFW is allowed </summary>
-    Task<UserProfileData> UserGetProfileData(UserDto user, bool allowNSFW);
-    /// <summary> Retrieve the ProfileData for a Sanction. Can filter if NSFW is allowed </summary>
-    Task<SanctionProfileData> UserGetSanctionProfile(SanctionDto sanction, bool allowNSFW);
     /// <summary>
     ///   Allows anyone to freely update their UserData alias. <br/>
     ///   All other fields aside from Alias are supporter only.
@@ -196,7 +205,7 @@ public interface ISundouleiaHub
     Task<HubResponse> UserUpdateData(UserDataUpdate dto);
     // Modify as we update the profile layout...
     /// <summary> Update the image contents of your ProfileData, check image validity server-side. </summary>
-    Task<HubResponse> UserUpdateProfilePicture(UserProfileImage dto);
+    Task<HubResponse> UserUpdateProfilePicture(ProfileImages dto);
     /// <summary> Update the contents of your ProfileData. </summary>
     Task<HubResponse> UserUpdateProfileContent(UserProfileInfo dto);
     Task<HubResponse> UserSendChat(SentMessage message);

@@ -21,7 +21,7 @@ public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic) : Sanc
 public record SanctionPreferencesDto(SanctionData Sanction, bool Anims, bool Sfx, bool Vfx, bool SyncMinionMount, bool SyncPet, bool SyncBuddy) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionProfileImagesDto(SanctionData Sanction, SanctionProfileImages Images) : SanctionDto(Sanction);
+public record SanctionProfileImagesDto(SanctionData Sanction, ProfileImages Images) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionProfileContentDto(SanctionData Sanction, SanctionProfileInfo Content) : SanctionDto(Sanction);
