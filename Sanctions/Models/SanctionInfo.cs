@@ -12,11 +12,11 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public bool IsPublic { get; set; } = true;
     public string? Password { get; set; } = null;
     public string ChatlogId { get; set; } = string.Empty;
-    public bool AllowAnimationsPreferred { get; set; } = true;
-    public bool AllowSoundsPreferred { get; set; } = true;
-    public bool AllowVfxPreferred { get; set; } = true;
-    public bool MountMinionSyncPreferred { get; set; } = true;
-    public bool PetSyncPreferred { get; set; } = true;
-    public bool CompanionSyncPreferred { get; set; } = true;
+    public bool SuggestFilterAnims { get; set; } = false;
+    public bool SuggestFilterSfx { get; set; } = false;
+    public bool SuggestFilterVfx { get; set; } = false;
+    public bool SuggestFilterSidekicks { get; set; } = false;
+    public bool SuggestFilterPets { get; set; } = false;
+    public bool SuggestFilterCompanions { get; set; } = false;
     public List<SanctionRoleData> Roles { get; set; } = new();
 }
