@@ -76,6 +76,10 @@ public enum  SundouleiaApiEc
 
     BadClaimCode,
 
+    MissingRequiredRole,
+
+    InvalidRoleId,
+
     // ----- Interaction Specific Errors -----
     /// <summary> Cannot use temporary-related interaction on permanent sundesmo. </summary>
     AlreadyPermanent,

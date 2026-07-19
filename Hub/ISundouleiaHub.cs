@@ -57,7 +57,9 @@ public interface ISundouleiaHub
     Task Callback_SanctionVisibilityUpdated(SanctionVisibilityDto dto);
     /// <summary> The default DataSync preferences for the Sanction were modified. </summary>
     Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
-    /// <summary> Updates to the roles and their permissions. </summary>
+    /// <summary> The RoleRequirementChanges to a sanction were modified. (Expected to update your pairs to reflect the changes) </summary>
+    Task Callback_SanctionRoleRequirementsUpdated(SanctionRoleRequirementsDto dto);
+    /// <summary> Updates to the roles and their permissions. (Expected to update your pairs to reflect the changes) </summary>
     Task Callback_SanctionRolesUpdated(SanctionRolesUpdate dto);
     /// <summary> Informs that the Sanction updated its profile. The client should trigger a refresh </summary>
     Task Callback_SanctionProfileUpdated(SanctionDto dto, bool wasContentUpdate);
@@ -308,6 +310,10 @@ public interface ISundouleiaHub
     /// <summary> Sets the datasync preferences of a sanction. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangePreferences"/></remarks>
     Task<HubResponse> SanctionSetPreferences(SanctionPreferencesDto dto);
+
+    /// <summary> Sets the datasync role requirements for a sanction. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeRoleRequirements"/></remarks>
+    Task<HubResponse> SanctionSetRoleRequirements(SanctionRoleRequirementsDto dto);
 
     /// <summary> Updates the sanctions profile images. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>

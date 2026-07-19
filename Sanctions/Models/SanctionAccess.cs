@@ -38,17 +38,24 @@ public enum SanctionAccess : ushort
     /// <remarks> Ineffective against users of the same or higher role. (?) </remarks>
     ChangeUserAccess = 1 << 8,
 
+    /// <summary> Can update required roles for Sync or Chat, and also change roles that assigned to new users. </summary>
+    ChangeRoleRequirements = 1 << 9,
+
+    /// <summary> Can remove roles from other users. (Cannot remove roles higher than your own) </summary>
+    RemoveUserRoles = 1 << 10,
+
     /// <summary> Can give others the b00t. (Can only be granted by the owner) </summary>
-    BanMembers = 1 << 9,
+    BanMembers = 1 << 11,
 
     /// <summary> Can remove other SanctionedPairs from the SanctionedGroup. </summary>
     /// <remarks> Cannot remove users from a role higher than your own. </remarks>
-    RemoveMembers = 1 << 10,
+    RemoveMembers = 1 << 12,
 
     /// <summary> Reserved usually for the Owner. Be careful who has this. </summary>
-    Admin = 1 << 11,
+    Admin = 1 << 13,
 
     All = AssignRoles | ChatModeration | ChangeVisibility | ChangePreferences | ChangeProfile 
-        | ChangePassword | ChangeNames | ChangeStyle | ChangeUserAccess | BanMembers | RemoveMembers | Admin
+        | ChangePassword | ChangeNames | ChangeStyle | ChangeUserAccess | ChangeRoleRequirements
+        | RemoveUserRoles | BanMembers | RemoveMembers | Admin
 }
 
