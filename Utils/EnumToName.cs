@@ -1,5 +1,6 @@
 using SundouleiaAPI.Files;
 using SundouleiaAPI.Location;
+using SundouleiaAPI.Profiles;
 
 namespace SundouleiaAPI;
 public static class EnumToName
@@ -85,4 +86,45 @@ public static class EnumToName
 
         _ => "Unknown",
     };
+
+    public static string ToName(this CharaInterest ci) => ci switch
+    {
+        CharaInterest.Achievements => "Achievements",
+        CharaInterest.AllianceRaids => "Alliance Raids",
+        CharaInterest.Art => "Art",
+        CharaInterest.BlueMage => "Blue Mage",
+        CharaInterest.CasualRaids => "Casual Raids",
+        CharaInterest.Crafting => "Crafting",
+        CharaInterest.CriterionDungeons => "Criterion Dungeons",
+        CharaInterest.DeepDungeons => "Deep Dungeons",
+        CharaInterest.Eeping => "Eeping",
+        CharaInterest.Events => "Events",
+        CharaInterest.ExtremeTrials => "Extremes Trials",
+        CharaInterest.Fishing => "Fishing",
+        CharaInterest.Gathering => "Gathering",
+        CharaInterest.Glamour => "Glamour",
+        CharaInterest.Gposing => "Gposing",
+        CharaInterest.Housing => "Housing",
+        CharaInterest.Hunts => "Hunts",
+        CharaInterest.Immersion => "Immersion",
+        CharaInterest.IslandSanctuary => "Island Sanctuary",
+        CharaInterest.Lore => "Lore",
+        CharaInterest.Maps => "Maps",
+        CharaInterest.Modding => "Modding",
+        CharaInterest.Music => "Music",
+        CharaInterest.Performance => "Performance",
+        CharaInterest.PvP => "PvP",
+        CharaInterest.Questing => "Quests",
+        CharaInterest.Raiding => "Raiding",
+        CharaInterest.Roleplay => "Roleplay",
+        CharaInterest.SavageRaids => "Savage Raids",
+        CharaInterest.Sightseeing => "Sightseeing",
+        CharaInterest.Socializing => "Socializing",
+        CharaInterest.Story => "Story",
+        CharaInterest.Streaming => "Streaming",
+        CharaInterest.Venues => "Venues",
+        CharaInterest.UltimateRaids => "Ultimates",
+        _ => "UNK",
+    };
+
 }

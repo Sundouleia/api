@@ -52,9 +52,9 @@ public class PrimativeCircle : IPrimativeShape
     public uint Color1 { get; set; } = 0xFF000000;
     public uint Color2 { get; set; } = 0xFF555555;
 
-    public Vector2 Center { get; set; } = Vector2.Zero;
-    public float Radius { get; set; } = 0f;
-    public int Edges { get; set; } = 16;
+    public Vector2 Center { get; set; } = new Vector2(25);
+    public float Radius { get; set; } = 10f;
+    public int Edges { get; set; } = 0;
     public float Stroke { get; set; } = 0f;
 
     public bool Equals(IPrimativeShape? other)
@@ -85,7 +85,7 @@ public class PrimativeRect : IPrimativeShape
     public uint Color2 { get; set; } = 0xFF555555;
 
     public Vector2 Min { get; set; } = Vector2.Zero;
-    public Vector2 Max { get; set; } = Vector2.Zero;
+    public Vector2 Max { get; set; } = new Vector2(50);
     public float Rounding { get; set; } = 0f;
     public float Stroke { get; set; } = 0f;
     public CornerDrawFlags CornerFlags { get; set; } = CornerDrawFlags.RoundAll;
@@ -121,11 +121,11 @@ public class PrimativeGradient : IPrimativeShape
     public bool FillShape { get; set; } = true;
     public uint Color1 { get; set; } = 0xFF000000;
     public uint Color2 { get; set; } = 0xFF444444;
-    public uint Color3 { get; set; } = 0xFF888888;
-    public uint Color4 { get; set; } = 0xFFCCCCCC;
+    public uint Color3 { get; set; } = 0xFFCCCCCC;
+    public uint Color4 { get; set; } = 0xFF888888;
 
     public Vector2 Min { get; set; } = Vector2.Zero;
-    public Vector2 Max { get; set; } = Vector2.Zero;
+    public Vector2 Max { get; set; } = new Vector2(50);
     public float Stroke => 0f;
 
     public bool Equals(IPrimativeShape? other)
@@ -162,9 +162,9 @@ public class PrimativeQuad : IPrimativeShape
     public uint Color2 { get; set; } = 0xFF555555;
 
     public Vector2 P1 { get; set; } = Vector2.Zero;
-    public Vector2 P2 { get; set; } = Vector2.Zero;
-    public Vector2 P3 { get; set; } = Vector2.Zero;
-    public Vector2 P4 { get; set; } = Vector2.Zero;
+    public Vector2 P2 { get; set; } = new Vector2(0, 50);
+    public Vector2 P3 { get; set; } = new Vector2(50);
+    public Vector2 P4 { get; set; } = new Vector2(50, 0);
     public float Stroke { get; set; } = 0f;
 
     public bool Equals(IPrimativeShape? other)
@@ -195,7 +195,7 @@ public class PrimativeLine : IPrimativeShape
     public bool FillShape => false;
     public uint Color1 { get; set; } = 0xFF000000;
     public Vector2 Start { get; set; } = Vector2.Zero;
-    public Vector2 End { get; set; } = Vector2.Zero;
+    public Vector2 End { get; set; } = new Vector2(50);
     public float Stroke { get; set; } = 0f;
     public bool Equals(IPrimativeShape? other)
     {
@@ -217,34 +217,34 @@ public class PrimativeLine : IPrimativeShape
 public enum PrimativePathType
 {
     LineTo,
-    ArcTo,
+    ArcBend,
     BezierTo,
 }
 
 public class PrimativePathNode : IEquatable<PrimativePathNode>
 {
     public PrimativePathType Instruction;
-    public Vector2 DestPoint;
-    public Vector2 Control1; // For Bezier
-    public Vector2 Control2; // For Bezier
-    public float Radius;     // For ArcTo
+    public Vector2 Point;
+    public Vector2 CtrlPoint1;
+    public Vector2 CtrlPoint2;
+    public int Segments;
 
     public bool Equals(PrimativePathNode? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
         return Instruction == other.Instruction &&
-               DestPoint.Equals(other.DestPoint) &&
-               Control1.Equals(other.Control1) &&
-               Control2.Equals(other.Control2) &&
-               Radius == other.Radius;
+               Point.Equals(other.Point) &&
+               CtrlPoint1.Equals(other.CtrlPoint1) &&
+               CtrlPoint2.Equals(other.CtrlPoint2) &&
+               Segments == other.Segments;
     }
 
     public override bool Equals(object? obj)
         => Equals(obj as PrimativePathNode);
 
     public override int GetHashCode()
-        => HashCode.Combine(Instruction, DestPoint, Radius);
+        => HashCode.Combine(Instruction, Point, Segments);
 }
 
 public class PrimativePath : IPrimativeShape

@@ -20,18 +20,18 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
     public PfpTextStyle BioText { get; set; } = new();
 
     // Layout & Bounding Boxes
-    public Vector2 NamePos { get; set; } = Vector2.Zero;
+    public Vector2 NamePos { get; set; } = new Vector2(20);
     public bool NameMoveWithExpand { get; set; } = false;
 
-    public Vector2 SubNamePos { get; set; } = Vector2.Zero;
+    public Vector2 SubNamePos { get; set; } = new Vector2(20, 40);
     public bool SubNameMoveWithExpand { get; set; } = false;
 
-    public Vector2 InterestsMin { get; set; } = Vector2.Zero;
-    public Vector2 InterestsMax { get; set; } = Vector2.Zero;
+    public Vector2 InterestsMin { get; set; } = new Vector2(20, 400);
+    public Vector2 InterestsMax { get; set; } = new Vector2(380, 500);
     public bool InterestsMoveWithExpand { get; set; } = true;
 
-    public Vector2 BioMin { get; set; } = Vector2.Zero;
-    public Vector2 BioMax { get; set; } = Vector2.Zero;
+    public Vector2 BioMin { get; set; } = new Vector2(20, 540);
+    public Vector2 BioMax { get; set; } = new Vector2(380, 650);
     public bool BioMoveWithExpand { get; set; } = true;
 
     // Pill Shapes & Behaviors
@@ -39,6 +39,8 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
     public uint PillBorder { get; set; } = uint.MinValue;
     public float PillPadding { get; set; } = 0f;
     public float PillRounding { get; set; } = 90f;
+    public float PillGapX { get; set; } = 4f;
+    public float PillGapY { get; set; } = 4f;
     public Alignment PillAlignment { get; set; } = Alignment.Left;
     public bool ShowInterestText { get; set; } = true;
 

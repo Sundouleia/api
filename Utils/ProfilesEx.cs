@@ -56,14 +56,15 @@ public enum ValidationError
     BadShapes,
     EmptyWhitespace,
     TooManyShapes,
+    InvalidPath,
     OtherError,
 }
 
-public static class ProfileUtils
+public static class ProfilesEx
 {
     public const int MAX_DISPLAYNAME_LEN = 20;
     public const int MAX_PRONOUNS_LEN = 20;
-    public const int MAX_DESCRIPTION_LEN = 500; // Maybe increase.
+    public const int MAX_DESCRIPTION_LEN = 800; // Maybe increase.
     public const int MAX_SHAPES = 50;
 
     // For UI
@@ -72,61 +73,12 @@ public static class ProfileUtils
     public const float SANCTION_BASE_WIDTH = 600f;
     public const float SANCTION_BASE_HEIGHT = 400f;
     public const float SANCTION_BANNER_HEIGHT = 200f;
-    public const float SANCTION_ICON_LENGTH = 256f;
+    public const float ICON_WIDTH = 256f;
 
     // Raw ImageSize
     public static readonly Vector2 MaxIconSize = new Vector2(256, 256);
     public static readonly Vector2 MaxUserBackgroundSize = new Vector2(1080, 1920);
     public static readonly Vector2 MaxSanctionBannerSize = new Vector2(900, 300);
-
-    public static readonly JsonSerializerOptions Settings = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
-        // Forgiveness Settings (To be more graceful like Newtonsoft, but can remove later)
-        AllowTrailingCommas = true,
-        ReadCommentHandling = JsonCommentHandling.Skip,
-        PropertyNameCaseInsensitive = true,
-        NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.AllowNamedFloatingPointLiterals,
-        // Ensure PrimativeShapeConverter exists.
-        Converters = { new PrimativeShapeConverter() }
-    };
-
-    /// <summary>
-    ///   Retrieves the UserProfileV1 from a JSON string.
-    /// </summary>
-    /// <exception cref="JsonException">Thrown when the JSON is invalid or cannot be deserialized.</exception>
-    /// <exception cref="ArgumentNullException">Thrown when the input JSON string is null.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when the deserialization fails for reasons other than invalid JSON.</exception>
-    public static UserProfileV1 GetUserV1FromJson(string? jsonData)
-    {
-        jsonData = (jsonData ?? string.Empty).Trim();
-        if (jsonData.StartsWith("{", StringComparison.Ordinal))
-            return JsonSerializer.Deserialize<UserProfileV1>(jsonData, Settings) ?? new UserProfileV1();
-        // Debug output for invalid format.
-        return new UserProfileV1 { Version = 1, Description = jsonData };
-    }
-
-    public static string WriteToJson(this UserProfileV1 profileV1)
-    {
-        profileV1 ??= new UserProfileV1();
-        return JsonSerializer.Serialize(profileV1, Settings);
-    }
-
-    public static SanctionProfileV1 GetSanctionV1FromJson(string? jsonData)
-    {
-        jsonData = (jsonData ?? string.Empty).Trim();
-        if (jsonData.StartsWith("{", StringComparison.Ordinal))
-            return JsonSerializer.Deserialize<SanctionProfileV1>(jsonData, Settings) ?? new SanctionProfileV1();
-        // Debug output for invalid format.
-        return new SanctionProfileV1 { Version = 1, Description = jsonData };
-    }
-
-    public static string WriteToJson(this SanctionProfileV1 profileV1)
-    {
-        profileV1 ??= new SanctionProfileV1();
-        return JsonSerializer.Serialize(profileV1, Settings);
-    }
 
     public static ValidationError RunValidation(UserProfileV1 up, float borderSize)
     {
@@ -163,6 +115,10 @@ public static class ProfileUtils
         {
             return ValidationError.BadColorOpacity;
         }
+
+        if (up.Theme.Shapes.Any(s => s is PrimativePath path && path.Nodes.Count > 25))
+            return ValidationError.InvalidPath;
+
         // We could do a check to see if the full shape is out of bounds though.
         return ValidationError.Valid;
 

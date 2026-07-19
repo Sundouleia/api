@@ -9,6 +9,45 @@ public enum Alignment
     Right
 }
 
+public enum CharaInterest
+{
+    Achievements,
+    AllianceRaids,
+    Art,
+    BlueMage,
+    CasualRaids,
+    Crafting,
+    CriterionDungeons,
+    DeepDungeons,
+    Eeping,
+    Events,
+    ExtremeTrials,
+    Fishing,
+    Gathering,
+    Glamour,
+    Gposing,
+    Housing,
+    Hunts,
+    Immersion,
+    IslandSanctuary,
+    Lore,
+    Maps,
+    Modding,
+    Music,
+    Performance,
+    PvP,
+    Questing,
+    Raiding,
+    Roleplay,
+    SavageRaids,
+    Sightseeing,
+    Socializing,
+    Story,
+    Streaming,
+    Venues,
+    UltimateRaids,
+}
+
 /// <summary>
 ///   Defines which directions something should be applied to. <br/>
 ///   Designed for general use, but intended for top-left-down-right application.
