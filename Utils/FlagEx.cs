@@ -11,11 +11,17 @@ public static class FlagEx
 {
     public static bool HasAny(this IpcKind flags, IpcKind check) => (flags & check) != 0;
     public static bool HasAny(this LociAccess flags, LociAccess check) => (flags & check) != 0;
-    public static bool HasAny(this RadarChatFlags flags, RadarChatFlags check) => (flags & check) != 0;
     public static bool HasAny(this RadarFlags flags, RadarFlags check) => (flags & check) != 0;
     public static bool HasAny(this RadarGroupFlags flags, RadarGroupFlags check) => (flags & check) != 0;
+    public static bool HasAny(this RadarChatFlags flags, RadarChatFlags check) => (flags & check) != 0;
     public static bool HasAny(this SanctionAccess flags, SanctionAccess check) => (flags & check) != 0;
     public static bool HasAny(this DirectionFlags flags, DirectionFlags check) => (flags & check) != 0;
+
+    public static bool HasAll(this RadarFlags flags, RadarFlags check) => (flags & check) == check;
+    public static bool HasAll(this RadarGroupFlags flags, RadarGroupFlags check) => (flags & check) == check;
+    public static bool HasAll(this RadarChatFlags flags, RadarChatFlags check) => (flags & check) == check;
+
+
 
     /// <returns> If only one flag in a flag enum is set. </returns>
     public static bool IsSingleFlagSet(byte value)

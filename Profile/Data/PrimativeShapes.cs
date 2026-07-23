@@ -4,13 +4,13 @@ namespace SundouleiaAPI.Profiles;
 
 public enum PrimShapeType
 {
-    Circle,
-    Rect,
-    Gradient,
-    Quad,
-    Line,
-    Path,
-    // Could add more in the future like dotted lines ext.
+    Circle = 0,
+    Rect = 1,
+    Gradient = 2,
+    Quad = 3,
+    // Should really make this more like 10 or 15 to leave room for additions.
+    Line = 4,
+    Path = 5,
 }
 
 /// <summary>

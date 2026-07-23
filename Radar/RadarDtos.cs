@@ -39,7 +39,7 @@ public interface IRadarSyncMember
 {
     public UserData User { get; }
     public string HashedIdent { get; }
-    public string RadarName { get; } // Maybe remove, idk.
+    public string RadarName { get; }
 }
 
 [MessagePackObject(keyAsPropertyName: true)]

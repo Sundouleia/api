@@ -1,48 +1,8 @@
 ﻿using SundouleiaAPI.Profiles;
-using SundouleiaAPI.User;
 using System.Numerics;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SundouleiaAPI;
 #nullable enable
-
-/// <summary>
-///   Converter for PrimativeShapes using System.Text.Json over NewtonsoftJson. <br/>
-///   Designed to hopefully prevent the Newtonsoft to be required for the API or server.
-/// </summary>
-public class PrimativeShapeConverter : JsonConverter<IPrimativeShape>
-{
-    public override IPrimativeShape? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-    {
-        using var doc = JsonDocument.ParseValue(ref reader);
-        var root = doc.RootElement;
-
-        // Check for 'type' due to Note: We check for "type" (camelCase) because of our JsonSerializerOptions
-        if (!root.TryGetProperty("type", out var typeProperty))
-            throw new JsonException("Missing 'type' property on shape.");
-
-        var shapeType = (PrimShapeType)typeProperty.GetInt32();
-        var rawJson = root.GetRawText();
-
-        return shapeType switch
-        {
-            PrimShapeType.Circle => JsonSerializer.Deserialize<PrimativeCircle>(rawJson, options),
-            PrimShapeType.Rect => JsonSerializer.Deserialize<PrimativeRect>(rawJson, options),
-            PrimShapeType.Gradient => JsonSerializer.Deserialize<PrimativeGradient>(rawJson, options),
-            PrimShapeType.Quad => JsonSerializer.Deserialize<PrimativeQuad>(rawJson, options),
-            PrimShapeType.Line => JsonSerializer.Deserialize<PrimativeLine>(rawJson, options),
-            PrimShapeType.Path => JsonSerializer.Deserialize<PrimativePath>(rawJson, options),
-            _ => throw new JsonException($"UNK PrimativeShapeType: {shapeType}")
-        };
-    }
-
-    // Write to an (object) cast of the value so it reflects all properties of the concrete class.
-    public override void Write(Utf8JsonWriter writer, IPrimativeShape value, JsonSerializerOptions options)
-        => JsonSerializer.Serialize(writer, (object)value, options);
-}
-
 
 public enum ValidationError
 {
@@ -60,6 +20,9 @@ public enum ValidationError
     OtherError,
 }
 
+// NOTE TO SELF:
+// - SAMPLEPLUGIN -> Lookup "Select Icon" and "Icon Picker" to extract better selectors for these.
+
 public static class ProfilesEx
 {
     public const int MAX_DISPLAYNAME_LEN = 20;
@@ -70,15 +33,29 @@ public static class ProfilesEx
     // For UI
     public const float BASE_WIDTH = 400f;
     public const float BASE_HEIGHT = 711f;
-    public const float SANCTION_BASE_WIDTH = 600f;
-    public const float SANCTION_BASE_HEIGHT = 400f;
-    public const float SANCTION_BANNER_HEIGHT = 200f;
+    public const float SANCTION_BASE_WIDTH = 730f;
+    public const float SANCTION_BASE_HEIGHT = 350f;
+    public const float SANCTION_BANNER_HEIGHT = 160f;
     public const float ICON_WIDTH = 256f;
 
     // Raw ImageSize
     public static readonly Vector2 MaxIconSize = new Vector2(256, 256);
-    public static readonly Vector2 MaxUserBackgroundSize = new Vector2(1080, 1920);
-    public static readonly Vector2 MaxSanctionBannerSize = new Vector2(900, 300);
+    public static readonly Vector2 MaxUserBackgroundSize = new Vector2(1080, 1920); // Base Factor 0.37x (400x711 -> 1080x1920)
+    public static readonly Vector2 MaxSanctionBannerSize = new Vector2(1280, 280); // Base Factor 0.56x (730x160 -> 1280x280)
+
+
+    public static ValidationError RunValidation(SanctionProfileV1 sp, float borderSize)
+    {
+        var profileSize = new Vector2(SANCTION_BASE_WIDTH, SANCTION_BASE_HEIGHT);
+        var frameSize = new Vector2(borderSize);
+        var infoMin = frameSize;
+        var infoMax = profileSize - frameSize;
+
+        // TODO:
+
+
+        return ValidationError.Valid;
+    }
 
     public static ValidationError RunValidation(UserProfileV1 up, float borderSize)
     {

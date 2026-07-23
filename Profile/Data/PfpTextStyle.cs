@@ -18,9 +18,6 @@ public sealed class PfpTextStyle : IEquatable<PfpTextStyle>
             && ShadowRadius == other.ShadowRadius;
     }
 
-    public override bool Equals(object? obj)
-        => Equals(obj as PfpTextStyle);
-
-    public override int GetHashCode()
-        => HashCode.Combine(Color, Shadow, ShadowOffset, ShadowRadius);
+    public override bool Equals(object? obj) => Equals(obj as PfpTextStyle);
+    public override int GetHashCode() => HashCode.Combine(Color, Shadow, ShadowOffset, ShadowRadius);
 }
