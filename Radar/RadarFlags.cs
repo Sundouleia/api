@@ -50,9 +50,4 @@ public enum RadarFlags : ushort
     ///   Enforce requests sent to you as permanent, to become temporary instead.
     /// </summary>
     EnforceTemporary = 1 << 7,
-
-    /// <summary>
-    ///   Automatically accept sent radar requests.
-    /// </summary>
-    AutoAcceptRequests = 1 << 8,
 }

@@ -4,7 +4,7 @@ namespace SundouleiaAPI.Sanctions;
 ///   What a user in a SanctionedGroup can do
 /// </summary>
 [Flags]
-public enum SanctionAccess : ushort
+public enum SanctionAccess : int
 {
     /// <summary> This role is purely cosmetic, and has no permissions. </summary>
     None = 0,
@@ -51,11 +51,17 @@ public enum SanctionAccess : ushort
     /// <remarks> Cannot remove users from a role higher than your own. </remarks>
     RemoveMembers = 1 << 12,
 
+    /// <summary> Can make alerts that get sent out to all members of the sanction. </summary>
+    PostAlerts = 1 << 13,
+
+    /// <summary> Can edit the roles of a sanction, including its permissions and claimcodes. </summary>
+    EditRoles = 1 << 14,
+
     /// <summary> Reserved usually for the Owner. Be careful who has this. </summary>
-    Admin = 1 << 13,
+    Admin = 1 << 31,
 
     All = AssignRoles | ChatModeration | ChangeVisibility | ChangePreferences | ChangeProfile 
         | ChangePassword | ChangeNames | ChangeStyle | ChangeUserAccess | ChangeRoleRequirements
-        | RemoveUserRoles | BanMembers | RemoveMembers | Admin
+        | RemoveUserRoles | BanMembers | RemoveMembers | PostAlerts | EditRoles | Admin
 }
 
