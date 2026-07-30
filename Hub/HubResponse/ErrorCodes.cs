@@ -78,7 +78,11 @@ public enum  SundouleiaApiEc
 
     MissingRequiredRole,
 
+    RequiredAdminPrivilege,
+
     InvalidRoleId,
+
+    IsBannedUser,
 
     // ----- Interaction Specific Errors -----
     /// <summary> Cannot use temporary-related interaction on permanent sundesmo. </summary>

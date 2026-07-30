@@ -53,22 +53,28 @@ public interface ISundouleiaHub
     Task Callback_SanctionInfo(SanctionInfo dto);
     /// <summary> SanctionName or ChatlogId was modified </summary>
     Task Callback_SanctionNamesUpdated(SanctionNamesDto dto);
-    /// <summary> Sanction went Public to private, or private to public </summary>
-    Task Callback_SanctionVisibilityUpdated(SanctionVisibilityDto dto);
-    /// <summary> The default DataSync preferences for the Sanction were modified. </summary>
-    Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
-    /// <summary> The RoleRequirementChanges to a sanction were modified. (Expected to update your pairs to reflect the changes) </summary>
-    Task Callback_SanctionRoleRequirementsUpdated(SanctionRoleRequirementsDto dto);
-    /// <summary> Updates to the roles and their permissions. (Expected to update your pairs to reflect the changes) </summary>
-    Task Callback_SanctionRolesUpdated(SanctionRolesUpdate dto);
     /// <summary> Informs that the Sanction updated its profile. The client should trigger a refresh </summary>
     Task Callback_SanctionProfileUpdated(SanctionDto dto, bool wasContentUpdate);
+    /// <summary> The default DataSync preferences for the Sanction were modified. </summary>
+    Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
+    /// <summary> Sanction went Public to private, or private to public </summary>
+    Task Callback_SanctionVisibilityUpdated(SanctionVisibilityDto dto);
+    /// <summary> The RoleRequirementChanges to a sanction were modified. (Expected to update your pairs to reflect the changes) </summary>
+    Task Callback_SanctionRoleRequirementsUpdated(SanctionRoleRequirementsDto dto);
+    /// <summary> A new alert was posted or it was updated. </summary>
+    Task Callback_SanctionAlertUpdated(SanctionAlertAddUpdateDto dto);
+    /// <summary> One or more Alerts were deleted. </summary>
+    Task Callback_SanctionAlertsRemoved(SanctionAlertRemovalDto dto);
+    /// <summary> Someone in the chat was muted by a moderator. </summary>
+    Task Callback_SanctionChatterMuted(SanctionMuteDto dto);
+    /// <summary> Updates to the roles and their permissions. (Expected to update your pairs to reflect the changes) </summary>
+    Task Callback_SanctionRolesUpdated(SanctionRolesUpdate dto);
     /// <summary> The Alerts for the sanction were updated. </summary>
-    Task Callback_SanctionAlertsUpdated(SanctionAlertsDto dto);
-    /// <summary> When someone joins the sanction </summary>
     Task Callback_SanctionMemberJoined(SanctionPairFullDto dto);
     /// <summary> A sanction pairs roles, access or chatlog state was updated </summary>
     Task Callback_SanctionMemberUpdated(SanctionPairFullDto dto);
+    /// <summary> Multiple sanction pairs had their roles and/or access updated simultaneously </summary>
+    Task Callback_SanctionMembersUpdated(SanctionBulkUpdate dto);
     /// <summary> An individual has left the Sanction Group </summary>
     Task Callback_SanctionMemberLeft(SanctionPairDto dto);
     /// <summary> Multiple individuals left a SanctionedGroup </summary>
@@ -293,59 +299,77 @@ public interface ISundouleiaHub
     /// <summary> Retrieves the banned users for a Sanction. </summary>
     Task<HubResponse<List<SanctionBannedUser>>> GetSanctionBannedUsers(SanctionDto sanction);
 
-    /// <summary> Updates the Roles via addition, removal, or updating existing. </summary>
-    Task<HubResponse<SanctionRolesUpdate>> SanctionRolesUpdate(SanctionRolesDto dto);
+    /// <summary> Updates the SanctionName or ChatlogName. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeNames"/></remarks>
+    Task<HubResponse> SanctionSetName(SanctionNamesDto dto);
 
-    /// <summary> Updates the Alerts via addition, removal, or updating existing. </summary>
-    Task<HubResponse<SanctionAlertsDto>> SanctionAlertsUpdate(SanctionAlertsDto dto);
+    /// <summary> Updates the sanctions profile images. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
+    Task<HubResponse> SanctionSetProfileImages(SanctionProfileImages dto);
 
-    /// <summary> Updates a SanctionPairs roles. </summary>
-    /// <remarks> Action requires <see cref="SanctionAccess.AssignRoles"/></remarks>
-    Task<HubResponse<SanctionPairInfo>> SanctionSetUserRoles(SanctionPairRoles dto);
-
-    /// <summary> Marks a Sanction as public or private. </summary>
-    /// <remarks> Action requires <see cref="SanctionAccess.ChangeVisibility"/></remarks>
-    Task<HubResponse> SanctionSetVisibility(SanctionVisibilityDto dto);
+    /// <summary> Updates the sanctions profiles contents. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
+    Task<HubResponse> SanctionSetProfileContent(SanctionProfileContents dto);
 
     /// <summary> Sets the datasync preferences of a sanction. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangePreferences"/></remarks>
     Task<HubResponse> SanctionSetPreferences(SanctionPreferencesDto dto);
 
-    /// <summary> Sets the datasync role requirements for a sanction. </summary>
-    /// <remarks> Action requires <see cref="SanctionAccess.ChangeRoleRequirements"/></remarks>
-    Task<HubResponse> SanctionSetRoleRequirements(SanctionRoleRequirementsDto dto);
+    /// <summary> Marks a Sanction as public or private. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeVisibility"/></remarks>
+    Task<HubResponse> SanctionSetVisibility(SanctionVisibilityDto dto);
 
-    /// <summary> Updates the sanctions profile images. </summary>
-    /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
-    Task<HubResponse> SanctionSetProfileImages(SanctionProfileImagesDto dto);
-
-    /// <summary> Updates the sanctions profiles contents. </summary>
-    /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
-    Task<HubResponse> SanctionSetProfileContent(SanctionProfileContentDto dto);
-     
     /// <summary> Sets or clears the SanctionGroups password. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangePassword"/></remarks>
     Task<HubResponse> SanctionSetPassword(SanctionPasswordDto dto);
 
-    /// <summary> Updates the SanctionName or ChatlogName. </summary>
-    /// <remarks> Action requires <see cref="SanctionAccess.ChangeNames"/></remarks>
-    Task<HubResponse> SanctionSetName(SanctionNamesDto dto);
+    /// <summary> Posts a new alert, or update an existing one. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.PostAlerts"/></remarks>
+    Task<HubResponse> SanctionAddUpdateAlert(SanctionAlertAddUpdateDto dto);
+
+    /// <summary> Removes the alerts passed into the call. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.RemoveAlerts"/></remarks>
+    Task<HubResponse<SanctionAlertRemovalDto>> SanctionRemoveAlerts(SanctionAlertRemovalDto dto);
+
+    /// <summary> Updates the Roles via addition, removal, or updating existing. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChatModeration"/></remarks>
+    Task<HubResponse> SanctionMuteToggle(SanctionMuteDto dto);
+
+    /// <summary> Sets the datasync role requirements for a sanction. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.EditRoleRequirements"/></remarks>
+    Task<HubResponse> SanctionSetRoleRequirements(SanctionRoleRequirementsDto dto);
+
+    /// <summary> Updates the Roles via addition, removal, or updating existing. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.EditRoleData"/> (Rearranging requires Admin/Owner. </remarks>
+    Task<HubResponse<SanctionRolesUpdate>> SanctionRolesUpdate(SanctionRolesDto dto);
+
+    /// <summary> Updates a SanctionPairs roles. </summary>
+    /// <remarks> Adding requires <see cref="SanctionAccess.AssignRoles"/>, removing requires <see cref="SanctionAccess.RemoveRoles"/>. </remarks>
+    Task<HubResponse<SanctionPairInfo>> SanctionSetUserRoles(SanctionPairRolesDto dto);
+
+    /// <summary> Updates a SanctionPairs roles. </summary>
+    /// <remarks> Adding requires <see cref="SanctionAccess.AssignRoles"/>, removing requires <see cref="SanctionAccess.RemoveRoles"/>. </remarks>
+    Task<HubResponse<SanctionBulkUpdate>> SanctionSetRoleForUsers(SanctionRoleForUsers dto);
 
     /// <summary> Changes the <see cref="SanctionAccess"/> of another SanctionPair. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeUserAccess"/></remarks>
-    Task<HubResponse> SanctionSetUserAccess(SanctionUserAccessDto dto);
+    Task<HubResponse> SanctionSetUserAccess(SanctionPairAccessDto dto);
 
-    /// <summary> Bans a SanctionedPair from the SanctionedGroup for a spesified or infinite time. </summary>
+    /// <summary> Changes the <see cref="SanctionAccess"/> of another SanctionPair. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeUserAccess"/> </remarks>
+    Task<HubResponse<SanctionBulkUpdate>> SanctionSetAccessForUsers(SanctionAccessForUsers dto);
+
+    /// <summary> Removes the specified users from the SanctionedGroup. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.KickMembers"/></remarks>
+    Task<HubResponse> SanctionRemoveUsers(SanctionPairsDto dto);
+
+    /// <summary> Bans the defined users from the SanctionedGroup for a spesified or infinite time. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.BanMembers"/></remarks>
-    Task<HubResponse> SanctionBanUser(SanctionBanDto dto);
+    Task<HubResponse> SanctionBanUsers(SanctionBanDto dto);
 
     /// <summary> Unbans a SanctionedPair from the SanctionedGroup. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.BanMembers"/></remarks>
     Task<HubResponse> SanctionUnbanUser(SanctionPairDto dto);
-
-    /// <summary> Removes the specified users from the SanctionedGroup. </summary>
-    /// <remarks> Action requires <see cref="SanctionAccess.RemoveMembers"/></remarks>
-    Task<HubResponse> SanctionRemoveUsers(SanctionPairsDto dto);
 
     /// <summary> Join a SanctionedGroup for the given ID and optional password. </summary>
     /// <returns> The current SanctionPairs, online, offline, and visible, and associated data. </returns>
@@ -353,7 +377,7 @@ public interface ISundouleiaHub
 
     /// <summary> Attempts to claim a role from a Sanction with a given claimCode. </summary>
     /// <remarks> If the claim code is invalid or the role doesn't exist, this will fail. </remarks>
-    Task<HubResponse<SanctionPairInfo>> SanctionClaimRole(SanctionRoleClaimDto dto);
+    Task<HubResponse<SanctionPairInfo>> SanctionClaimRole(SanctionRoleClaim dto);
 
     /// <summary> Sets participant status for the sanctions data sync and chat elements. </summary>
     Task<HubResponse<List<ChatlogMessage>>> SanctionSetOptIns(SanctionOptInPrefs dto);
