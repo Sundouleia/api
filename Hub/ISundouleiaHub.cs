@@ -322,7 +322,7 @@ public interface ISundouleiaHub
     /// <summary> Updates the sanctions profiles contents. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
     Task<HubResponse> SanctionSetProfileContent(SanctionProfileContentDto dto);
-
+     
     /// <summary> Sets or clears the SanctionGroups password. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangePassword"/></remarks>
     Task<HubResponse> SanctionSetPassword(SanctionPasswordDto dto);

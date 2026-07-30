@@ -58,7 +58,7 @@ public enum SanctionAccess : int
     EditRoles = 1 << 14,
 
     /// <summary> Reserved usually for the Owner. Be careful who has this. </summary>
-    Admin = 1 << 31,
+    Admin = 1 << 30,
 
     All = AssignRoles | ChatModeration | ChangeVisibility | ChangePreferences | ChangeProfile 
         | ChangePassword | ChangeNames | ChangeStyle | ChangeUserAccess | ChangeRoleRequirements
