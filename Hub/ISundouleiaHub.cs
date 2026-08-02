@@ -15,7 +15,7 @@ using SundouleiaAPI.User;
 namespace SundouleiaAPI.Hub;
 
 /// <summary>
-///     The contract that defines which methods must be provided by any signalR hub using it.
+///   The contract that defines which methods must be provided by any signalR hub using it.
 /// </summary>
 public interface ISundouleiaHub
 {
