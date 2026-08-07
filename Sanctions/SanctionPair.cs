@@ -11,11 +11,10 @@ public record SanctionPairDto(SanctionData Sanction, UserData User) : SanctionDt
 public record SanctionPairsDto(SanctionData Sanction, List<UserData> Users) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionPairFullDto(SanctionData Sanction, SanctionPairInfo Info) : SanctionPairDto(Sanction, Info.User);
+public record SanctionPairInfoDto(SanctionData Sanction, SanctionPairInfo Info) : SanctionPairDto(Sanction, Info.User);
 
-
-//[MessagePackObject(keyAsPropertyName: true)]
-//public record SanctionPairInfo(UserData User, bool InChat, List<string> RoleIds, SanctionAccess Access, DateTime JoinedAt) : UserDto(User);
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionPairInfosDto(SanctionData Sanction, List<SanctionPairInfo> Infos) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionPairInfo(UserData User, DateTime JoinedAt) : UserDto(User)

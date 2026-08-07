@@ -41,10 +41,11 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnSanctionAlertUpdated(Action<SanctionAlertAddUpdateDto> act);
     void OnSanctionAlertsRemoved(Action<SanctionAlertRemovalDto> act);
     void OnSanctionChatterMuted(Action<SanctionMuteDto> act);
-    void OnSanctionRolesUpdated(Action<SanctionRolesUpdate> act);
-    void OnSanctionMemberJoined(Action<SanctionPairFullDto> act);
-    void OnSanctionMemberUpdated(Action<SanctionPairFullDto> act);
-    void OnSanctionMembersUpdated(Action<SanctionBulkUpdate> act);
+    void OnSanctionRolesUpdated(Action<SanctionRolesUpdateDto> act);
+    void OnSanctionClaimCodesUpdated(Action<SanctionClaimCodesDto> act);
+    void OnSanctionMemberJoined(Action<SanctionPairInfoDto> act);
+    void OnSanctionMemberUpdated(Action<SanctionPairInfoDto> act);
+    void OnSanctionMembersUpdated(Action<SanctionPairInfosDto> act);
     void OnSanctionMemberLeft(Action<SanctionPairDto> act);
     void OnSanctionMembersLeft(Action<SanctionPairsDto> act);
     void OnSanctionDeleted(Action<SanctionDto> act);

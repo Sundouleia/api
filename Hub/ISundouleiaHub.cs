@@ -49,7 +49,10 @@ public interface ISundouleiaHub
     #endregion Callbacks (Pairs/Requests)
 
     #region Callbacks (Sanctions)
-    /// <summary> Updates last validation, location, IsPublic, and chatlogId </summary>
+    /// <summary> 
+    ///   Updates last validation, location, IsPublic, and chatlogId <br/>
+    ///   NOTE: This is slightly outdated in purpose, as all of the below also update public data too.
+    /// </summary>
     Task Callback_SanctionInfo(SanctionInfo dto);
     /// <summary> SanctionName or ChatlogId was modified </summary>
     Task Callback_SanctionNamesUpdated(SanctionNamesDto dto);
@@ -59,6 +62,8 @@ public interface ISundouleiaHub
     Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
     /// <summary> Sanction went Public to private, or private to public </summary>
     Task Callback_SanctionVisibilityUpdated(SanctionVisibilityDto dto);
+    /// <summary> Sanction's password changed. This only alerts owners, admins, and members with SanctionAccess.ChangePassword </summary>
+    Task Callback_SanctionPasswordUpdated(SanctionPasswordDto dto);
     /// <summary> The RoleRequirementChanges to a sanction were modified. (Expected to update your pairs to reflect the changes) </summary>
     Task Callback_SanctionRoleRequirementsUpdated(SanctionRoleRequirementsDto dto);
     /// <summary> A new alert was posted or it was updated. </summary>
@@ -68,13 +73,15 @@ public interface ISundouleiaHub
     /// <summary> Someone in the chat was muted by a moderator. </summary>
     Task Callback_SanctionChatterMuted(SanctionMuteDto dto);
     /// <summary> Updates to the roles and their permissions. (Expected to update your pairs to reflect the changes) </summary>
-    Task Callback_SanctionRolesUpdated(SanctionRolesUpdate dto);
+    Task Callback_SanctionRolesUpdated(SanctionRolesUpdateDto dto);
+    /// <summary> The ClaimCodes for the sanction were updated. (Only given to users with valid access. </summary>
+    Task Callback_SanctionClaimCodesUpdated(SanctionClaimCodesDto dto);
     /// <summary> The Alerts for the sanction were updated. </summary>
-    Task Callback_SanctionMemberJoined(SanctionPairFullDto dto);
+    Task Callback_SanctionMemberJoined(SanctionPairInfoDto dto);
     /// <summary> A sanction pairs roles, access or chatlog state was updated </summary>
-    Task Callback_SanctionMemberUpdated(SanctionPairFullDto dto);
+    Task Callback_SanctionMemberUpdated(SanctionPairInfoDto dto);
     /// <summary> Multiple sanction pairs had their roles and/or access updated simultaneously </summary>
-    Task Callback_SanctionMembersUpdated(SanctionBulkUpdate dto);
+    Task Callback_SanctionMembersUpdated(SanctionPairInfosDto dto);
     /// <summary> An individual has left the Sanction Group </summary>
     Task Callback_SanctionMemberLeft(SanctionPairDto dto);
     /// <summary> Multiple individuals left a SanctionedGroup </summary>
@@ -339,9 +346,12 @@ public interface ISundouleiaHub
     /// <remarks> Action requires <see cref="SanctionAccess.EditRoleRequirements"/></remarks>
     Task<HubResponse> SanctionSetRoleRequirements(SanctionRoleRequirementsDto dto);
 
-    /// <summary> Updates the Roles via addition, removal, or updating existing. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.EditRoleData"/> (Rearranging requires Admin/Owner. </remarks>
-    Task<HubResponse<SanctionRolesUpdate>> SanctionRolesUpdate(SanctionRolesDto dto);
+    Task<HubResponse<SanctionRolesUpdateDto>> SanctionRolesUpdate(SanctionRolesDto dto);
+
+    /// <summary> Sends over pending claim code delta changes. Returns all latest claim codes. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.EditRoleData"/>. </remarks>
+    Task<HubResponse<SanctionClaimCodesDto>> SanctionSetClaimCodes(SanctionClaimCodesDto dto);
 
     /// <summary> Updates a SanctionPairs roles. </summary>
     /// <remarks> Adding requires <see cref="SanctionAccess.AssignRoles"/>, removing requires <see cref="SanctionAccess.RemoveRoles"/>. </remarks>
@@ -349,7 +359,7 @@ public interface ISundouleiaHub
 
     /// <summary> Updates a SanctionPairs roles. </summary>
     /// <remarks> Adding requires <see cref="SanctionAccess.AssignRoles"/>, removing requires <see cref="SanctionAccess.RemoveRoles"/>. </remarks>
-    Task<HubResponse<SanctionBulkUpdate>> SanctionSetRoleForUsers(SanctionRoleForUsers dto);
+    Task<HubResponse<SanctionPairInfosDto>> SanctionSetRoleForUsers(SanctionRoleForUsers dto);
 
     /// <summary> Changes the <see cref="SanctionAccess"/> of another SanctionPair. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeUserAccess"/></remarks>
@@ -357,7 +367,7 @@ public interface ISundouleiaHub
 
     /// <summary> Changes the <see cref="SanctionAccess"/> of another SanctionPair. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeUserAccess"/> </remarks>
-    Task<HubResponse<SanctionBulkUpdate>> SanctionSetAccessForUsers(SanctionAccessForUsers dto);
+    Task<HubResponse<SanctionPairInfosDto>> SanctionSetAccessForUsers(SanctionAccessForUsers dto);
 
     /// <summary> Removes the specified users from the SanctionedGroup. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.KickMembers"/></remarks>
