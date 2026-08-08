@@ -45,7 +45,10 @@ public record SanctionMuteDto(SanctionData Sanction, UserData Target, DateTime E
 
 // Roles
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionRoleRequirementsDto(SanctionData Sanction, string[]? RoleIdsOnJoin, string? SyncRoleId, string? ChatRoleId) : SanctionDto(Sanction);
+public record SanctionReqsUpdateDto(SanctionData Sanction, string[]? RoleIdsOnJoin, string? SyncRoleId, string? ChatRoleId, List<string> LeftSync, List<string> LeftChat) : SanctionDto(Sanction);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionRoleRequirements(SanctionData Sanction, string[]? RoleIdsOnJoin, string? SyncRoleId, string? ChatRoleId) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionRolesDto(SanctionData Sanction, List<SanctionRoleData> Roles) : SanctionDto(Sanction);

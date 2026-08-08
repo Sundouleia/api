@@ -65,7 +65,7 @@ public interface ISundouleiaHub
     /// <summary> Sanction's password changed. This only alerts owners, admins, and members with SanctionAccess.ChangePassword </summary>
     Task Callback_SanctionPasswordUpdated(SanctionPasswordDto dto);
     /// <summary> The RoleRequirementChanges to a sanction were modified. (Expected to update your pairs to reflect the changes) </summary>
-    Task Callback_SanctionRoleRequirementsUpdated(SanctionRoleRequirementsDto dto);
+    Task Callback_SanctionRoleRequirementsUpdated(SanctionReqsUpdateDto dto);
     /// <summary> A new alert was posted or it was updated. </summary>
     Task Callback_SanctionAlertUpdated(SanctionAlertAddUpdateDto dto);
     /// <summary> One or more Alerts were deleted. </summary>
@@ -344,7 +344,7 @@ public interface ISundouleiaHub
 
     /// <summary> Sets the datasync role requirements for a sanction. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.EditRoleRequirements"/></remarks>
-    Task<HubResponse> SanctionSetRoleRequirements(SanctionRoleRequirementsDto dto);
+    Task<HubResponse<SanctionReqsUpdateDto>> SanctionSetRoleRequirements(SanctionRoleRequirements dto);
 
     /// <remarks> Action requires <see cref="SanctionAccess.EditRoleData"/> (Rearranging requires Admin/Owner. </remarks>
     Task<HubResponse<SanctionRolesUpdateDto>> SanctionRolesUpdate(SanctionRolesDto dto);
