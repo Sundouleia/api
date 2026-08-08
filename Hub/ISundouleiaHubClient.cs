@@ -37,7 +37,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnSanctionProfileUpdated(Action<SanctionDto, bool> act);
     void OnSanctionPreferencesModified(Action<SanctionPreferencesDto> act);
     void OnSanctionVisibilityUpdated(Action<SanctionVisibilityDto> act);
-    void OnSanctionRoleRequirementsUpdated(Action<SanctionRoleRequirements> act);
+    void OnSanctionRoleRequirementsUpdated(Action<SanctionReqsUpdateDto> act);
     void OnSanctionAlertUpdated(Action<SanctionAlertAddUpdateDto> act);
     void OnSanctionAlertsRemoved(Action<SanctionAlertRemovalDto> act);
     void OnSanctionChatterMuted(Action<SanctionMuteDto> act);
