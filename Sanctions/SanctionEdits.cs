@@ -51,7 +51,7 @@ public record SanctionReqsUpdateDto(SanctionData Sanction, string[]? RoleIdsOnJo
 public record SanctionRoleRequirements(SanctionData Sanction, string[]? RoleIdsOnJoin, string? SyncRoleId, string? ChatRoleId) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionRolesDto(SanctionData Sanction, List<SanctionRoleData> Roles) : SanctionDto(Sanction);
+public record SanctionRoleChangesDto(SanctionData Sanction, List<SanctionRoleData> Changed, List<string> RemovedIds) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionClaimCodesDto(SanctionData Sanction, Dictionary<string, string> ClaimCodes) : SanctionDto(Sanction);

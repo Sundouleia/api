@@ -36,7 +36,7 @@ public enum SanctionAccess : int
     /// <summary> Can update required roles for Sync or Chat, and also change roles that assigned to new users. </summary>
     EditRoleRequirements = 1 << 8,
 
-    /// <summary> Can edit role permissions and claimcodes. (Cannot reorder roles) </summary>
+    /// <summary> Can edit role permissions. (Cannot reorder roles) </summary>
     EditRoleData = 1 << 9,
 
     /// <summary> Can assign roles to other users. </summary>

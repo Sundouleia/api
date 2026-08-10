@@ -346,8 +346,9 @@ public interface ISundouleiaHub
     /// <remarks> Action requires <see cref="SanctionAccess.EditRoleRequirements"/></remarks>
     Task<HubResponse<SanctionReqsUpdateDto>> SanctionSetRoleRequirements(SanctionRoleRequirements dto);
 
+    /// <summary> Applies the delta changes for the sanctions roles. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.EditRoleData"/> (Rearranging requires Admin/Owner. </remarks>
-    Task<HubResponse<SanctionRolesUpdateDto>> SanctionRolesUpdate(SanctionRolesDto dto);
+    Task<HubResponse<SanctionRolesUpdateDto>> SanctionRolesUpdate(SanctionRoleChangesDto dto);
 
     /// <summary> Sends over pending claim code delta changes. Returns all latest claim codes. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.EditRoleData"/>. </remarks>
