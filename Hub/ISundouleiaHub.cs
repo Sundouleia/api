@@ -332,7 +332,7 @@ public interface ISundouleiaHub
 
     /// <summary> Posts a new alert, or update an existing one. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.PostAlerts"/></remarks>
-    Task<HubResponse> SanctionAddUpdateAlert(SanctionAlertAddUpdateDto dto);
+    Task<HubResponse<SanctionAlertData>> SanctionAddUpdateAlert(SanctionAlertAddUpdateDto dto);
 
     /// <summary> Removes the alerts passed into the call. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.RemoveAlerts"/></remarks>
