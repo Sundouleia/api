@@ -23,4 +23,4 @@ public record SanctionDto(SanctionData Sanction);
 public record SanctionListDto(List<SanctionData> Sanctions);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionDataFull(SanctionData Sanction, SanctionInfo Info, List<SanctionPairInfo> Members, List<ChatlogMessage> Chat) : SanctionDto(Sanction);
+public record SanctionDataFull(SanctionData Sanction, SanctionInfo Info, List<SanctionPairInfo> Members, List<SanctionAlertData> Alerts, List<ChatlogMessage> Chat) : SanctionDto(Sanction);
