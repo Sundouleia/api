@@ -9,6 +9,7 @@ namespace SundouleiaAPI.Data;
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionJoinDto(string SID, string Password);
 
+[MessagePackObject(keyAsPropertyName: true)]
 public record SanctionOptInsResult(List<OnlineUser> Online, List<ChatlogMessage> Chat);
 
 // Use elsewhere later when we do prune services.
