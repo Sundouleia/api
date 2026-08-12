@@ -391,7 +391,7 @@ public interface ISundouleiaHub
     Task<HubResponse<SanctionPairInfo>> SanctionClaimRole(SanctionRoleClaim dto);
 
     /// <summary> Sets participant status for the sanctions data sync and chat elements. </summary>
-    Task<HubResponse<List<ChatlogMessage>>> SanctionSetOptIns(SanctionOptInPrefs dto);
+    Task<HubResponse<SanctionOptInsResult>> SanctionSetOptIns(SanctionOptInPrefs dto);
 
     /// <summary>
     ///   Leave a SanctionedGroup, optionally unpairing with the Groups 
