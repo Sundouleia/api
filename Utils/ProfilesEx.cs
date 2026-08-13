@@ -18,6 +18,7 @@ public enum ValidationError
     TooManyShapes,
     InvalidPath,
     OtherError,
+    DuplicateIcons,
 }
 
 // NOTE TO SELF:
@@ -66,18 +67,28 @@ public static class ProfilesEx
 
         if (up.Theme.Shapes.Count > MAX_SHAPES)
             return ValidationError.TooManyShapes;
+
         if (up.DisplayName.Length > 0 && string.IsNullOrWhiteSpace(up.DisplayName))
             return ValidationError.EmptyWhitespace;
+
         if (up.Pronouns.Length > 0 && string.IsNullOrWhiteSpace(up.Pronouns))
             return ValidationError.EmptyWhitespace;
+
         if (up.Description.Length > 0 && string.IsNullOrWhiteSpace(up.Description))
             return ValidationError.EmptyWhitespace;
+
+        if (up.Theme.Shapes.Count(s => s.Type is PrimShapeType.Icon) > 1)
+            return ValidationError.DuplicateIcons;
+
         if (OutOfBounds(up.Theme.NamePos))
             return ValidationError.NamePos;
+
         if (OutOfBounds(up.Theme.SubNamePos))
             return ValidationError.PronounsPos;
+
         if (OutOfBounds(up.Theme.InterestsMin) || OutOfBounds(up.Theme.InterestsMax))
             return ValidationError.InterestsRectOutside;
+
         if (OutOfBounds(up.Theme.BioMin) || OutOfBounds(up.Theme.BioMax))
             return ValidationError.DescriptionRectOutside;
 
@@ -87,8 +98,12 @@ public static class ProfilesEx
             return ValidationError.RectOverlap;
 
         // Should also validate colors.
-        if (!IsOpaque(up.Theme.StaticButtons.Color) || !IsOpaque(up.Theme.BottomColor) || !IsOpaque(up.Theme.BorderColor) ||
-            !IsOpaque(up.Theme.MainText.Color) || !IsOpaque(up.Theme.PillText.Color) || !IsOpaque(up.Theme.BioText.Color))
+        if (!IsOpaque(up.Theme.StaticButtons.Color)
+         || !IsOpaque(up.Theme.BgColor) 
+         || !IsOpaque(up.Theme.BorderColor)
+         || !IsOpaque(up.Theme.MainText.Color)
+         || !IsOpaque(up.Theme.PillText.Color) 
+         || !IsOpaque(up.Theme.BioText.Color))
         {
             return ValidationError.BadColorOpacity;
         }

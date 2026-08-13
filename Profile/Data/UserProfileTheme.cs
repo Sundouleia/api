@@ -11,7 +11,7 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
     public uint BorderFadeInner { get; set; } = uint.MinValue;
     public float FadeDistance { get; set; } = 5f;
     public DirectionFlags FadeDirections { get; set; } = DirectionFlags.All;
-    public uint BottomColor { get; set; } = 0xFF000000;
+    public uint BgColor { get; set; } = 0xFF000000;
 
     // Text Styles
     public PfpTextStyle StaticButtons { get; set; } = new();
@@ -57,7 +57,7 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
                FadeDirections == other.FadeDirections &&
                BorderColor == other.BorderColor &&
                BorderFade == other.BorderFade &&
-               BottomColor == other.BottomColor &&
+               BgColor == other.BgColor &&
                NameMoveWithExpand == other.NameMoveWithExpand &&
                SubNameMoveWithExpand == other.SubNameMoveWithExpand &&
                InterestsMoveWithExpand == other.InterestsMoveWithExpand &&

@@ -13,12 +13,9 @@ public sealed class SanctionProfileTheme : IEquatable<SanctionProfileTheme>
     public float FadeDistance { get; set; } = 0f;
     public DirectionFlags FadeDirections { get; set; } = DirectionFlags.All;
 
-    public uint DividerColor { get; set; } = 0xFF000000;
-    public float DividerFadeDistance { get; set; } = 15f;
-    public float DividerStroke { get; set; } = 1f;
-
     // Text Styles
     public PfpTextStyle StaticButtons { get; set; } = new();
+    public PfpTextStyle DividerLine { get; set; } = new() { Color = 0xFF000000, ShadowOffset = 15f };
 
     public PfpTextStyle MainText { get; set; } = new();
     public PfpTextStyle SIDText { get; set; } = new();
@@ -71,9 +68,6 @@ public sealed class SanctionProfileTheme : IEquatable<SanctionProfileTheme>
             BorderFadeInner == other.BorderFadeInner &&
             FadeDistance == other.FadeDistance &&
             FadeDirections == other.FadeDirections &&
-            DividerColor == other.DividerColor &&
-            DividerFadeDistance == other.DividerFadeDistance &&
-            DividerStroke == other.DividerStroke &&
             TagsAlignment == other.TagsAlignment &&
             BadgesAlignment == other.BadgesAlignment &&
             IconSizeOverride == other.IconSizeOverride &&
@@ -87,6 +81,7 @@ public sealed class SanctionProfileTheme : IEquatable<SanctionProfileTheme>
             TagGapY == other.TagGapY &&
 
             StaticButtons.Equals(other.StaticButtons) &&
+            DividerLine.Equals(other.DividerLine) &&
             MainText.Equals(other.MainText) &&
             SIDText.Equals(other.SIDText) &&
             PunchlineText.Equals(other.PunchlineText) &&

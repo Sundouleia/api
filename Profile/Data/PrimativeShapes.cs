@@ -8,9 +8,11 @@ public enum PrimShapeType
     Rect = 1,
     Gradient = 2,
     Quad = 3,
-    // Should really make this more like 10 or 15 to leave room for additions.
-    Line = 4,
-    Path = 5,
+
+    Icon = 10,
+    
+    Line = 20,
+    Path = 21,
 }
 
 /// <summary>
@@ -42,6 +44,35 @@ public interface IPrimativeShape : IEquatable<IPrimativeShape>
     ///   0 Defaults to no stroke
     /// </summary>
     public float Stroke { get; }
+}
+
+public class PrimativeIcon : IPrimativeShape
+{
+    public PrimShapeType Type => PrimShapeType.Icon;
+    public bool MoveWithExpand { get; set; } = false;
+    public bool FillShape => true;
+    public uint Color1 { get; set; } = 0xFF000000;
+
+    public Vector2 Pos { get; set; } = Vector2.Zero;
+    public float Size { get; set; } = 128f;
+    public float Rounding { get; set; } = 90f;
+    public float Stroke => 0;
+
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeIcon icon) return false;
+        return MoveWithExpand == icon.MoveWithExpand &&
+               Color1 == icon.Color1 &&
+               Pos.Equals(icon.Pos) &&
+               Size == icon.Size &&
+               Rounding == icon.Rounding;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Type, Pos, Size, Color1);
 }
 
 public class PrimativeCircle : IPrimativeShape
