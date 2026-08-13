@@ -9,6 +9,15 @@ public enum Alignment
     Right
 }
 
+public enum TextFont
+{
+    Default,
+    Scaled150,
+    Game,    
+    Subheader,
+    Header,
+}
+
 public enum CharaInterest
 {
     Achievements,

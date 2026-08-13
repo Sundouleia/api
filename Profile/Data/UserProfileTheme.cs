@@ -1,3 +1,4 @@
+using SundouleiaAPI.User;
 using System.Numerics;
 
 namespace SundouleiaAPI.Profiles;
@@ -6,9 +7,9 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
 {
     // Profile Window & Ruleset
     public bool CanExpand { get; set; } = false;
-    public uint BorderColor { get; set; } = uint.MaxValue;
+    public uint BorderColor { get; set; } = 0xFFAAAAAA;
     public uint BorderFade { get; set; } = 0xFF000000;
-    public uint BorderFadeInner { get; set; } = uint.MinValue;
+    public uint BorderFadeInner { get; set; } = 0x44111111;
     public float FadeDistance { get; set; } = 5f;
     public DirectionFlags FadeDirections { get; set; } = DirectionFlags.All;
     public uint BgColor { get; set; } = 0xFF000000;
@@ -33,6 +34,13 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
     public Vector2 BioMin { get; set; } = new Vector2(20, 540);
     public Vector2 BioMax { get; set; } = new Vector2(380, 650);
     public bool BioMoveWithExpand { get; set; } = true;
+
+    // Text Fonts
+    public TextFont NameFont { get; set; } = TextFont.Subheader;
+    public TextFont SubNameFont { get; set; } = TextFont.Default;
+    public TextFont InterestLabelFont { get; set; } = TextFont.Default;
+    public TextFont InterestsFonts { get; set; } = TextFont.Default;
+    public TextFont BioFont { get; set; } = TextFont.Default;
 
     // Pill Shapes & Behaviors
     public uint PillColor { get; set; } = 0xFF787878;
@@ -78,7 +86,7 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
                MainText.Equals(other.MainText) &&
                PillText.Equals(other.PillText) &&
                BioText.Equals(other.BioText) &&
-               Shapes.SequenceEqual(other.Shapes);
+               Shapes.SequenceEqual(other.Shapes, ShapeComparer.Instance);
     }
 
     public override bool Equals(object? obj)

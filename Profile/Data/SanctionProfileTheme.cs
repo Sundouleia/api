@@ -46,6 +46,12 @@ public sealed class SanctionProfileTheme : IEquatable<SanctionProfileTheme>
     public uint IconBorderColor { get; set; } = uint.MaxValue;
     public float IconBorderStroke { get; set; } = 4f;
 
+    // Font control
+    public TextFont MainTextFont { get; set; } = TextFont.Header;
+    public TextFont SIDFont { get; set; } = TextFont.Scaled150;
+    public TextFont PunchlineFont { get; set; } = TextFont.Subheader;
+    public TextFont TagsFonts { get; set; } = TextFont.Default;
+    public TextFont BioFont { get; set; } = TextFont.Default;
 
     public bool TagBorders { get; set; } = false;
     public float TagPadding { get; set; } = 0f;
