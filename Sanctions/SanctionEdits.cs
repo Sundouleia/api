@@ -63,7 +63,7 @@ public record SanctionPairRolesDto(SanctionData Sanction, UserData User, List<st
 public record SanctionRoleForUsers(SanctionData Sanction, List<UserData> Users, string RoleId, bool Assigning) : SanctionPairsDto(Sanction, Users);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionRolesUpdateDto(SanctionInfo SanctionInfo, Dictionary<string, (string[] Roles, SanctionAccess Access)> AffectedUsers) : SanctionDto(SanctionInfo.Sanction);
+public record SanctionRolesUpdateDto(SanctionData Sanction, SanctionRoleInfo RoleInfo, Dictionary<string, (string[] Roles, SanctionAccess Access)> AffectedUsers) : SanctionDto(Sanction);
 
 // Access
 [MessagePackObject(keyAsPropertyName: true)]

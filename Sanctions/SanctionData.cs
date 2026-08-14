@@ -1,7 +1,4 @@
 using MessagePack;
-using SundouleiaAPI.Chat;
-using SundouleiaAPI.Connection;
-using SundouleiaAPI.Data;
 
 namespace SundouleiaAPI.Sanctions;
 
@@ -21,6 +18,3 @@ public record SanctionDto(SanctionData Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionListDto(List<SanctionData> Sanctions);
-
-[MessagePackObject(keyAsPropertyName: true)]
-public record SanctionDataFull(SanctionData Sanction, SanctionInfo Info, List<SanctionPairInfo> Members, List<SanctionAlertData> Alerts, List<ChatlogMessage> Chat) : SanctionDto(Sanction);

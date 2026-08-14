@@ -1,4 +1,6 @@
 using MessagePack;
+using SundouleiaAPI.Chat;
+using SundouleiaAPI.Data;
 using SundouleiaAPI.Location;
 using SundouleiaAPI.User;
 
@@ -23,5 +25,16 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public List<string> RolesOnJoin { get; set; } = [];
     public string RequiredSyncRole { get; set; } = string.Empty;
     public string RequiredChatRole { get; set; } = string.Empty;
-    public List<SanctionRoleData> Roles { get; set; } = [];
 }
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionRoleInfo(List<SanctionRoleData> Roles, List<string> OnJoin, string ReqSyncRole, string ReqChatRole);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionDataFull(
+    SanctionInfo Info,
+    SanctionRoleInfo Roles,
+    List<SanctionPairInfo> Members,
+    List<SanctionAlertData> Alerts,
+    List<ChatlogMessage> Chat,
+    Dictionary<string, string> Codes) : SanctionDto(Info.Sanction);
