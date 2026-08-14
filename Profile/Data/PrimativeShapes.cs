@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Numerics;
 
 namespace SundouleiaAPI.Profiles;
@@ -81,9 +82,24 @@ public class PrimativeCircle : IPrimativeShape
         Edges = Edges,
         Stroke = Stroke
     };
-    public bool Equals(IPrimativeShape? other) => other is not null && Id == other.Id && Type == other.Type;
-    public override bool Equals(object? obj) => Equals(obj as IPrimativeShape);
-    public override int GetHashCode() => HashCode.Combine(Id, Type);
+
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeCircle circle) return false;
+        return MoveWithExpand == circle.MoveWithExpand &&
+               FillShape == circle.FillShape &&
+               Color1 == circle.Color1 &&
+               Color2 == circle.Color2 &&
+               Center.Equals(circle.Center) &&
+               Radius == circle.Radius &&
+               Stroke == circle.Stroke;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Id, Type);
 }
 
 public class PrimativeRect : IPrimativeShape
@@ -112,9 +128,26 @@ public class PrimativeRect : IPrimativeShape
         Stroke = Stroke,
         CornerFlags = CornerFlags
     };
-    public bool Equals(IPrimativeShape? other) => other is not null && Id == other.Id && Type == other.Type;
-    public override bool Equals(object? obj) => Equals(obj as IPrimativeShape);
-    public override int GetHashCode() => HashCode.Combine(Id, Type);
+
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeRect rect) return false;
+        return MoveWithExpand == rect.MoveWithExpand &&
+               FillShape == rect.FillShape &&
+               Color1 == rect.Color1 &&
+               Color2 == rect.Color2 &&
+               Min.Equals(rect.Min) &&
+               Max.Equals(rect.Max) &&
+               Rounding == rect.Rounding &&
+               Stroke == rect.Stroke &&
+               CornerFlags == rect.CornerFlags;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Id, Type);
 }
 
 /// <summary>
@@ -145,9 +178,26 @@ public class PrimativeGradient : IPrimativeShape
         Min = Min,
         Max = Max
     };
-    public bool Equals(IPrimativeShape? other) => other is not null && Id == other.Id && Type == other.Type;
-    public override bool Equals(object? obj) => Equals(obj as IPrimativeShape);
-    public override int GetHashCode() => HashCode.Combine(Id, Type);
+
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeGradient grad) return false;
+        return MoveWithExpand == grad.MoveWithExpand &&
+               FillShape == grad.FillShape &&
+               Color1 == grad.Color1 &&
+               Color2 == grad.Color2 &&
+               Color3 == grad.Color3 &&
+               Color4 == grad.Color4 &&
+               Min.Equals(grad.Min) &&
+               Max.Equals(grad.Max) &&
+               Stroke == grad.Stroke;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Id, Type);
 }
 
 /// <summary>
@@ -181,9 +231,25 @@ public class PrimativeQuad : IPrimativeShape
         Stroke = Stroke
     };
 
-    public bool Equals(IPrimativeShape? other) => other is not null && Id == other.Id && Type == other.Type;
-    public override bool Equals(object? obj) => Equals(obj as IPrimativeShape);
-    public override int GetHashCode() => HashCode.Combine(Id, Type);
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeQuad quad) return false;
+        return MoveWithExpand == quad.MoveWithExpand &&
+               FillShape == quad.FillShape &&
+               Color1 == quad.Color1 &&
+               Color2 == quad.Color2 &&
+               P1.Equals(quad.P1) &&
+               P2.Equals(quad.P2) &&
+               P3.Equals(quad.P3) &&
+               P4.Equals(quad.P4) &&
+               Stroke == quad.Stroke;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Id, Type);
 }
 
 public class PrimativeIcon : IPrimativeShape
@@ -207,9 +273,21 @@ public class PrimativeIcon : IPrimativeShape
         Rounding = Rounding
     };
 
-    public bool Equals(IPrimativeShape? other) => other is not null && Id == other.Id && Type == other.Type;
-    public override bool Equals(object? obj) => Equals(obj as IPrimativeShape);
-    public override int GetHashCode() => HashCode.Combine(Id, Type);
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeIcon icon) return false;
+        return MoveWithExpand == icon.MoveWithExpand &&
+               Color1 == icon.Color1 &&
+               Pos.Equals(icon.Pos) &&
+               Size == icon.Size &&
+               Rounding == icon.Rounding;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Id, Type);
 }
 
 public class PrimativeLine : IPrimativeShape
@@ -232,9 +310,21 @@ public class PrimativeLine : IPrimativeShape
         Stroke = Stroke
     };
 
-    public bool Equals(IPrimativeShape? other) => other is not null && Id == other.Id && Type == other.Type;
-    public override bool Equals(object? obj) => Equals(obj as IPrimativeShape);
-    public override int GetHashCode() => HashCode.Combine(Id, Type);
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativeLine line) return false;
+        return MoveWithExpand == line.MoveWithExpand &&
+               Color1 == line.Color1 &&
+               Start.Equals(line.Start) &&
+               End.Equals(line.End) &&
+               Stroke == line.Stroke;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Id, Type);
 }
 
 public enum PrimativePathType
@@ -244,13 +334,30 @@ public enum PrimativePathType
     BezierTo,
 }
 
-public class PrimativePathNode
+public class PrimativePathNode : IEquatable<PrimativePathNode>
 {
     public PrimativePathType Instruction;
     public Vector2 Point;
     public Vector2 CtrlPoint1;
     public Vector2 CtrlPoint2;
     public int Segments;
+
+    public bool Equals(PrimativePathNode? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Instruction == other.Instruction &&
+               Point.Equals(other.Point) &&
+               CtrlPoint1.Equals(other.CtrlPoint1) &&
+               CtrlPoint2.Equals(other.CtrlPoint2) &&
+               Segments == other.Segments;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as PrimativePathNode);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Instruction, Point, Segments);
 }
 
 public class PrimativePath : IPrimativeShape
@@ -281,7 +388,19 @@ public class PrimativePath : IPrimativeShape
         })]
     };
 
-    public bool Equals(IPrimativeShape? other) => other is not null && Id == other.Id && Type == other.Type;
-    public override bool Equals(object? obj) => Equals(obj as IPrimativeShape);
-    public override int GetHashCode() => HashCode.Combine(Id, Type);
+    public bool Equals(IPrimativeShape? other)
+    {
+        if (other is not PrimativePath path) return false;
+        return MoveWithExpand == path.MoveWithExpand &&
+               Start.Equals(path.Start) &&
+               Color1 == path.Color1 &&
+               Stroke == path.Stroke &&
+               Nodes.SequenceEqual(path.Nodes);
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as IPrimativeShape);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Id, Type);
 }

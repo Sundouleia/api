@@ -22,9 +22,11 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
 
     // Layout & Bounding Boxes
     public Vector2 NamePos { get; set; } = new Vector2(20);
+    public Alignment NameAlignment { get; set; } = Alignment.Left;
     public bool NameMoveWithExpand { get; set; } = false;
 
     public Vector2 SubNamePos { get; set; } = new Vector2(20, 40);
+    public Alignment SubNameAlignment { get; set; } = Alignment.Left;
     public bool SubNameMoveWithExpand { get; set; } = false;
 
     public Vector2 InterestsMin { get; set; } = new Vector2(20, 400);
@@ -35,12 +37,18 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
     public Vector2 BioMax { get; set; } = new Vector2(380, 650);
     public bool BioMoveWithExpand { get; set; } = true;
 
+    public Vector2 VanityPos { get; set; } = new Vector2(20);
+    public float VanitySize { get; set; } = 48f; 
+    public bool VanityMoveWithExpand { get; set; } = false;
+    public uint VanityTint { get; set; } = 0xFFFFFFFF;
+
     // Text Fonts
-    public TextFont NameFont { get; set; } = TextFont.Subheader;
+    public TextFont NameFont { get; set; } = TextFont.Header;
     public TextFont SubNameFont { get; set; } = TextFont.Default;
     public TextFont InterestLabelFont { get; set; } = TextFont.Default;
     public TextFont InterestsFonts { get; set; } = TextFont.Default;
     public TextFont BioFont { get; set; } = TextFont.Default;
+
 
     // Pill Shapes & Behaviors
     public uint PillColor { get; set; } = 0xFF787878;
@@ -70,11 +78,16 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
                SubNameMoveWithExpand == other.SubNameMoveWithExpand &&
                InterestsMoveWithExpand == other.InterestsMoveWithExpand &&
                BioMoveWithExpand == other.BioMoveWithExpand &&
+               VanityMoveWithExpand == other.VanityMoveWithExpand &&
                PillColor == other.PillColor &&
                PillBorder == other.PillBorder &&
                PillPadding == other.PillPadding &&
                PillRounding == other.PillRounding &&
+               VanitySize == other.VanitySize &&
+               NameAlignment == other.NameAlignment &&
+               SubNameAlignment == other.SubNameAlignment &&
                PillAlignment == other.PillAlignment &&
+               VanityTint == other.VanityTint &&
                ShowInterestText == other.ShowInterestText &&
                NamePos.Equals(other.NamePos) &&
                SubNamePos.Equals(other.SubNamePos) &&
@@ -82,11 +95,12 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
                InterestsMax.Equals(other.InterestsMax) &&
                BioMin.Equals(other.BioMin) &&
                BioMax.Equals(other.BioMax) &&
+               VanityPos.Equals(other.VanityPos) &&
                StaticButtons.Equals(other.StaticButtons) &&
                MainText.Equals(other.MainText) &&
                PillText.Equals(other.PillText) &&
                BioText.Equals(other.BioText) &&
-               Shapes.SequenceEqual(other.Shapes, ShapeComparer.Instance);
+               Shapes.SequenceEqual(other.Shapes);
     }
 
     public override bool Equals(object? obj)

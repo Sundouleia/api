@@ -47,9 +47,9 @@ public sealed class SanctionProfileTheme : IEquatable<SanctionProfileTheme>
     public float IconBorderStroke { get; set; } = 4f;
 
     // Font control
-    public TextFont MainTextFont { get; set; } = TextFont.Header;
-    public TextFont SIDFont { get; set; } = TextFont.Scaled150;
-    public TextFont PunchlineFont { get; set; } = TextFont.Subheader;
+    public TextFont MainTextFont { get; set; } = TextFont.Subtitle;
+    public TextFont SIDFont { get; set; } = TextFont.Scaled;
+    public TextFont PunchlineFont { get; set; } = TextFont.Header;
     public TextFont TagsFonts { get; set; } = TextFont.Default;
     public TextFont BioFont { get; set; } = TextFont.Default;
 

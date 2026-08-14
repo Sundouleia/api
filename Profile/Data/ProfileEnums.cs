@@ -12,10 +12,11 @@ public enum Alignment
 public enum TextFont
 {
     Default,
-    Scaled150,
-    Game,    
-    Subheader,
+    Scaled,
+    Game,   
     Header,
+    Subtitle,
+    Title,
 }
 
 public enum CharaInterest
