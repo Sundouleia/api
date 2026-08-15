@@ -37,13 +37,14 @@ public record RadarGroupJoin(UserData User, string HashedIdent, RadarGroupFlags 
 
 public interface IRadarSyncMember
 {
+    public string RadarId { get; }
     public UserData User { get; }
     public string HashedIdent { get; }
     public string RadarName { get; }
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record RadarMember(UserData User, string HashedIdent, RadarFlags Flags) : UserDto(User), IRadarSyncMember
+public record RadarMember(UserData User, string HashedIdent, string RadarId, RadarFlags Flags) : UserDto(User), IRadarSyncMember
 {
     // Mutable for a more DDS-Friendly model (if it works out)
     public RadarFlags Flags { get; set; } = Flags;
@@ -53,7 +54,7 @@ public record RadarMember(UserData User, string HashedIdent, RadarFlags Flags) :
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record RadarGroupMember(UserData User, string HashedIdent, RadarGroupFlags Flags) : UserDto(User), IRadarSyncMember
+public record RadarGroupMember(UserData User, string HashedIdent, string RadarId, RadarGroupFlags Flags) : UserDto(User), IRadarSyncMember
 {
     // Mutable for a more DDS-Friendly model (if it works out)
     public RadarGroupFlags Flags { get; set; } = Flags;
