@@ -1,4 +1,5 @@
 using MessagePack;
+using SundouleiaAPI.Sanctions;
 using SundouleiaAPI.User;
 
 namespace SundouleiaAPI.Connection;
@@ -18,6 +19,13 @@ public record OnlineData(List<OnlineUser> OnlineUsers, List<PausedUser> PausedUs
 /// <param name="Ident">The Identity of the online user, hashed for security. </param>
 [MessagePackObject(keyAsPropertyName: true)]
 public record OnlineUser(UserData User, string Ident) : UserDto(User);
+
+// Alternative OnlineData to process further down the line as things scale.
+[MessagePackObject(keyAsPropertyName: true)]
+public record NewOnlineUser(UserData User, string Ident, Dictionary<string, OnlineSanctionMemberData> SanctionPresence);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record OnlineSanctionMemberData(DateTime JoinedAt, bool InSync, bool InChat, string[] RoleIds, SanctionAccess Access, DateTime MutedUntil);
 
 /// <summary>
 ///   Gets the PauseState data for a user, including how long they are paused for.
