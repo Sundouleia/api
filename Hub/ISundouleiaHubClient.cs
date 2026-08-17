@@ -21,6 +21,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnServerMessage(Action<MessageSeverity, string> act);
     void OnHardReconnectMessage(Action<MessageSeverity, string, ServerState> act);
     void OnRadarUserFlagged(Action<ReportKind, string> act);
+    void OnReputationInfo(Action<UserReputation, string> act);
     void OnServerInfo(Action<ServerInfoResponse> act);
     #endregion Server Information
 
