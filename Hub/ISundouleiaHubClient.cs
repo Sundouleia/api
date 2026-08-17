@@ -5,6 +5,7 @@ using SundouleiaAPI.Data;
 using SundouleiaAPI.Loci;
 using SundouleiaAPI.Permissions;
 using SundouleiaAPI.Radar;
+using SundouleiaAPI.Reporting;
 using SundouleiaAPI.Requests;
 using SundouleiaAPI.Sanctions;
 using SundouleiaAPI.User;
@@ -19,7 +20,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     #region Server Information
     void OnServerMessage(Action<MessageSeverity, string> act);
     void OnHardReconnectMessage(Action<MessageSeverity, string, ServerState> act);
-    void OnRadarUserFlagged(Action<string> act);
+    void OnRadarUserFlagged(Action<ReportKind, string> act);
     void OnServerInfo(Action<ServerInfoResponse> act);
     #endregion Server Information
 
