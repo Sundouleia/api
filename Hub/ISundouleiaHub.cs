@@ -31,7 +31,7 @@ public interface ISundouleiaHub
     #region Callbacks (Connection Responses)
     Task Callback_ServerMessage(MessageSeverity severity, string message);
     Task Callback_HardReconnectMessage(MessageSeverity severity, string message, ServerState state);
-    Task Callback_RadarUserFlagged(string flaggedUserUid); // Maybe remove
+    Task Callback_UserFlaggedForReport(ReportKind kind, string flaggedUID);
     /// <summary> Gets total online users. </summary>
     Task Callback_ServerInfo(ServerInfoResponse info);
     #endregion Callbacks (Connection Responses)
@@ -452,8 +452,8 @@ public interface ISundouleiaHub
 
     #region Reporting
     Task<HubResponse> UserReportProfile(ProfileReport dto);
-    Task<HubResponse> UserReportSanction(SanctionReport dto);
-    Task<HubResponse> UserReportRadar(RadarReport dto);
+    Task<HubResponse> UserReportSanction(SanctionReport dto); // Not yet implemented.
+    Task<HubResponse> UserReportRadar(RadarGroupReport dto);
     Task<HubResponse> UserReportChat(RadarChatReport dto);
     #endregion Reporting
 
