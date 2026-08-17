@@ -32,6 +32,7 @@ public interface ISundouleiaHub
     Task Callback_ServerMessage(MessageSeverity severity, string message);
     Task Callback_HardReconnectMessage(MessageSeverity severity, string message, ServerState state);
     Task Callback_UserFlaggedForReport(ReportKind kind, string flaggedUID);
+    Task Callback_ReputationInfo(UserReputation reputation);
     /// <summary> Gets total online users. </summary>
     Task Callback_ServerInfo(ServerInfoResponse info);
     #endregion Callbacks (Connection Responses)
