@@ -365,7 +365,7 @@ public interface ISundouleiaHub
 
     /// <summary> Changes the <see cref="SanctionAccess"/> of another SanctionPair. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeUserAccess"/></remarks>
-    Task<HubResponse> SanctionSetUserAccess(SanctionPairAccessDto dto);
+    Task<HubResponse<SanctionPairInfo>> SanctionSetUserAccess(SanctionPairAccessDto dto);
 
     /// <summary> Changes the <see cref="SanctionAccess"/> of another SanctionPair. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeUserAccess"/> </remarks>
