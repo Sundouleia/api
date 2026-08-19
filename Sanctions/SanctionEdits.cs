@@ -57,7 +57,7 @@ public record SanctionRoleChangesDto(SanctionData Sanction, List<SanctionRoleDat
 public record SanctionClaimCodesDto(SanctionData Sanction, Dictionary<string, string> ClaimCodes) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionPairRolesDto(SanctionData Sanction, UserData User, List<string> RoleIds) : SanctionPairDto(Sanction, User);
+public record SanctionPairRolesDto(SanctionData Sanction, UserData User, List<string> AddedIds, List<string> RemovedIds) : SanctionPairDto(Sanction, User);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionRoleForUsers(SanctionData Sanction, List<UserData> Users, string RoleId, bool Assigning) : SanctionPairsDto(Sanction, Users);
@@ -67,7 +67,7 @@ public record SanctionRolesUpdateDto(SanctionData Sanction, SanctionRoleInfo Rol
 
 // Access
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionPairAccessDto(SanctionData Sanction, UserData User, SanctionAccess Access) : SanctionPairDto(Sanction, User);
+public record SanctionPairAccessDto(SanctionData Sanction, UserData User, SanctionAccess Granted, SanctionAccess Revoked) : SanctionPairDto(Sanction, User);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionAccessForUsers(SanctionData Sanction, List<UserData> Users, SanctionAccess Access, bool Assigning) : SanctionPairsDto(Sanction, Users);

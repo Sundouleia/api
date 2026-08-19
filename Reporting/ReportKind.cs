@@ -7,3 +7,13 @@ public enum ReportKind
     RadarGroup = 2,
     Chat = 3,
 }
+
+public enum RepResetTarget
+{
+    All,
+    ProfileViewing,
+    ProfileEditing,
+    Radar,
+    Chat,
+    FalseReports
+}
