@@ -35,14 +35,6 @@ public record LocationUpdateResult
 [MessagePackObject(keyAsPropertyName: true)]
 public record RadarGroupJoin(UserData User, string HashedIdent, RadarGroupFlags Flags) : UserDto(User);
 
-public interface IRadarSyncMember
-{
-    public string RadarId { get; }
-    public UserData User { get; }
-    public string HashedIdent { get; }
-    public string RadarName { get; }
-}
-
 [MessagePackObject(keyAsPropertyName: true)]
 public record RadarMember(UserData User, string HashedIdent, string RadarId, RadarFlags Flags) : UserDto(User), IRadarSyncMember
 {
