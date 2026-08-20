@@ -47,7 +47,7 @@ public enum SanctionAccess : int
     RemoveRoles = 1 << 11,
 
     /// <summary> Can change the permission access of others in the group. </summary>
-    /// <remarks> Ineffective against users of the same or higher role. (?) </remarks>
+    /// <remarks> Can remove any access, but can only their own access. (Admin and ChangeUserAccess are restricted unless owner) </remarks>
     ChangeUserAccess = 1 << 12,
 
     /// <summary> Can remove other SanctionedPairs from the SanctionedGroup. </summary>
