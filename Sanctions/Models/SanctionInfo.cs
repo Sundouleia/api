@@ -28,6 +28,9 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
+public record OwnedSanctionInfo(SanctionInfo Info, SanctionPairInfo? InitPairInfo = null) : SanctionDto(Info.Sanction);
+
+[MessagePackObject(keyAsPropertyName: true)]
 public record SanctionRoleInfo(List<SanctionRoleData> Roles, List<string> OnJoin, string ReqSyncRole, string ReqChatRole);
 
 [MessagePackObject(keyAsPropertyName: true)]

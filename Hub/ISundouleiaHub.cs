@@ -299,7 +299,7 @@ public interface ISundouleiaHub
     #region Sanctions
     /// <summary> Updates the server with all current owned estates. </summary>
     /// <returns> The owned Sanction info, even if location is no longer valid.
-    Task<HubResponse<List<SanctionInfo>>> UpdateOwnedSanctions(OwnedEstates dto);
+    Task<HubResponse<List<OwnedSanctionInfo>>> UpdateOwnedSanctions(OwnedEstates dto);
 
     /// <summary> Retrieves the Audit log for a Sanction. </summary>
     Task<HubResponse<List<SanctionAuditRecord>>> GetSanctionAuditLog(SanctionAuditFetch dto);
