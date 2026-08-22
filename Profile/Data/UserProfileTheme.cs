@@ -42,7 +42,7 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
     public Vector2 VanityPos { get; set; } = new Vector2(20);
     public float VanitySize { get; set; } = 48f; 
     public bool VanityMoveWithExpand { get; set; } = false;
-    public uint VanityTint { get; set; } = 0xFFFFFFFF;
+    public float VanityAlpha { get; set; } = 1.0f;
 
     // Text Fonts
     public TextFont NameFont { get; set; } = TextFont.Header;
@@ -89,7 +89,7 @@ public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
                NameAlignment == other.NameAlignment &&
                SubNameAlignment == other.SubNameAlignment &&
                PillAlignment == other.PillAlignment &&
-               VanityTint == other.VanityTint &&
+               VanityAlpha == other.VanityAlpha &&
                ShowInterestText == other.ShowInterestText &&
                NamePos.Equals(other.NamePos) &&
                SubNamePos.Equals(other.SubNamePos) &&
