@@ -5,8 +5,10 @@ namespace SundouleiaAPI.Profiles;
 
 public sealed class UserProfileTheme : IEquatable<UserProfileTheme>
 {
-    // Profile Window & Ruleset
+    // This will be a future feature that lets people set an expanded and collapsed profile state.
     public bool CanExpand { get; set; } = false;
+
+    // Profile Window & Ruleset
     public uint BorderColor { get; set; } = 0xFFAAAAAA;
     public uint BorderFade { get; set; } = 0xFF000000;
     public uint BorderFadeInner { get; set; } = 0x44111111;

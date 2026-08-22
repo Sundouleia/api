@@ -299,7 +299,7 @@ public class PrimativeLine : IPrimativeShape
     public uint Color1 { get; set; } = 0xFF000000;
     public Vector2 Start { get; set; } = Vector2.Zero;
     public Vector2 End { get; set; } = new Vector2(50);
-    public float Stroke { get; set; } = 0f;
+    public float Stroke { get; set; } = 1f;
 
     public IPrimativeShape Clone() => new PrimativeLine
     {
@@ -369,7 +369,7 @@ public class PrimativePath : IPrimativeShape
     public Vector2 Start { get; set; } = Vector2.Zero;
     public List<PrimativePathNode> Nodes { get; set; } = [];
     public uint Color1 { get; set; } = 0xFF000000;
-    public float Stroke { get; set; } = 0f;
+    public float Stroke { get; set; } = 1f;
 
     public IPrimativeShape Clone() => new PrimativePath
     {
