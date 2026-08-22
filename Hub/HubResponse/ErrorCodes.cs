@@ -84,6 +84,10 @@ public enum  SundouleiaApiEc
 
     IsBannedUser,
 
+    MaxSanctionsReached,
+
+    MaxRolesReached,
+
     // ----- Interaction Specific Errors -----
     /// <summary> Cannot use temporary-related interaction on permanent sundesmo. </summary>
     AlreadyPermanent,
