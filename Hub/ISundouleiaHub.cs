@@ -376,11 +376,12 @@ public interface ISundouleiaHub
 
     /// <summary> Removes the specified users from the SanctionedGroup. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.KickMembers"/></remarks>
-    Task<HubResponse> SanctionRemoveUsers(SanctionPairsDto dto);
+    Task<HubResponse<List<UserData>>> SanctionRemoveUsers(SanctionPairsDto dto);
 
     /// <summary> Bans the defined users from the SanctionedGroup for a spesified or infinite time. </summary>
+    /// <returns> The banned profile UserDatas from our passed in list that got banned. (Not AccountUser) </returns>
     /// <remarks> Action requires <see cref="SanctionAccess.BanMembers"/></remarks>
-    Task<HubResponse> SanctionBanUsers(SanctionBanDto dto);
+    Task<HubResponse<List<UserData>>> SanctionBanUsers(SanctionBanDto dto);
 
     /// <summary> Unbans a SanctionedPair from the SanctionedGroup. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.BanMembers"/></remarks>
