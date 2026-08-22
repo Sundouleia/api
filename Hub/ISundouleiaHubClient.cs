@@ -51,6 +51,7 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnSanctionMemberLeft(Action<SanctionPairDto> act);
     void OnSanctionMembersLeft(Action<SanctionPairsDto> act);
     void OnSanctionDeleted(Action<SanctionDto> act);
+    void OnSanctionUnban(Action<SanctionDto> act);
     #endregion Sanctions
 
     #region Data Updates

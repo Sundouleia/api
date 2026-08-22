@@ -90,6 +90,9 @@ public interface ISundouleiaHub
     /// <summary> Called when a sanction that you were in was deleted due to a timeout or invalidation period expiring. </summary>
     Task Callback_SanctionDeleted(SanctionDto dto);
     // Called by the cleanup ^^^
+    /// <summary> Helps inform the recipient they were unbanned from a sanction, re-enabling any cached blocking. </summary>
+    Task Callback_SanctionUnban(SanctionDto dto);
+
     #endregion Callbacks (Sanctions)
 
     #region Callbacks (Alterations)
