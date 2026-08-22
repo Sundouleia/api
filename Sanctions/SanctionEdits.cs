@@ -22,7 +22,7 @@ public record SanctionPreferencesDto(SanctionData Sanction, bool Anims, bool Sfx
 
 // ChangeVisibility
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic) : SanctionDto(Sanction);
+public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic, bool IsAddrMasked) : SanctionDto(Sanction);
 
 // ChangePassword
 [MessagePackObject(keyAsPropertyName: true)]

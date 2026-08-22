@@ -25,7 +25,6 @@ public sealed class SanctionProfileTheme : IEquatable<SanctionProfileTheme>
 
     public Vector2 IconPos { get; set; } = Vector2.Zero;
 
-
     // Layout & Bounding Boxes
     public Vector2 DispNamePos { get; set; } = new Vector2(20);
     public Vector2 SIDPos { get; set; } = new Vector2(20, 40);
@@ -42,6 +41,7 @@ public sealed class SanctionProfileTheme : IEquatable<SanctionProfileTheme>
     public Vector2 BadgesMax { get; set; } = new Vector2(850, 125);
 
     // Behaviors
+    public bool ShowIcon { get; set; } = false;
     public float IconSizeOverride { get; set; } = 63f; // 64-312 is size override range.
     public uint IconBorderColor { get; set; } = uint.MaxValue;
     public float IconBorderStroke { get; set; } = 4f;
@@ -79,6 +79,7 @@ public sealed class SanctionProfileTheme : IEquatable<SanctionProfileTheme>
             IconSizeOverride == other.IconSizeOverride &&
             IconBorderColor == other.IconBorderColor &&
             IconBorderStroke == other.IconBorderStroke &&
+            ShowIcon == other.ShowIcon &&
 
             TagBorders == other.TagBorders &&
             TagPadding == other.TagPadding &&

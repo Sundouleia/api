@@ -12,6 +12,7 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public SanctionHouseType HouseType { get; set; }
     public ulong HouseID { get; set; }
     public bool IsPublic { get; set; } = true;
+    public bool MaskAddress { get; set; } = true;
     public string? Password { get; set; } = null;
     public string ChatlogId { get; set; } = string.Empty;
 
