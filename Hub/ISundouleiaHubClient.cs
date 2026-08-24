@@ -13,7 +13,7 @@ using SundouleiaAPI.User;
 namespace SundouleiaAPI.Hub;
 
 /// <summary>
-///     All OnCallback actions.
+///   All OnCallback actions.
 /// </summary>
 public interface ISundouleiaHubClient : ISundouleiaHub
 {

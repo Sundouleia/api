@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SundouleiaAPI.User;
 
 /// <summary>
-///     The primary record used to represent a Sundouleia user.
+///   The primary record used to represent a Sundouleia user.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record UserReputation

@@ -4,11 +4,11 @@ using SundouleiaAPI.User;
 namespace SundouleiaAPI.Permissions;
 
 /// <summary>
-///     Updates a single perm in the <paramref name="User"/>'s OtherPerms entry
-///     from your list of pairs. <para />
+///   Updates a single perm in the <paramref name="User"/>'s OtherPerms entry
+///   from your list of pairs. <para />
 ///
-///     Note that this will never be enacted by the client, so we can assume it is for OtherPerms. <para />
-///     Should be able to reference GSpeaks code if we want to make this bi-directional though.
+///   Note that this will never be enacted by the client, so we can assume it is for OtherPerms. <para />
+///   Should be able to reference GSpeaks code if we want to make this bi-directional though.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record ChangeUniquePerm(UserData User, string PermName, object NewValue) : UserDto(User)
@@ -23,9 +23,9 @@ public record ChangeUniquePerms(UserData User, Dictionary<string, object> Change
 }
 
 /// <summary>
-///     The new pair permissions to be set for <paramref name="User"/>. <para />
-///     Note that this will never be enacted by the client, so we can assume it is for OtherPerms. <para />
-///     Should be able to reference GSpeaks code if we want to make this bi-directional though.
+///   The new pair permissions to be set for <paramref name="User"/>. <para />
+///   Note that this will never be enacted by the client, so we can assume it is for OtherPerms. <para />
+///   Should be able to reference GSpeaks code if we want to make this bi-directional though.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record ChangeAllUnique(UserData User, PairPerms NewPerms) : UserDto(User)

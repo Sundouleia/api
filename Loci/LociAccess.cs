@@ -1,7 +1,7 @@
 namespace SundouleiaAPI.Loci;
 
 /// <summary>
-///     Defines access permissions for loci status application and removal on others.
+///   Defines access permissions for loci status application and removal on others.
 /// </summary>
 [Flags]
 public enum LociAccess : short

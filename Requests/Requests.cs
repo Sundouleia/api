@@ -4,7 +4,7 @@ using SundouleiaAPI.User;
 namespace SundouleiaAPI.Requests;
 
 /// <summary> 
-///     The User we wish to send a request to, and the message to attach with it.
+///   The User we wish to send a request to, and the message to attach with it.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record CreateRequest(UserData User, RequestDetails Details) : UserDto(User);
@@ -14,8 +14,8 @@ public record CreateRequest(UserData User, RequestDetails Details) : UserDto(Use
 public record CreateRequests(List<UserData> Recipients, RequestDetails Details);
 
 /// <summary>
-///     A pair request that is current pending a response from the recipient. <para />
-///     Can be canceled by either side.
+///   A pair request that is current pending a response from the recipient. <para />
+///   Can be canceled by either side.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record PairRequest(UserData User, UserData Target, RequestDetails Details, DateTime CreatedAt) : UserDto(User)
@@ -25,7 +25,7 @@ public record PairRequest(UserData User, UserData Target, RequestDetails Details
 }
 
 /// <summary>
-///     Various details about a request. Useful for filtering requests and such.
+///   Various details about a request. Useful for filtering requests and such.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record RequestDetails(bool IsTemp, string Message, ushort FromWorldId, ushort FromZoneId)
@@ -34,14 +34,14 @@ public record RequestDetails(bool IsTemp, string Message, ushort FromWorldId, us
 }
 
 /// <summary>
-///     Very basic request response packet. Includes if the responder desires 
-///     to forcibly accept the request as temporary, or permanent.
+///   Very basic request response packet. Includes if the responder desires 
+///   to forcibly accept the request as temporary, or permanent.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record RequestResponse(UserData User, bool AsTemp) : UserDto(User);
 
 /// <summary>
-///     List variant of <see cref="RequestResponse"/>.
+///   List variant of <see cref="RequestResponse"/>.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record RequestResponses(List<RequestResponse> Responces);

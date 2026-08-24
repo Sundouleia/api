@@ -5,7 +5,7 @@ using SundouleiaAPI.Permissions;
 namespace SundouleiaAPI.Connection;
 
 /// <summary> 
-///     The data send to a client that just successfully connected to Sundouleia servers.
+///   The data send to a client that just successfully connected to Sundouleia servers.
 /// </summary>
 [MessagePackObject(keyAsPropertyName: true)]
 public record ConnectionResponse(UserData User) : UserDto(User)

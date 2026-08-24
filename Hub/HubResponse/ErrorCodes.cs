@@ -1,7 +1,7 @@
 namespace SundouleiaAPI.Hub;
 
 /// <summary>
-///     All Error Codes for SundouleiaAPI calls.
+///   All Error Codes for SundouleiaAPI calls.
 /// </summary>
 public enum  SundouleiaApiEc
 {

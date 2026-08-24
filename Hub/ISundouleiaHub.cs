@@ -128,9 +128,9 @@ public interface ISundouleiaHub
     /// <summary> A Sundesmo updated their GlobalPerms in bulk. </summary>
     Task Callback_ChangeAllGlobal(ChangeAllGlobal dto);
     /// <summary>
-    ///     Whenever one of our Sundesmo have updated a permission in their PairPerms. <para />
-    ///     Only ever called when a sundesmo changes their own permissions for our client. <para />
-    ///     <b> THIS IS NOT CALLED WHEN WE CHANGE A PAIRPERM FOR A SUNDESMO. </b>
+    ///   Whenever one of our Sundesmo have updated a permission in their PairPerms. <para />
+    ///   Only ever called when a sundesmo changes their own permissions for our client. <para />
+    ///   <b> THIS IS NOT CALLED WHEN WE CHANGE A PAIRPERM FOR A SUNDESMO. </b>
     /// </summary>
     Task Callback_ChangeUniquePerm(ChangeUniquePerm dto);
     Task Callback_ChangeUniquePerms(ChangeUniquePerms dto);
@@ -415,9 +415,9 @@ public interface ISundouleiaHub
     /// <returns>
     ///   The resulting data for the new location based on your Opt-In settings, including:
     ///   <list type="bullet">
-    ///     <item> <b>ChatHistory</b> - The most recent chat history validated by the server. </item>
-    ///     <item> <b>RadarUsers</b> - The list of RadarMembers in the area. </item>
-    ///     <item> <b>RadarGroupUsers</b> - The list of RadarGroupMembers in the area. </item>
+    ///   <item> <b>ChatHistory</b> - The most recent chat history validated by the server. </item>
+    ///   <item> <b>RadarUsers</b> - The list of RadarMembers in the area. </item>
+    ///   <item> <b>RadarGroupUsers</b> - The list of RadarGroupMembers in the area. </item>
     ///   </list>
     /// </returns>
     Task<HubResponse<LocationUpdateResult>> UpdateLocation(LocationUpdate updateDto);

@@ -1,7 +1,7 @@
 namespace SundouleiaAPI.Files;
 
 /// <summary>
-///     The <b>S</b>undouleia <b>M</b>odular <b>A</b>ctor fileType
+///   The <b>S</b>undouleia <b>M</b>odular <b>A</b>ctor fileType
 /// </summary>
 public enum SMAFileType
 {
