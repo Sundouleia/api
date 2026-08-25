@@ -168,7 +168,8 @@ public static class RadarUtils
         }
         else
         {
-            return $"Sanctioned Estate, W{data.WardIndex + 1}, P{data.PlotIndex + 1}";
+            // Don't Include the plot for privacy reasons.
+            return $"Sanctioned Estate, W{data.WardIndex + 1}";
         }
     }
 }
