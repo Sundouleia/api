@@ -407,10 +407,7 @@ public interface ISundouleiaHub
 
     #region Radar
     /// <summary>
-    ///   Updates the server via Redis of the clients current location. <para/>
-    ///   In addition the client should provide which radar features 
-    ///   they opted into, so the returned result can contain the data 
-    ///   for the new location.
+    ///   Informs the server of the clients new location, and returns them with data for that location.
     /// </summary>
     /// <returns>
     ///   The resulting data for the new location based on your Opt-In settings, including:
@@ -422,34 +419,27 @@ public interface ISundouleiaHub
     /// </returns>
     Task<HubResponse<LocationUpdateResult>> UpdateLocation(LocationUpdate updateDto);
     /// <summary> Joins the RadarChat for the location stored on the server. </summary>
-    /// <param name="joinDto"> Info for your client that will be stored via Redis for this location. </param>
+    /// <param name="joinDto"> Info for your client that will be stored for this location. </param>
     /// <returns> Returns the recent messages for the area, if the join was valid. </returns>
     Task<HubResponse<List<ChatlogMessage>>> RadarChatJoin(RadarChatMember joinDto);
-    /// <summary> Update the stored permissions on redis, and inform others of this change. </summary>
+    /// <summary> Update the stored permissions and inform others of this change. </summary>
     Task<HubResponse> RadarChatPermissionChange(RadarChatMember updateDto);
     /// <summary> Manually leaves the RadarChat for the current area </summary>
     Task<HubResponse> RadarChatLeave();
     /// <summary> Joins the PublicRadar for the current location. All locations should be valid. </summary>
-    /// <param name="joinDto"> The permissions for the PublicRadar to store on Redis. </param>
+    /// <param name="joinDto"> The permissions for the PublicRadar to store. </param>
     /// <returns> The list of RadarMembers in this area aside from yourself. </returns>
     /// <remarks> This is not a RadarGroup, it is like an Anonymous locator. </remarks>
     Task<HubResponse<List<RadarMember>>> RadarAreaJoin(RadarMember joinDto);
-    /// <summary> Update the stored permissions on redis, and inform others of this change. </summary>
+    /// <summary> Update the stored permissions and inform others of this change. </summary>
     Task<HubResponse> RadarAreaPermissionChange(RadarMember updateDto);
     /// <summary> Leaves the current PublicRadar. </summary>
     Task<HubResponse> RadarAreaLeave();
-    /// <summary>
-    ///   Joins the public RadarGroup. <br/>
-    ///   This automatically creates RadarPairs with the returned 
-    ///   users, excluding those blocked or paused. <para />
-    ///   You are able to pause these users with a 3 hour timeout. <br/>
-    ///   RadarGroup pauses expire after 5 hours of inactivity.
-    /// </summary>
-    /// <param name="joinDto"> The permissions for the RadarGroup to store on Redis. </param>
-    /// <returns> The other RadarGroup Members currently present, aside from yourself. </returns>
-    /// <remarks> <b>RadarGroups are not allowed in residential areas.</b></remarks>
+    /// <summary> Joins the RadarGroup for the current location. All locations should be valid. </summary>
+    /// <param name="joinDto"> The permissions for the RadarGroup to store. </param>
+    /// <returns> The list of RadarGroupMembers in this area aside from yourself. </returns>
     Task<HubResponse<List<RadarGroupMember>>> RadarGroupJoin(RadarGroupJoin joinDto);
-    /// <summary> Update the stored permissions on redis, and inform others of this change. </summary>
+    /// <summary> Update the stored permissions, and inform others of this change. </summary>
     Task<HubResponse> RadarGroupPermissionChange(RadarGroupMember updateDto);
     /// <summary> Leaves the current RadarGroup </summary>
     Task<HubResponse> RadarGroupLeave();

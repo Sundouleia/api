@@ -9,7 +9,6 @@ namespace SundouleiaAPI.Chat;
 [MessagePackObject(keyAsPropertyName: true)]
 public readonly record struct ChatlogId(SundChatKind Kind, string ChatId) : IEquatable<ChatlogId>
 {
-    // Add support for DM's soon.
     public static readonly ChatlogId Invalid = new(SundChatKind.Direct, string.Empty);
 
     public bool Equals(ChatlogId other)
