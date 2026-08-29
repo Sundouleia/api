@@ -9,8 +9,14 @@ namespace SundouleiaAPI.Sanctions;
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(Sanction)
 {
+    // The actual binding HouseID
     public SanctionHouseType HouseType { get; set; }
     public ulong HouseID { get; set; }
+
+    // The HouseID used in the about and nearby tab. (Currently unused)
+    public SanctionHouseType ShownHouseType { get; set; }
+    public ulong ShownHouseID { get; set; }
+
     public bool IsPublic { get; set; } = true;
     public bool MaskAddress { get; set; } = true;
     public string? Password { get; set; } = null;

@@ -9,6 +9,7 @@ public record SanctionRoleData(string RoleId, string Name, int Priority, int Ico
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionAlertData(string AlertId, UserData Poster, DateTime PostedAt)
 {
+    public bool PingEveryone { get; set; } = false;
     public DateTime LastEditedAt { get; set; } = DateTime.MinValue;
     public string Header { get; set; } = string.Empty;
     public string Subheader { get; set; } = string.Empty;
