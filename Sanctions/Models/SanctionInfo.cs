@@ -17,8 +17,10 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public SanctionHouseType ShownHouseType { get; set; }
     public ulong ShownHouseID { get; set; }
 
+    public bool IsVerified { get; set; } = false;
     public bool IsPublic { get; set; } = true;
     public bool MaskAddress { get; set; } = true;
+    public bool AllowShownForAddress { get; set; } = false;
     public string? Password { get; set; } = null;
     public string ChatlogId { get; set; } = string.Empty;
 
@@ -32,6 +34,9 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public List<string> RolesOnJoin { get; set; } = [];
     public string RequiredSyncRole { get; set; } = string.Empty;
     public string RequiredChatRole { get; set; } = string.Empty;
+
+    // Failsafe verification check.
+    public bool Verified() => IsVerified || HouseID == ShownHouseID;
 }
 
 [MessagePackObject(keyAsPropertyName: true)]

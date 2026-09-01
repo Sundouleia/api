@@ -47,6 +47,8 @@ public interface ISundouleiaHub
     /// <summary> When a pending request was rejected, or pending request was canceled. </summary>
     /// <remarks> This is not called in responce to your own sent requests. </remarks>
     Task Callback_RemoveRequest(PairRequest dto);
+    Task Callback_AddInquiry(SanctionInquiry dto);
+    Task Callback_RemoveInquiry(SanctionInquiryReply dto);
     #endregion Callbacks (Pairs/Requests)
 
     #region Callbacks (Sanctions)
@@ -198,7 +200,7 @@ public interface ISundouleiaHub
     Task<List<SanctionDataFull>> GetJoinedSanctions();
     Task<OnlineData> GetOnlineData();
     // Maybe conjoin these into a single call to avoid thousands of users opening 5 calls on connections.
-    Task<List<PairRequest>> GetRequests(); // Maybe unify with blocked users later or something. 
+    Task<ActiveRequests> GetRequests();
     Task<List<BlockedUser>> GetBlockedUsers();
     Task<List<ChatlogMessage>> GetChatHistory(ChatHistoryRequest dto);
 
@@ -213,7 +215,6 @@ public interface ISundouleiaHub
 
     /// <summary> Retrieves the profileData for a list of sanctions. </summary>
     Task<List<SanctionProfileData>> GetSanctionProfiles(SanctionListDto sanctions);
-
     #endregion
 
     #region Vanity & Cosmetics
@@ -300,6 +301,14 @@ public interface ISundouleiaHub
     #endregion Pairs
 
     #region Sanctions
+    /// <summary> Creates an Owner-based Sanction Request to perform with another sanction. </summary>
+    /// <returns> The created sanctionRequest, if valid. </returns>
+    Task<HubResponse<SanctionInquiry>> SanctionCreateInquiry(CreateSanctionInquiry dto);
+    /// <summary> Remove an Inquiry that you created. </summary>
+    Task<HubResponse> SanctionCancelInquiry(UserDto target, string callerSid);
+    /// <summary> Accept or decline a pending Inquiry from someone else. </summary>
+    Task<HubResponse> SanctionInquiryReply(SanctionInquiryReply dto);
+
     /// <summary> Updates the server with all current owned estates. </summary>
     /// <returns> The owned Sanction info, even if location is no longer valid.
     Task<HubResponse<List<OwnedSanctionInfo>>> UpdateOwnedSanctions(OwnedEstates dto);
@@ -313,6 +322,10 @@ public interface ISundouleiaHub
     /// <summary> Updates the SanctionName or ChatlogName. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeNames"/></remarks>
     Task<HubResponse> SanctionSetName(SanctionNamesDto dto);
+
+    /// <summary> Update the displayed location of your sanction as shown in the about and nearby tab. </summary>
+    /// <remarks> Action can only be performed by the Owner. </remarks>
+    Task<HubResponse> SanctionSetShownLoc(SanctionShownLocDto dto);
 
     /// <summary> Updates the sanctions profile images. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>

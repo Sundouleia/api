@@ -1,5 +1,6 @@
 using MessagePack;
 using SundouleiaAPI.Data;
+using SundouleiaAPI.Location;
 using SundouleiaAPI.Profiles;
 using SundouleiaAPI.User;
 
@@ -8,6 +9,9 @@ namespace SundouleiaAPI.Sanctions;
 // ChangeNames
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionNamesDto(SanctionData Sanction, string NewSanctionName, string NewChatlogId) : SanctionDto(Sanction);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionShownLocDto(SanctionData Sanction, SanctionHouseType HouseType, ulong HouseId) : SanctionDto(Sanction);
 
 // ChangeProfile
 [MessagePackObject(keyAsPropertyName: true)]
@@ -22,7 +26,7 @@ public record SanctionPreferencesDto(SanctionData Sanction, bool Anims, bool Sfx
 
 // ChangeVisibility
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic, bool IsAddrMasked) : SanctionDto(Sanction);
+public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic, bool IsAddrMasked, bool AllowShownForAddress) : SanctionDto(Sanction);
 
 // ChangePassword
 [MessagePackObject(keyAsPropertyName: true)]

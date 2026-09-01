@@ -44,6 +44,8 @@ public enum  SundouleiaApiEc
     /// <summary> Invalid access level to perform the interaction. </summary>
     AccessRestriction = 12,
 
+    NotOnline = 13,
+
     // ---- Chat Related Errors ----
     /// <summary> The provided ChatlogId does not exist, or you were not in it. </summary>
     ChatNotFound,
@@ -87,6 +89,10 @@ public enum  SundouleiaApiEc
     MaxSanctionsReached,
 
     MaxRolesReached,
+
+    NotDefaultLocation,
+
+    ShownAddressRestricted,
 
     // ----- Interaction Specific Errors -----
     /// <summary> Cannot use temporary-related interaction on permanent sundesmo. </summary>
