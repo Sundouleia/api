@@ -31,6 +31,8 @@ public interface ISundouleiaHubClient : ISundouleiaHub
     void OnPersistPair(Action<UserDto> act);
     void OnAddRequest(Action<PairRequest> act);
     void OnRemoveRequest(Action<PairRequest> act);
+    void OnAddInquiry(Action<SanctionInquiry> act);
+    void OnRemoveInquiry(Action<SanctionInquiryReply> act);
     #endregion Pairs / Requests
 
     #region Sanctions

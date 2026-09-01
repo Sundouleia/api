@@ -307,7 +307,8 @@ public interface ISundouleiaHub
     /// <summary> Remove an Inquiry that you created. </summary>
     Task<HubResponse> SanctionCancelInquiry(UserDto target, string callerSid);
     /// <summary> Accept or decline a pending Inquiry from someone else. </summary>
-    Task<HubResponse> SanctionInquiryReply(SanctionInquiryReply dto);
+    /// <remarks> The returned inquiry reply will have sanctionData attached if you just joined that sanction. </remarks>
+    Task<HubResponse<SanctionInquiryReply>> SanctionInquiryReply(SanctionInquiryReply dto);
 
     /// <summary> Updates the server with all current owned estates. </summary>
     /// <returns> The owned Sanction info, even if location is no longer valid.
