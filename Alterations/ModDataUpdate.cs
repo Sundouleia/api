@@ -1,5 +1,6 @@
 using MessagePack;
 using SundouleiaAPI.Files;
+using System.Net.NetworkInformation;
 
 namespace SundouleiaAPI.Alterations;
 
@@ -21,16 +22,8 @@ public record ValidModFileDto(string ResolvedPath, string[] GamePaths, bool IsFi
     public string Hash { get; init; } = string.Empty;
     public OwnedObject Source { get; init; } = OwnedObject.Player;
     public string Link { get; init; } = string.Empty;
-
-    // The compressed download link if one is present on the server for this file.
-    // Should not exist if not a .tex file.
-    public string? CompressedLink { get; init; } = string.Empty;
-
-    // If the compressed link is null, this tells us if it is in a worker task.
-    public bool IsCompressing { get; } = false;
-
-    // Tells the client if this is a .tex file that has an active compression or has a download link for the compressed version.
-    [IgnoreMember] public bool IsCompressableTexFile => IsCompressing || CompressedLink is not null;
+    public string CompressedLink { get; init; } = string.Empty;
+    public FileOptimizationStatus Status { get; init; } = FileOptimizationStatus.NotCompressible;
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -57,13 +50,14 @@ public static class DtoExtensions
             Link = link,
         };
 
-    public static ValidModFileDto ToValidDownload(this ModFileDto file, string link, string? compressedLink)
+    public static ValidModFileDto ToValidDownload(this ModFileDto file, string link, string compressedLink, int status)
         => new(file.ResolvedPath, file.GamePaths, file.IsFileSwap)
         {
             Hash = file.Hash,
             Source = file.Source,
             Link = link,
-            CompressedLink = compressedLink
+            CompressedLink = compressedLink,
+            Status = (FileOptimizationStatus)status,
         };
 
     public static ModFileDto ToBase(this ValidModFileDto valid)
