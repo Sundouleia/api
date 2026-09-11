@@ -19,7 +19,7 @@ namespace SundouleiaAPI.Hub;
 /// </summary>
 public interface ISundouleiaHub
 {
-    const int ApiVersion = 2;
+    const int ApiVersion = 3;
     const string Path = "/sundouleia";
 
     Task<bool> HealthCheck();
