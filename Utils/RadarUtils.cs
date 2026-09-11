@@ -78,7 +78,6 @@ public static class RadarUtils
     /// </summary>
     public static readonly IReadOnlySet<XivIntendedUse> ForbiddenInChat = new HashSet<XivIntendedUse>()
     {
-        // IntendedUse.Town, <-- Maybe uncomment later if nessisary.
         XivIntendedUse.MordionGaol,
         XivIntendedUse.HousingIndoor,
         XivIntendedUse.Frontline,

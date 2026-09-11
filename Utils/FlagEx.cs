@@ -14,6 +14,7 @@ public static class FlagEx
     public static bool HasAny(this RadarFlags flags, RadarFlags check) => (flags & check) != 0;
     public static bool HasAny(this RadarGroupFlags flags, RadarGroupFlags check) => (flags & check) != 0;
     public static bool HasAny(this RadarChatFlags flags, RadarChatFlags check) => (flags & check) != 0;
+    public static bool HasAny(this RadarGroupAreas flags, RadarGroupAreas check) => (flags & check) != 0;
     public static bool HasAny(this SanctionAccess flags, SanctionAccess check) => (flags & check) != 0;
     public static bool HasAny(this DirectionFlags flags, DirectionFlags check) => (flags & check) != 0;
 
