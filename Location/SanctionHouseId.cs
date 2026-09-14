@@ -167,6 +167,22 @@ public struct SanctionHouseId : IEquatable<SanctionHouseId>, IComparable<Sanctio
         _ => "Unknown"
     };
 
+    public int ToResidentialAetheryteKind() => TerritoryId switch
+    {
+        // Mist -> Limsa
+        339 => 8,
+        // Lav.Beds -> Gridania
+        340 => 2,
+        // Goblet -> Ul'dah
+        341 => 9,
+        // Shirogane -> Kugane
+        641 => 111,
+        // Empyreum -> Foundation
+        979 => 70,
+        // Unknown
+        _ => -1
+    };
+
     #region Matching logic
     public bool SharesWardWith(SanctionHouseId other)
     {
