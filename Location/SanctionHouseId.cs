@@ -15,22 +15,28 @@ public enum EstateHouseType
 // As such as can assume static territory id locations.
 public static class SanctionHouseExtensions
 {
+    // 339 => "Mist",
+    // 340 => "Lav. Beds",
+    // 341 => "Goblet",
+    // 641 => "Shirogane",
+    // 979 => "Empyreum",
+
     public static readonly IReadOnlyDictionary<ushort, HashSet<int>> MediumPlots = new Dictionary<ushort, HashSet<int>>
     {
-        [979] = new HashSet<int> { 21, 18, 17, 8, 7, 2, 26 },
-        [641] = new HashSet<int> { 28, 24, 19, 1, 8, 13, 15 },
-        [341] = new HashSet<int> { 4, 6, 11, 12, 8, 25, 19 },
-        [339] = new HashSet<int> { 1, 4, 6, 7, 14, 29, 30 },
-        [340] = new HashSet<int> { 30, 27, 21, 5, 1, 16, 11 }
+        [339] = new HashSet<int> { 1, 4, 6, 7, 14, 29, 30, 31, 34, 36, 37, 44, 59, 60 },
+        [340] = new HashSet<int> { 1, 5, 11, 16, 21, 27, 30, 31, 35, 41, 46, 51, 57, 60 },
+        [341] = new HashSet<int> { 4, 6, 8, 11, 12, 19, 25, 34, 36, 38, 41, 42, 49, 55 },
+        [641] = new HashSet<int> { 1, 8, 13, 15, 19, 24, 28, 31, 38, 43, 45, 49, 54, 58 },
+        [979] = new HashSet<int> { 2, 7, 8, 17, 18, 21, 26, 32, 37, 38, 47, 48, 51, 56 },
     };
 
     public static readonly IReadOnlyDictionary<ushort, HashSet<int>> LargePlots = new Dictionary<ushort, HashSet<int>>
     {
-        [979] = new HashSet<int> { 22, 30, 12 },
-        [641] = new HashSet<int> { 30, 16, 7 },
-        [341] = new HashSet<int> { 5, 13, 30 },
-        [339] = new HashSet<int> { 2, 5, 15 },
-        [340] = new HashSet<int> { 28, 3, 6 }
+        [339] = new HashSet<int> { 2, 5, 15, 32, 35, 45 },
+        [340] = new HashSet<int> { 28, 3, 6, 33, 36, 58 },
+        [341] = new HashSet<int> { 5, 13, 30, 35, 43, 60 },
+        [641] = new HashSet<int> { 30, 16, 7, 37, 46, 60 },
+        [979] = new HashSet<int> { 22, 30, 12, 42, 52, 60 },
     };
 
     public static EstateHouseType GetEstateType(this SanctionHouseId houseId)
