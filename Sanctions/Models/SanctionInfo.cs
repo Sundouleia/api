@@ -35,6 +35,8 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public string RequiredSyncRole { get; set; } = string.Empty;
     public string RequiredChatRole { get; set; } = string.Empty;
 
+    public string VenuescopeId { get; set; } = string.Empty;
+
     // Failsafe verification check.
     public bool Verified() => IsVerified || HouseID == ShownHouseID;
 }
