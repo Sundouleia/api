@@ -45,7 +45,7 @@ public static class ProfilesEx
     public static readonly Vector2 MaxSanctionBannerSize = new Vector2(1280, 280); // Base Factor 0.56x (730x160 -> 1280x280)
 
 
-    public static ValidationError RunValidation(SanctionProfileV1 sp, float borderSize)
+    public static ValidationError RunValidation(SanctionProfileV2 sp, float borderSize)
     {
         var profileSize = new Vector2(SANCTION_BASE_WIDTH, SANCTION_BASE_HEIGHT);
         var frameSize = new Vector2(borderSize);
