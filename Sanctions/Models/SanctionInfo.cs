@@ -7,6 +7,9 @@ using SundouleiaAPI.User;
 namespace SundouleiaAPI.Sanctions;
 
 [MessagePackObject(keyAsPropertyName: true)]
+public record SanctionAffiliateData(SanctionData Sanction, List<SanctionInfo> Affiliates) : SanctionDto(Sanction);
+
+[MessagePackObject(keyAsPropertyName: true)]
 public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(Sanction)
 {
     // The actual binding HouseID
@@ -18,11 +21,17 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public ulong ShownHouseID { get; set; }
 
     public bool IsVerified { get; set; } = false;
+
     public bool IsPublic { get; set; } = true;
     public bool MaskAddress { get; set; } = true;
     public bool AllowShownForAddress { get; set; } = false;
     public string? Password { get; set; } = null;
+    
     public string ChatlogId { get; set; } = string.Empty;
+    public string XivVenuesId { get; set; } = string.Empty;
+
+    public List<string> Tags { get; set; } = [];
+    public string Description { get; set; } = string.Empty;
 
     public bool SuggestFilterAnims { get; set; } = false;
     public bool SuggestFilterSfx { get; set; } = false;
@@ -35,7 +44,32 @@ public record SanctionInfo(SanctionData Sanction, UserData Owner) : SanctionDto(
     public string RequiredSyncRole { get; set; } = string.Empty;
     public string RequiredChatRole { get; set; } = string.Empty;
 
-    public string VenuescopeId { get; set; } = string.Empty;
+    // Failsafe verification check.
+    public bool Verified() => IsVerified || HouseID == ShownHouseID;
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionVenueInfo(SanctionData Sanction) : SanctionDto(Sanction)
+{
+    // Populated from Sanction + CachedVenue
+    public string XivVenuesId { get; set; } = string.Empty;
+    public string DataCenter { get; set; } = string.Empty;
+    public bool IsLiveNow { get; set; } = false;
+
+    // The actual binding HouseID
+    public SanctionHouseType HouseType { get; set; }
+    public ulong HouseID { get; set; }
+
+    // The HouseID used in the about and nearby tab.
+    public SanctionHouseType ShownHouseType { get; set; }
+    public ulong ShownHouseID { get; set; }
+
+    public bool IsVerified { get; set; } = false;
+    public bool IsPublic { get; set; } = true;
+    public bool MaskAddress { get; set; } = true;
+
+    public List<string> Tags { get; set; } = [];
+    public string Description { get; set; } = string.Empty;
 
     // Failsafe verification check.
     public bool Verified() => IsVerified || HouseID == ShownHouseID;
@@ -54,4 +88,5 @@ public record SanctionDataFull(
     List<SanctionPairInfo> Members,
     List<SanctionAlertData> Alerts,
     List<ChatlogMessage> Chat,
-    Dictionary<string, string> Codes) : SanctionDto(Info.Sanction);
+    Dictionary<string, string> Codes,
+    List<SanctionInfo> Affiliates) : SanctionDto(Info.Sanction);

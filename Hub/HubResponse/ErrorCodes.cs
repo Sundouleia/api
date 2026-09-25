@@ -118,6 +118,8 @@ public enum  SundouleiaApiEc
 
     ChatNameExists,
 
+    LimitReached,
+
     // ----- SMA File Sharing Specific Errors -----
     NotOwner,
 

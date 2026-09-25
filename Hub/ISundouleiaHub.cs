@@ -58,13 +58,15 @@ public interface ISundouleiaHub
     /// </summary>
     Task Callback_SanctionInfo(SanctionInfo dto);
     /// <summary> SanctionName or ChatlogId was modified </summary>
-    Task Callback_SanctionNamesUpdated(SanctionNamesDto dto);
+    Task Callback_SanctionIdentityUpdated(SanctionIdentityDto dto);
+    /// <summary> The Sanction's description was updated. </summary>
+    Task Callback_SanctionDescriptionUpdated(SanctionDescriptionDto dto);
     /// <summary> Informs that the Sanction updated its profile. The client should trigger a refresh </summary>
     Task Callback_SanctionProfileUpdated(SanctionDto dto, bool wasContentUpdate);
     /// <summary> The default DataSync preferences for the Sanction were modified. </summary>
-    Task Callback_SanctionPreferencesModified(SanctionPreferencesDto dto);
+    Task Callback_SanctionFiltersUpdated(SanctionPreferencesDto dto);
     /// <summary> Sanction went Public to private, or private to public </summary>
-    Task Callback_SanctionVisibilityUpdated(SanctionVisibilityDto dto);
+    Task Callback_SanctionDiscoveryUpdated(SanctionDiscoveryDto dto);
     /// <summary> Sanction's password changed. This only alerts owners, admins, and members with SanctionAccess.ChangePassword </summary>
     Task Callback_SanctionPasswordUpdated(SanctionPasswordDto dto);
     /// <summary> The RoleRequirementChanges to a sanction were modified. (Expected to update your pairs to reflect the changes) </summary>
@@ -79,6 +81,8 @@ public interface ISundouleiaHub
     Task Callback_SanctionRolesUpdated(SanctionRolesUpdateDto dto);
     /// <summary> The ClaimCodes for the sanction were updated. (Only given to users with valid access. </summary>
     Task Callback_SanctionClaimCodesUpdated(SanctionClaimCodesDto dto);
+    /// <summary> The Affiliates of a Sanction were updated. </summary>
+    Task Callback_SanctionAffiliatesUpdated(SanctionAffiliateData dto);
     /// <summary> The Alerts for the sanction were updated. </summary>
     Task Callback_SanctionMemberJoined(SanctionPairInfoDto dto);
     /// <summary> A sanction pairs roles, access or chatlog state was updated </summary>
@@ -204,6 +208,9 @@ public interface ISundouleiaHub
     Task<List<BlockedUser>> GetBlockedUsers();
     Task<List<ChatlogMessage>> GetChatHistory(ChatHistoryRequest dto);
 
+    /// <summary> Currently just grabs all venues every set time so that we can filter on client end. </summary>
+    Task<List<SanctionVenueInfo>> GetUpcomingVenues();
+
     /// <summary> Retrieve the ProfileData for a User. </summary>
     Task<UserProfileData> GetUserProfile(UserDto user);
 
@@ -320,9 +327,13 @@ public interface ISundouleiaHub
     /// <summary> Retrieves the banned users for a Sanction. </summary>
     Task<HubResponse<List<SanctionBannedUser>>> GetSanctionBannedUsers(SanctionDto sanction);
 
-    /// <summary> Updates the SanctionName or ChatlogName. </summary>
-    /// <remarks> Action requires <see cref="SanctionAccess.ChangeNames"/></remarks>
-    Task<HubResponse> SanctionSetName(SanctionNamesDto dto);
+    /// <summary> Updates the Names and Ids for the Sanction. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeIdentity"/></remarks>
+    Task<HubResponse> SanctionSetIdentity(SanctionIdentityDto dto);
+
+    /// <summary> Updates the SanctionDescription. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.ChangeProfile"/></remarks>
+    Task<HubResponse> SanctionSetDescription(SanctionDescriptionDto dto);
 
     /// <summary> Update the displayed location of your sanction as shown in the about and nearby tab. </summary>
     /// <remarks> Action can only be performed by the Owner. </remarks>
@@ -342,7 +353,7 @@ public interface ISundouleiaHub
 
     /// <summary> Marks a Sanction as public or private. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangeVisibility"/></remarks>
-    Task<HubResponse> SanctionSetVisibility(SanctionVisibilityDto dto);
+    Task<HubResponse> SanctionSetVisibility(SanctionDiscoveryDto dto);
 
     /// <summary> Sets or clears the SanctionGroups password. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.ChangePassword"/></remarks>
@@ -400,6 +411,10 @@ public interface ISundouleiaHub
     /// <summary> Unbans a SanctionedPair from the SanctionedGroup. </summary>
     /// <remarks> Action requires <see cref="SanctionAccess.BanMembers"/></remarks>
     Task<HubResponse> SanctionUnbanUser(SanctionPairDto dto);
+
+    /// <summary> Updates the Affiliates of a SanctionedGroup. </summary>
+    /// <remarks> Action requires <see cref="SanctionAccess.SetAffiliates"/></remarks>
+    Task<HubResponse<SanctionAffiliateData>> SanctionSetAffiliates(SanctionAffiliatesDto dto);
 
     /// <summary> Join a SanctionedGroup for the given ID and optional password. </summary>
     /// <returns> The current SanctionPairs, online, offline, and visible, and associated data. </returns>
