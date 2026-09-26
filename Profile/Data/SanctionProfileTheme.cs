@@ -53,6 +53,8 @@ public sealed class SanctionProfileTheme : IEquatable<SanctionProfileTheme>
     public TextFont TagsFonts { get; set; } = TextFont.Default;
     public TextFont BioFont { get; set; } = TextFont.Default;
 
+    public uint TagColor { get; set; } = 0xFF787878;
+    public uint TagBorder { get; set; } = uint.MinValue;
     public bool TagBorders { get; set; } = false;
     public float TagPadding { get; set; } = 0f;
     public float TagRounding { get; set; } = 90f;

@@ -1,5 +1,4 @@
 using MessagePack;
-using SundouleiaAPI.Profiles;
 using SundouleiaAPI.Sanctions;
 
 namespace SundouleiaAPI.Profiles;

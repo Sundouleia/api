@@ -10,7 +10,7 @@ public enum SanctionAccess : int
     None = 0,
 
     /// <summary> Can change the sanction and chat name </summary>
-    ChangeNames = 1 << 0,
+    ChangeIdentity = 1 << 0,
 
     /// <summary> Can change the sanction profile (description, avatar, etc) </summary>
     ChangeProfile = 1 << 1,
@@ -57,11 +57,14 @@ public enum SanctionAccess : int
     /// <summary> Can give others the b00t. (Can only be granted by the owner) </summary>
     BanMembers = 1 << 14,
 
+    /// <summary> Can add or remove the sanctions Affiliates. </summary>
+    SetAffiliates = 1 << 15,
+
     /// <summary> Reserved usually for the Owner. Be careful who has this. </summary>
     Admin = 1 << 30,
 
-    All = ChangeNames | ChangeProfile | ChangePreferences | ChangeVisibility | ChangePassword | PostAlerts
+    All = ChangeIdentity | ChangeProfile | ChangePreferences | ChangeVisibility | ChangePassword | PostAlerts
         | RemoveAlerts | ChatModeration | EditRoleRequirements | EditRoleData | AssignRoles | RemoveRoles
-        | ChangeUserAccess | KickMembers | BanMembers | Admin
+        | ChangeUserAccess | KickMembers | BanMembers | SetAffiliates | Admin
 }
 

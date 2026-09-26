@@ -8,7 +8,10 @@ namespace SundouleiaAPI.Sanctions;
 
 // ChangeNames
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionNamesDto(SanctionData Sanction, string NewSanctionName, string NewChatlogId) : SanctionDto(Sanction);
+public record SanctionIdentityDto(SanctionData Sanction, string Name, string ChatlogId, string XivVenuesId, List<string> Tags) : SanctionDto(Sanction);
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionDescriptionDto(SanctionData Sanction, string Description) : SanctionDto(Sanction);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionShownLocDto(SanctionData Sanction, SanctionHouseType HouseType, ulong HouseId) : SanctionDto(Sanction);
@@ -26,7 +29,7 @@ public record SanctionPreferencesDto(SanctionData Sanction, bool Anims, bool Sfx
 
 // ChangeVisibility
 [MessagePackObject(keyAsPropertyName: true)]
-public record SanctionVisibilityDto(SanctionData Sanction, bool IsPublic, bool IsAddrMasked, bool AllowShownForAddress) : SanctionDto(Sanction);
+public record SanctionDiscoveryDto(SanctionData Sanction, bool IsPublic, bool IsAddrMasked, bool AllowShownForAddress) : SanctionDto(Sanction);
 
 // ChangePassword
 [MessagePackObject(keyAsPropertyName: true)]
@@ -82,6 +85,10 @@ public record SanctionBulkUpdate(SanctionData Sanction, Dictionary<string, (stri
 // Banning
 [MessagePackObject(keyAsPropertyName: true)]
 public record SanctionBanDto(SanctionData Sanction, List<UserData> Users, string BanReason) : SanctionDto(Sanction);
+
+// Affiliates
+[MessagePackObject(keyAsPropertyName: true)]
+public record SanctionAffiliatesDto(SanctionData Sanction, List<string> AffiliateIds) : SanctionDto(Sanction);
 
 // ---- Non-Management Calls ----
 [MessagePackObject(keyAsPropertyName: true)]
