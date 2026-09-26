@@ -37,16 +37,19 @@ public interface ISundouleiaHubClient : ISundouleiaHub
 
     #region Sanctions
     void OnSanctionInfo(Action<SanctionInfo> act);
-    void OnSanctionNamesUpdated(Action<SanctionIdentityDto> act);
+    void OnSanctionIdentityUpdated(Action<SanctionIdentityDto> act);
+    void OnSanctionDescriptionUpdated(Action<SanctionDescriptionDto> act);
     void OnSanctionProfileUpdated(Action<SanctionDto, bool> act);
-    void OnSanctionPreferencesModified(Action<SanctionPreferencesDto> act);
-    void OnSanctionVisibilityUpdated(Action<SanctionDiscoveryDto> act);
+    void OnSanctionFiltersModified(Action<SanctionPreferencesDto> act);
+    void OnSanctionDiscoveryUpdated(Action<SanctionDiscoveryDto> act);
+    void OnSanctionPasswordUpdated(Action<SanctionPasswordDto> act);
     void OnSanctionRoleRequirementsUpdated(Action<SanctionReqsUpdateDto> act);
     void OnSanctionAlertUpdated(Action<SanctionAlertAddUpdateDto> act);
     void OnSanctionAlertsRemoved(Action<SanctionAlertRemovalDto> act);
     void OnSanctionChatterMuted(Action<SanctionMuteDto> act);
     void OnSanctionRolesUpdated(Action<SanctionRolesUpdateDto> act);
     void OnSanctionClaimCodesUpdated(Action<SanctionClaimCodesDto> act);
+    void OnSanctionAffiliatesUpdated(Action<SanctionAffiliateData> act);
     void OnSanctionMemberJoined(Action<SanctionPairInfoDto> act);
     void OnSanctionMemberUpdated(Action<SanctionPairInfoDto> act);
     void OnSanctionMembersUpdated(Action<SanctionPairInfosDto> act);
