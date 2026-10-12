@@ -24,6 +24,8 @@ public record ValidModFileDto(string ResolvedPath, string[] GamePaths, bool IsFi
     public string Link { get; init; } = string.Empty;
     public string CompressedLink { get; init; } = string.Empty;
     public FileOptimizationStatus Status { get; init; } = FileOptimizationStatus.NotCompressible;
+    public int Size { get; init; } = 0;
+    public int CompressedSize { get; init; } = 0;
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -50,7 +52,7 @@ public static class DtoExtensions
             Link = link,
         };
 
-    public static ValidModFileDto ToValidDownload(this ModFileDto file, string link, string compressedLink, int status)
+    public static ValidModFileDto ToValidDownload(this ModFileDto file, string link, string compressedLink, int status, int size, int compressedSize)
         => new(file.ResolvedPath, file.GamePaths, file.IsFileSwap)
         {
             Hash = file.Hash,
@@ -58,6 +60,8 @@ public static class DtoExtensions
             Link = link,
             CompressedLink = compressedLink,
             Status = (FileOptimizationStatus)status,
+            Size = size,
+            CompressedSize = compressedSize,
         };
 
     public static ModFileDto ToBase(this ValidModFileDto valid)
